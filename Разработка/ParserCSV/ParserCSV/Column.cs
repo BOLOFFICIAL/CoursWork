@@ -10,6 +10,7 @@ namespace ParserCSV
     {
         public string Name { get; private set; }
         public List<string> Value { get; }
+        public string Type { get; private set; }
 
         public Column(string name)
         {

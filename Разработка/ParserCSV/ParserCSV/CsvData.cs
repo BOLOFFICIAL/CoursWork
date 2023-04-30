@@ -28,7 +28,7 @@
             ParseData();
         }
 
-        private void ParseData()
+        private bool ParseData()
         {
             // Читаем все строки из файла в список _data
             _data = File.ReadAllLines(_filePath).ToList();
@@ -37,42 +37,40 @@
                 // Создаем список столбцов Columns и заполняем его объектами Column на основе первой строки файла
                 Columns = _data[0].Split(',').Select(columnName => new Column(columnName)).ToList();
 
-                if (CheckDuplicateColumnNames(Columns))
+                if (CheckDuplicateColumnNames() == false)
                 {
-                    // Проходим по всем строкам файла, начиная со второй строки
-                    foreach (var dataRow in _data.Skip(1))
+                    return false;
+                }
+
+                // Проходим по всем строкам файла, начиная со второй строки
+                foreach (var dataRow in _data.Skip(1))
+                {
+                    // Разбиваем строку на массив значений, используя разделитель ","
+                    var splitDataRow = dataRow.Split(',');
+
+                    // Проходим по всем столбцам и добавляем значение текущей строки в соответствующий столбец
+                    for (int i = 0; i < splitDataRow.Length; i++)
                     {
-                        // Разбиваем строку на массив значений, используя разделитель ","
-                        var splitDataRow = dataRow.Split(',');
-
-                        // Проходим по всем столбцам и добавляем значение текущей строки в соответствующий столбец
-                        for (int i = 0; i < splitDataRow.Length; i++)
-                        {
-                            Columns[i].Add(splitDataRow[i]);
-                        }
+                        Columns[i].Add(splitDataRow[i]);
                     }
-
-                    // Получаем количество столбцов и строк
-                    ColumnCount = Columns.Count;
-                    RowCount = _data.Count - 1; // Уменьшаем количество строк на 1, так как первая строка содержит заголовок
                 }
 
-                else
-                {
-                    Console.WriteLine("В файле присутствуют повторяющиеся столбцы");
-                }
+                // Получаем количество столбцов и строк
+                ColumnCount = Columns.Count;
+                RowCount = _data.Count - 1; // Уменьшаем количество строк на 1, так как первая строка содержит заголовок
             }
 
+            return true;
         }
 
-        private bool CheckDuplicateColumnNames(List<Column> columns)
+        private bool CheckDuplicateColumnNames()
         {
             // Создаем HashSet для хранения уникальных имен столбцов
             HashSet<string> uniqueNames = new HashSet<string>();
             // Проходим по массиву объектов класса Column и добавляем их имена в HashSet. 
             // Если имя столбца уже есть в HashSet, то метод Add() вернет false, иначе добавит его в HashSet и вернет true.
             // Таким образом, если метод Add() вернул false, то имя столбца уже было добавлено в HashSet, то есть есть дубликат
-            foreach (Column column in columns)
+            foreach (Column column in Columns)
             {
                 if (!uniqueNames.Add(column.Name))
                 {
@@ -124,6 +122,26 @@
                     ResultColumn = column;
                 }
             }
+        }
+
+        public string[,] GetTable(bool includeResultColumn = true)
+        {
+            var csvtable = new string[RowCount, ColumnCount];
+            for (int i = 0; i < RowCount; i++)
+            {
+                for (int j = 0; j < ColumnCount; j++)
+                {
+                    if (includeResultColumn == false && ResultColumn != null)
+                    {
+                        if (Columns[j].Name == ResultColumn.Name)
+                        {
+                            continue;
+                        }
+                    }
+                    csvtable[i, j] = Columns[j].Value[i];
+                }
+            }
+            return (csvtable);
         }
     }
 }
