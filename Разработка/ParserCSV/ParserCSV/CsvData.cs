@@ -124,24 +124,27 @@
             }
         }
 
-        public string[,] GetTable(bool includeResultColumn = true)
+        public string[,] GetTable(params string[] names)
         {
-            var csvtable = new string[RowCount, ColumnCount];
-            for (int i = 0; i < RowCount; i++)
+            var columnnames = names.ToList();
+            var columns = new List<Column>();
+
+            foreach (Column column in Columns)
             {
-                for (int j = 0; j < ColumnCount; j++)
+                if (columnnames.Contains(column.Name))
                 {
-                    if (includeResultColumn == false && ResultColumn != null)
-                    {
-                        if (Columns[j].Name == ResultColumn.Name)
-                        {
-                            continue;
-                        }
-                    }
-                    csvtable[i, j] = Columns[j].Value[i];
+                    columns.Add(column);
                 }
             }
-            return (csvtable);
+            var csvtable = new string[RowCount, columns.Count];
+            for (int i = 0; i < RowCount; i++)
+            {
+                for (int j = 0; j < columns.Count; j++)
+                {
+                    csvtable[i, j] = columns[j].Value[i];
+                }
+            }
+            return csvtable;
         }
     }
 }
