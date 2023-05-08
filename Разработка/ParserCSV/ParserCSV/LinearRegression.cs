@@ -31,6 +31,7 @@
 
         public List<double> A { get; private set; }
         public double SumA { get; private set; }
+
         public double AvrA { get; private set; }
 
         public int Count { get; private set; }
@@ -79,12 +80,12 @@
                 XAvrX.Add(X[i] - AvrX);
                 XAvrX2.Add(XAvrX[i] * XAvrX[i]);
             }
-            SumXAvrX2 = Sum(XAvrX2);
-            SumX = Sum(X);
-            SumY = Sum(Y);
-            SumXY = Sum(XY);
-            SumX2 = Sum(X2);
-            SumY2 = Sum(Y2);
+            SumXAvrX2 = XAvrX2.Sum();
+            SumX = X.Sum();
+            SumY = Y.Sum();
+            SumXY = XY.Sum();
+            SumX2 = X2.Sum();
+            SumY2 = Y2.Sum();
         }
         private void LinearRegressionEquations()
         {
@@ -105,17 +106,16 @@
                 if (i > 0)
                 {
                     DE.Add(E[i] - E[i - 1]);
-                    DE2.Add(DE[i] * DE[i]);
                 }
                 else
                 {
                     DE.Add(0);
-                    DE2.Add(0);
                 }
+                DE2.Add(DE[i] * DE[i]);
             }
-            SumE2 = Sum(E2);
-            SumA = Sum(A);
-            SumDE2 = Sum(DE2);
+            SumE2 = E2.Sum();
+            SumA = A.Sum();
+            SumDE2 = DE2.Sum();
         }
         private void LinearPairCorrelation()
         {
@@ -136,24 +136,15 @@
             mb = Math.Sqrt((SumE2) / (Count - 2) * (SumX2) / (Count * SumXAvrX2));
             mR = Math.Sqrt((1 - R2) / (Count - 2));
         }
-        public void Studentstatistics() 
+        public void Studentstatistics()
         {
             ta = a / ma;
             tb = b / mb;
             tR = R / mR;
         }
-        public void DurbinWatsonCriteria() 
+        public void DurbinWatsonCriteria()
         {
             Dfact = SumDE2 / SumE2;
-        }
-        private double Sum(List<double> values)
-        {
-            double sum = 0;
-            foreach (double value in values)
-            {
-                sum += value;
-            }
-            return sum;
         }
     }
 }

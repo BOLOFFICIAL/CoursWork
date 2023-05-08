@@ -12,7 +12,7 @@ internal class Program
 
     private static void Main(string[] args)
     {
-        var fileputh = "D:\\YandexDisk\\ЯндексДиск\\BOLOFFICIAL\\ЯГТУ\\Бакалавриат\\3 КУРС\\6 СЕМЕСТР\\ИНСТРУМЕНТАЛЬНЫЕ СРЕДСТВА ИНФОРМАЦИОННЫХ СИСТЕМ\\Курсовая работа\\test.csv";
+        var fileputh = "D:\\YandexDisk\\ЯндексДиск\\BOLOFFICIAL\\ЯГТУ\\Бакалавриат\\3 КУРС\\6 СЕМЕСТР\\ИНСТРУМЕНТАЛЬНЫЕ СРЕДСТВА ИНФОРМАЦИОННЫХ СИСТЕМ\\Курсовая работа\\test3.csv";
 
         var csv = new CsvData(fileputh);
 
@@ -32,18 +32,18 @@ internal class Program
             Y.Add(double.Parse(el.Replace(".", ",")));
         }
 
-        LinearRegression linear = new LinearRegression(X,Y);
-        Console.WriteLine($"Уравнение: Y = {linear.a.ToString("#.##")}x+{linear.b.ToString("#.##")}");
-        Console.WriteLine($"Коэффициент корреляции: {linear.R.ToString("#.##")}");
-        Console.WriteLine($"Коэффициент детерминации: {linear.R2.ToString("#.##")}");
-        Console.WriteLine($"Средняя ошибка аппроксимации: {linear.AvrA.ToString("#.##")}");
-        Console.WriteLine($"F-критерии Фишера: {linear.Ffact.ToString("#.##")}");
-        Console.WriteLine($"Случайная ошибка параметра a: {linear.ma.ToString("#.##")}");
-        Console.WriteLine($"Случайная ошибка параметра b: {linear.mb.ToString("#.##")}");
-        Console.WriteLine($"Случайная ошибка параметра R: {linear.mR.ToString("#.##")}");
-        Console.WriteLine($"t-статистики Стьюдента параметра a: {linear.ta.ToString("#.##")}");
-        Console.WriteLine($"t-статистики Стьюдента параметра b: {linear.tb.ToString("#.##")}");
-        Console.WriteLine($"t-статистики Стьюдента параметра R: {linear.tR.ToString("#.##")}");
-        Console.WriteLine($"Критерии Дарбина-Уотсона: {linear.Dfact.ToString("#.##")}");
+        var linear = new QuadraticRegression(X,Y);
+        //Console.WriteLine($"Уравнение: Y = {linear.a.ToString("#.##")}x+{linear.b.ToString("#.##")}");
+        //Console.WriteLine($"Коэффициент корреляции: {linear.R.ToString("#.##")}");
+        //Console.WriteLine($"Коэффициент детерминации: {linear.R2.ToString("#.##")}");
+        //Console.WriteLine($"Средняя ошибка аппроксимации: {linear.AvrA.ToString("#.##")}");
+        //Console.WriteLine($"F-критерии Фишера: {linear.Ffact.ToString("#.##")}");
+        //Console.WriteLine($"Случайная ошибка параметра a: {linear.ma.ToString("#.##")}");
+        //Console.WriteLine($"Случайная ошибка параметра b: {linear.mb.ToString("#.##")}");
+        //Console.WriteLine($"Случайная ошибка параметра R: {linear.mR.ToString("#.##")}");
+        //Console.WriteLine($"t-статистики Стьюдента параметра a: {linear.ta.ToString("#.##")}");
+        //Console.WriteLine($"t-статистики Стьюдента параметра b: {linear.tb.ToString("#.##")}");
+        //Console.WriteLine($"t-статистики Стьюдента параметра R: {linear.tR.ToString("#.##")}");
+        //Console.WriteLine($"Критерии Дарбина-Уотсона: {linear.Dfact.ToString("#.##")}");
     }
 }
