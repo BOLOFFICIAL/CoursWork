@@ -45,6 +45,8 @@
         public double Ffact { get; private set; }
         public double Dfact { get; private set; }
 
+        public string Equation { get; private set; }
+
         public QuadraticRegression(List<double> x, List<double> y)
         {
             X = x;
@@ -90,6 +92,8 @@
             a = equations[0];
             b = equations[1];
             c = equations[2];
+
+            Equation = $"Y = {a.ToString("#.####")}X^2 + {b.ToString("#.####")}X + {c.ToString("#.####")}";
 
             AvrY = Y.Average();
             SettlementY = new List<double>();
@@ -204,7 +208,7 @@
         }
         public void Fischer()
         {
-            Ffact = R2 / (1 - R2) * ((double)(Count - 3)/2);
+            Ffact = R2 / (1.0001 - R2) * ((double)(Count - 3)/2);
         }
         public void DurbinWatsonCriteria()
         {

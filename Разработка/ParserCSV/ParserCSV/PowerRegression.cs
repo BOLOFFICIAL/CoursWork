@@ -42,6 +42,8 @@
         public double Ffact { get; private set; }
         public double Dfact { get; private set; }
 
+        public string Equation { get; private set; }
+
         public PowerRegression(List<double> x, List<double> y)
         {
             X = x;
@@ -80,6 +82,7 @@
         {
             b = (Count * SumlnXlnY - SumlnX * SumlnY) / (Count * SumlnX2 - SumlnX * SumlnX);
             a = Math.Exp((SumlnY / Count - (b / Count) * SumlnX));
+            Equation = $"Y = {a.ToString("#.####")}X^{b.ToString("#.####")}";
             SettlementY = new List<double>();
             YAvrY = new List<double>();
             YAvrY2 = new List<double>();
@@ -123,7 +126,7 @@
         }
         public void Fischer()
         {
-            Ffact = R2 / (1 - R2) * (Count - 2);
+            Ffact = R2 / (1.0001 - R2) * (Count - 2);
         }
         public void DurbinWatsonCriteria()
         {

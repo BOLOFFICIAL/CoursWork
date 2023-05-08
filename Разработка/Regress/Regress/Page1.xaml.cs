@@ -16,14 +16,17 @@ using System.Windows.Shapes;
 namespace Regress
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для Page1.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Page1 : Page
     {
-        public MainWindow()
+        public Page1(List<int> strings)
         {
             InitializeComponent();
-            MainFrame.Content = new StartPage();
+            foreach (var s in strings) 
+            {
+                Text.Content += s.ToString();
+            }
         }
     }
 }

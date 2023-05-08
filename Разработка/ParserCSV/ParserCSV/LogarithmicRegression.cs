@@ -39,6 +39,8 @@
         public double Ffact { get; private set; }
         public double Dfact { get; private set; }
 
+        public string Equation { get; private set; }
+
         public LogarithmicRegression(List<double> x, List<double> y)
         {
             X = x;
@@ -76,7 +78,7 @@
         {
             b = (Count * SumYlnX - SumlnX * SumY) / (Count * SumlnX2 - SumlnX * SumlnX);
             a = SumY / Count - b / Count * SumlnX;
-
+            Equation = $"Y = {a.ToString("#.####")} + {b.ToString("#.####")}lnX";
             SettlementY = new List<double>();
             YAvrY = new List<double>();
             YAvrY2 = new List<double>();
@@ -124,7 +126,7 @@
 
         public void Fischer()
         {
-            Ffact = R2 / (1 - R2) * ((double)(Count - 2) / 1);
+            Ffact = R2 / (1.0001 - R2) * ((double)(Count - 2) / 1);
         }
 
         public void DurbinWatsonCriteria()

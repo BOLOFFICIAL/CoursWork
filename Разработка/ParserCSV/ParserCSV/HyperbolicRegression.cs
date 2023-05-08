@@ -34,6 +34,8 @@
         public double Dfact { get; private set; }
         public double SumDE2 { get; private set; }
 
+        public string Equation { get; private set; }
+
         public HyperbolicRegression(List<double> x, List<double> y)
         {
             X = x;
@@ -70,7 +72,7 @@
         {
             b = (Count * SumYX - SumX1 * SumY) / (Count * SumX12 - SumX1 * SumX1);
             a = SumY / Count - (b / Count * SumX1);
-
+            Equation = $"Y = {a.ToString("#.####")} + {b.ToString("#.####")}/X";
             AvrY = Y.Average();
             SettlementY = new List<double>();
             YAvrY = new List<double>();
@@ -119,7 +121,7 @@
 
         public void Fischer()
         {
-            Ffact = R2 / (1 - R2) * ((double)(Count - 2) / 1);
+            Ffact = R2 / (1.0001 - R2) * ((double)(Count - 2) / 1);
         }
 
         public void DurbinWatsonCriteria()

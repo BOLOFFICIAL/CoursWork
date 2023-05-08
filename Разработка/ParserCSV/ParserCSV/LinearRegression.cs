@@ -51,6 +51,8 @@
         public double Ffact { get; private set; }
         public double Dfact { get; private set; }
 
+        public string Equation { get; private set; }
+
         public LinearRegression(List<double> x, List<double> y)
         {
             X = x;
@@ -92,6 +94,7 @@
         {
             a = (SumX * SumY - Count * SumXY) / (SumX * SumX - Count * SumX2);
             b = (SumX * SumXY - SumX2 * SumY) / (SumX * SumX - Count * SumX2);
+            Equation = $"Y = {a.ToString("#.####")}X + {b.ToString("#.####")}";
             SettlementY = new List<double>();
             E = new List<double>();
             E2 = new List<double>();
@@ -129,7 +132,7 @@
         }
         public void Fischer()
         {
-            Ffact = R2 / (1 - R2) * (Count - 2);
+            Ffact = R2 / (1.0001 - R2) * (Count - 2);
         }
         public void RandomParameterError()
         {
