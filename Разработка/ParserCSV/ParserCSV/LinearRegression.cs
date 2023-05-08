@@ -50,6 +50,7 @@
         public double R2 { get; private set; }
         public double Ffact { get; private set; }
         public double Dfact { get; private set; }
+
         public LinearRegression(List<double> x, List<double> y)
         {
             X = x;
