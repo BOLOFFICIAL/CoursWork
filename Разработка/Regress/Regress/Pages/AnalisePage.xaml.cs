@@ -3,6 +3,7 @@ using OxyPlot.Axes;
 using OxyPlot.Series;
 using Regress.CSV;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -108,7 +109,7 @@ namespace Regress
             plotModel.Series.Add(series1);
             plotModel.Series.Add(scatterSeries);
             plotModel.Series.Add(equation);
-            plotModel.Title = $"График зависимостей {resultcolumn} От {parameter}";
+            plotModel.Title = $"{resultcolumn} & {parameter}";
             plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = parameter });
             plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = resultcolumn });
 
@@ -146,7 +147,17 @@ namespace Regress
 
         private void Button_Save(object sender, RoutedEventArgs e)
         {
+            var exporter = new PdfExporter();
 
+            // Устанавливаем настройки экспорта
+            exporter.Width = 800;
+            exporter.Height = 600;
+
+            // Экспортируем график в формат PDF
+            using (var stream = File.Create("C:\\Users\\Bolofficial\\Desktop\\output.pdf"))
+            {
+                exporter.Export(PlotViewAnalise.Model, stream);
+            }
         }
     }
 }
