@@ -82,7 +82,7 @@ namespace Regress
         {
             b = (Count * SumYlnX - SumlnX * SumY) / (Count * SumlnX2 - SumlnX * SumlnX);
             a = SumY / Count - b / Count * SumlnX;
-            Equation = $"Y = {a.ToString("#.####")} + {b.ToString("#.####")}lnX";
+            Equation = $"Y = {a.ToString("0.####")} + {b.ToString("0.####")}lnX";
             SettlementY = new List<double>();
             YAvrY = new List<double>();
             YAvrY2 = new List<double>();
@@ -119,7 +119,7 @@ namespace Regress
 
         private void PowerPairCorrelation()
         {
-            R = Math.Sqrt(1 - ((SumE2) / (SumYAvrY2)));
+            R = Math.Sqrt(1.0001 - ((SumE2) / (SumYAvrY2)));
             R2 = R * R;
         }
 

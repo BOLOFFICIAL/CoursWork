@@ -49,10 +49,10 @@ namespace Regress
             ComboBoxRegression.ItemsSource = new List<string>()
             {
                 "Линейная",
-                "Степенной",
-                "Квадратичной",
-                "Логарифмической",
-                "Гиперболической",
+                "Степенная",
+                "Квадратичная",
+                "Логарифмическая",
+                "Гиперболическая",
             };
         }
 
@@ -107,7 +107,7 @@ namespace Regress
 
             plotModel.Series.Add(series1);
             plotModel.Series.Add(scatterSeries);
-            //plotModel.Series.Add(equation);
+            plotModel.Series.Add(equation);
             plotModel.Title = $"График зависимостей {resultcolumn} От {parameter}";
             plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = parameter });
             plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = resultcolumn });
@@ -115,25 +115,36 @@ namespace Regress
             PlotViewAnalise.Model = plotModel;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Back(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new ChosePage(_filepath));
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_Analise(object sender, RoutedEventArgs e)
         {
-            var r = _resultcolumn;
-            var p = ComboBoxParameter.SelectedValue.ToString();
-            CorrelationRegression regression = new CorrelationRegression(r, p);
-            PrintOXY(r, p, regression.Line);
+            Analise(ComboBoxParameter.SelectedIndex);
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void Button_AutoAnalise(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(ComboBoxParameter.SelectedValue.ToString());
+            Analise(-1);
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void Analise(int index)
+        {
+            CorrelationRegression regression = new CorrelationRegression(_filepath, ComboBoxRegression.SelectedValue.ToString(), _resultcolumn, index);
+            Label1.Content = regression.Results[0];
+            Label2.Content = regression.Results[1];
+            Label3.Content = regression.Results[2];
+            Label4.Content = regression.Results[3];
+            Label5.Content = regression.Results[4];
+            Label6.Content = regression.Results[5];
+            Label7.Content = regression.Results[6];
+            Label8.Content = regression.Results[7];
+            PrintOXY(_resultcolumn, ComboBoxParameter.SelectedValue.ToString(), regression.Line);
+        }
+
+        private void Button_Save(object sender, RoutedEventArgs e)
         {
 
         }

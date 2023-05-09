@@ -98,7 +98,7 @@ namespace Regress
         {
             a = (SumX * SumY - Count * SumXY) / (SumX * SumX - Count * SumX2);
             b = (SumX * SumXY - SumX2 * SumY) / (SumX * SumX - Count * SumX2);
-            Equation = $"Y = {a.ToString("#.####")}X + {b.ToString("#.####")}";
+            Equation = $"Y = {a.ToString("0.####")}X + {b.ToString("0.####")}";
             SettlementY = new List<double>();
             E = new List<double>();
             E2 = new List<double>();
@@ -142,7 +142,7 @@ namespace Regress
         {
             ma = Math.Sqrt((1) / (SumXAvrX2) * (SumE2) / (Count - 2));
             mb = Math.Sqrt((SumE2) / (Count - 2) * (SumX2) / (Count * SumXAvrX2));
-            mR = Math.Sqrt((1 - R2) / (Count - 2));
+            mR = Math.Sqrt((1.0001 - R2) / (Count - 2));
         }
         public void Studentstatistics()
         {

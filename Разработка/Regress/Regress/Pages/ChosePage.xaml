@@ -21,7 +21,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
         <Button Grid.Row="0"
                 Grid.Column="0"

@@ -6,7 +6,6 @@ using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Xml.Linq;
 
 namespace Regress
 {
@@ -55,9 +54,9 @@ namespace Regress
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var resultname = ComboBoxResult.SelectedValue;
-            if (!(resultname is null)) 
+            if (!(resultname is null))
             {
-               var name = resultname.ToString();
+                var name = resultname.ToString();
                 if (name.Length > 0)
                 {
                     NavigationService.Navigate(new AnalisePage(ComboBoxResult.SelectedValue.ToString(), filepath));

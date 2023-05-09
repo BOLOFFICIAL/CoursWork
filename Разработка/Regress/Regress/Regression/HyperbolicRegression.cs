@@ -76,7 +76,7 @@ namespace Regress
         {
             b = (Count * SumYX - SumX1 * SumY) / (Count * SumX12 - SumX1 * SumX1);
             a = SumY / Count - (b / Count * SumX1);
-            Equation = $"Y = {a.ToString("#.####")} + {b.ToString("#.####")}/X";
+            Equation = $"Y = {a.ToString("0.####")} + {b.ToString("0.####")}/X";
             AvrY = Y.Average();
             SettlementY = new List<double>();
             YAvrY = new List<double>();
@@ -114,7 +114,7 @@ namespace Regress
 
         private void PowerPairCorrelation()
         {
-            R = Math.Sqrt(1 - ((SumE2) / (SumYAvrY2)));
+            R = Math.Sqrt(1.0001 - ((SumE2) / (SumYAvrY2)));
             R2 = R * R;
         }
 

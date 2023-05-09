@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -68,6 +69,7 @@ namespace Regress
             Count = X.Count;
             for (int i = 0; i < Count; i++)
             {
+                if (X[i] == 0) { X[i] = 0.1; }
                 lnX.Add(Math.Log(X[i]));
                 lnY.Add(Math.Log(Y[i]));
                 lnX2.Add(lnX[i] * lnX[i]);
@@ -86,7 +88,7 @@ namespace Regress
         {
             b = (Count * SumlnXlnY - SumlnX * SumlnY) / (Count * SumlnX2 - SumlnX * SumlnX);
             a = Math.Exp((SumlnY / Count - (b / Count) * SumlnX));
-            Equation = $"Y = {a.ToString("#.####")}X^{b.ToString("#.####")}";
+            Equation = $"Y = {a.ToString("0.####")}X^{b.ToString("0.####")}";
             SettlementY = new List<double>();
             YAvrY = new List<double>();
             YAvrY2 = new List<double>();
@@ -121,7 +123,7 @@ namespace Regress
         }
         private void PowerPairCorrelation()
         {
-            R = Math.Sqrt(1 - ((SumE2) / (SumYAvrY2)));
+            R = Math.Sqrt(1.0001 - ((SumE2) / (SumYAvrY2)));
             R2 = R * R;
         }
         private void ApproximationError()

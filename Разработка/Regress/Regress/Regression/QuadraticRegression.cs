@@ -97,7 +97,7 @@ namespace Regress
             b = equations[1];
             c = equations[2];
 
-            Equation = $"Y = {a.ToString("#.####")}X^2 + {b.ToString("#.####")}X + {c.ToString("#.####")}";
+            Equation = $"Y = {a.ToString("0.####")}X^2 + {b.ToString("0.####")}X + {c.ToString("0.####")}";
 
             AvrY = Y.Average();
             SettlementY = new List<double>();
@@ -202,7 +202,7 @@ namespace Regress
 
         private void PowerPairCorrelation()
         {
-            R = Math.Sqrt(1 - ((SumE2) / (SumYAvrY2)));
+            R = Math.Sqrt(1.0001 - ((SumE2) / (SumYAvrY2)));
             R2 = R * R;
         }
 
