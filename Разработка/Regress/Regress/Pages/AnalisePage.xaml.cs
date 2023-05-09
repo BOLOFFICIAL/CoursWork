@@ -1,9 +1,7 @@
 ﻿using OxyPlot;
-using OxyPlot.Annotations;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using Regress.CSV;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -28,7 +26,7 @@ namespace Regress
             _resultcolumn = resultcolumn;
             ComboBoxRegression.SelectedIndex = 0;
             ComboBoxParameter.SelectedIndex = 0;
-            
+
             Regressions();
             Parameters();
         }
@@ -36,9 +34,9 @@ namespace Regress
         private void Parameters()
         {
             var parameters = new List<string>();
-            foreach (var name in csv.GetNames()) 
+            foreach (var name in csv.GetNames())
             {
-                if (name != _resultcolumn) 
+                if (name != _resultcolumn)
                 {
                     parameters.Add(name);
                 }
@@ -46,7 +44,7 @@ namespace Regress
             ComboBoxParameter.ItemsSource = parameters;
         }
 
-        private void Regressions() 
+        private void Regressions()
         {
             ComboBoxRegression.ItemsSource = new List<string>()
             {
@@ -103,9 +101,9 @@ namespace Regress
             }
 
             series1.Points.Add(new DataPoint(0, 0));
-            series1.Points.Add(new DataPoint(X.Max()+10, 0));
+            series1.Points.Add(new DataPoint(X.Max() + 10, 0));
             series1.Points.Add(new DataPoint(0, 0));
-            series1.Points.Add(new DataPoint(0, Y.Max()+10));
+            series1.Points.Add(new DataPoint(0, Y.Max() + 10));
 
             plotModel.Series.Add(series1);
             plotModel.Series.Add(scatterSeries);
@@ -124,7 +122,10 @@ namespace Regress
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            PrintOXY(_resultcolumn, ComboBoxParameter.SelectedValue.ToString(),null);
+            var r = _resultcolumn;
+            var p = ComboBoxParameter.SelectedValue.ToString();
+            CorrelationRegression regression = new CorrelationRegression(r, p);
+            PrintOXY(r, p, regression.Line);
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
