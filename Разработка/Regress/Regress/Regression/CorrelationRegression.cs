@@ -17,6 +17,7 @@ namespace Regress
         private string _regression;
         private string _result;
         private int _index;
+        public string Title { get; private set; }
         public List<string> Results { get; private set; }
         public CorrelationRegression(string filepath, string regression, string result, int index)
         {
@@ -61,6 +62,7 @@ namespace Regress
             {
                 case "Линейная":
                     {
+                        Title = "Linear";
                         var regress = new LinearRegression(X, Y);
                         Results.Add(regress.Equation);
                         Results.Add(regress.R.ToString("0.####"));
@@ -82,6 +84,7 @@ namespace Regress
                     break;
                 case "Степенная":
                     {
+                        Title = "Power";
                         var regress = new PowerRegression(X, Y);
                         Results.Add(regress.Equation);
                         Results.Add(regress.R.ToString("0.####"));
@@ -103,6 +106,7 @@ namespace Regress
                     break;
                 case "Квадратичная":
                     {
+                        Title = "Quadratic";
                         var regress = new QuadraticRegression(X, Y);
                         Results.Add(regress.Equation);
                         Results.Add(regress.R.ToString("0.####"));
@@ -124,6 +128,7 @@ namespace Regress
                     break;
                 case "Логарифмическая":
                     {
+                        Title = "Logarithmic";
                         var regress = new LogarithmicRegression(X, Y);
                         Results.Add(regress.Equation);
                         Results.Add(regress.R.ToString("0.####"));
@@ -145,6 +150,7 @@ namespace Regress
                     break;
                 case "Гиперболическая":
                     {
+                        Title = "Hiperbolic";
                         var regress = new HyperbolicRegression(X, Y);
                         Results.Add(regress.Equation);
                         Results.Add(regress.R.ToString("0.####"));

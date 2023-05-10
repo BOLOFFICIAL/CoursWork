@@ -28,11 +28,18 @@ namespace Regress
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "CSV files (*.csv)|*.csv";
-            if (openFileDialog.ShowDialog() == true)
+            try 
             {
-                NavigationService.Navigate(new ChosePage(openFileDialog.FileName));
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "CSV files (*.csv)|*.csv";
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    NavigationService.Navigate(new ChosePage(openFileDialog.FileName));
+                }
+            }
+            catch 
+            {
+                MessageBox.Show("Перепроверьте фаил и повторите попытку", "Ошибка чтения файла", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

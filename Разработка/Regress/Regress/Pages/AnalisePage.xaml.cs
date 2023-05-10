@@ -1,4 +1,5 @@
-﻿using OxyPlot;
+﻿using Microsoft.Win32;
+using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using Regress.CSV;
@@ -19,6 +20,7 @@ namespace Regress
         CsvData csv;
         string _filepath;
         string _resultcolumn;
+        CorrelationRegression regression;
         public AnalisePage(string resultcolumn, string filepath)
         {
             InitializeComponent();
@@ -128,12 +130,13 @@ namespace Regress
 
         private void Button_AutoAnalise(object sender, RoutedEventArgs e)
         {
+            return;
             Analise(-1);
         }
 
         private void Analise(int index)
         {
-            CorrelationRegression regression = new CorrelationRegression(_filepath, ComboBoxRegression.SelectedValue.ToString(), _resultcolumn, index);
+            regression = new CorrelationRegression(_filepath, ComboBoxRegression.SelectedValue.ToString(), _resultcolumn, index);
             Label1.Content = regression.Results[0];
             Label2.Content = regression.Results[1];
             Label3.Content = regression.Results[2];
@@ -147,17 +150,30 @@ namespace Regress
 
         private void Button_Save(object sender, RoutedEventArgs e)
         {
-            var exporter = new PdfExporter();
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = regression.Title+"Regression";
+            saveFileDialog.DefaultExt = ".txt";
+            saveFileDialog.Filter = "Regressions (.pdf)|*.pdf";
 
-            // Устанавливаем настройки экспорта
-            exporter.Width = 800;
-            exporter.Height = 600;
+            bool? result = saveFileDialog.ShowDialog();
 
-            // Экспортируем график в формат PDF
-            using (var stream = File.Create("C:\\Users\\Bolofficial\\Desktop\\output.pdf"))
+            if (result == true)
             {
-                exporter.Export(PlotViewAnalise.Model, stream);
+                string fileName = saveFileDialog.FileName;
+
+                var exporter = new PdfExporter();
+
+                // Устанавливаем настройки экспорта
+                exporter.Width = 800;
+                exporter.Height = 600;
+
+                // Экспортируем график в формат PDF
+                using (var stream = File.Create(fileName))
+                {
+                    exporter.Export(PlotViewAnalise.Model, stream);
+                }
             }
         }
+
     }
 }

@@ -12,16 +12,16 @@
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <Button Grid.Row="0"
                 Grid.Column="0"
@@ -35,6 +35,8 @@
                Grid.Column="0"
                x:Name="filename"
                HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               FontSize="20"
                Content="FileName"
                Grid.ColumnSpan="3"/>
         <DataGrid Grid.Row="2"
