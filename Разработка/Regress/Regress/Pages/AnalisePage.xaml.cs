@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using OxyPlot;
+using OxyPlot.Annotations;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using Regress.CSV;
@@ -151,29 +152,49 @@ namespace Regress
         private void Button_Save(object sender, RoutedEventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.FileName = regression.Title+"Regression";
-            saveFileDialog.DefaultExt = ".txt";
+            saveFileDialog.FileName = regression.Title + "Regression";
+            saveFileDialog.DefaultExt = ".pdf";
             saveFileDialog.Filter = "Regressions (.pdf)|*.pdf";
 
-            bool? result = saveFileDialog.ShowDialog();
-
-            if (result == true)
+            if (saveFileDialog.ShowDialog() == true)
             {
-                string fileName = saveFileDialog.FileName;
+                var plotModel = PlotViewAnalise.Model;
+
+                // добавляем текст сверху графика
+                var textAnnotationTop = new OxyPlot.Annotations.TextAnnotation
+                {
+                    Text = "UHFABE",
+                    TextPosition = new DataPoint(0.5, plotModel.PlotArea.Top - 400),
+                    FontSize = 18,
+                    FontWeight = OxyPlot.FontWeights.Bold,
+                    TextHorizontalAlignment = OxyPlot.HorizontalAlignment.Center
+                };
+                plotModel.Annotations.Add(textAnnotationTop);
+
+                // добавляем текст под графиком
+                var textAnnotationBottom = new OxyPlot.Annotations.TextAnnotation
+                {
+                    Text = "BOLOFFICIAL",
+                    TextPosition = new DataPoint(0.5, plotModel.PlotArea.Bottom + 200),
+                    FontSize = 18,
+                    FontWeight = OxyPlot.FontWeights.Bold,
+                    TextHorizontalAlignment = OxyPlot.HorizontalAlignment.Center
+                };
+                plotModel.Annotations.Add(textAnnotationBottom);
 
                 var exporter = new PdfExporter();
 
-                // Устанавливаем настройки экспорта
                 exporter.Width = 800;
-                exporter.Height = 600;
+                exporter.Height = 6000;
 
-                // Экспортируем график в формат PDF
-                using (var stream = File.Create(fileName))
+                using (var stream = File.Create(saveFileDialog.FileName))
                 {
-                    exporter.Export(PlotViewAnalise.Model, stream);
+                    exporter.Export(plotModel, stream);
                 }
             }
         }
+
+
 
     }
 }
