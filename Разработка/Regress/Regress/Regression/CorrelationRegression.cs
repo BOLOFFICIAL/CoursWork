@@ -53,7 +53,7 @@ namespace Regress
             Results = new List<string>();
             Line = new LineSeries();
             Line.Color = OxyColors.Red;
-            double x = 0;
+            double x = X.Min();
             double max = X.Max();
             double avr = X.Average();
             int count = X.Count();
@@ -93,10 +93,9 @@ namespace Regress
                         Results.Add(AboutDurbinWatson(regress.Dfact));
                         await Task.Run(() =>
                         {
-                            x = X.Min();
                             while (x < max)
                             {
-                                Line.Points.Add(new DataPoint(x, Math.Pow(regress.a * x, regress.b)));
+                                Line.Points.Add(new DataPoint(x, regress.a * Math.Pow( x, regress.b)));
                                 x += avr / count;
                             }
                         });
