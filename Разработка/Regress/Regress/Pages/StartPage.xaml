@@ -10,7 +10,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -21,6 +21,7 @@
         </Grid.RowDefinitions>
         <Label Grid.Row="0"
                Grid.Column="1"
+               FontFamily="Comfortaa"
                HorizontalAlignment="Center"
                VerticalAlignment="Bottom"
                FontSize="55"
@@ -28,6 +29,7 @@
                Content="КОРРЕЛЯЦИОННАЯ"/>
         <Label Grid.Row="1"
                Grid.Column="1"
+               FontFamily="Comfortaa"
                HorizontalAlignment="Center"
                VerticalAlignment="Top"
                FontSize="45"
@@ -37,6 +39,7 @@
                 Grid.Column="1" 
                 MaxWidth="250" 
                 FontSize="20"
+                FontFamily="Comfortaa"
                 BorderThickness="4"
                 Foreground="White"
                 Background="Black"
