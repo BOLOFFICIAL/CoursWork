@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Regress"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="500" d:DesignWidth="800"
       Title="ChosePage">
     <Page.Resources>
         
@@ -21,30 +21,29 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <Button Grid.Row="0"
                 Grid.Column="0"
                 Content="Назад" 
-                FontFamily="Comfortaa"
+                FontFamily="Microsoft Sans Serif"
                 MaxWidth="100"
                 MinWidth="100"
                 Margin="10"
                 HorizontalAlignment="Left"
                 Click="Button_Click_1"/>
-        <Label Grid.Row="1"
+        <Label Grid.Row="0"
                Grid.Column="0"
                x:Name="filename"
-               FontFamily="Comfortaa"
+               FontFamily="Microsoft Sans Serif"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
                FontSize="20"
                Content="FileName"
                Grid.ColumnSpan="3"/>
-        <DataGrid Grid.Row="2"
+        <DataGrid Grid.Row="1"
                   Grid.Column="0"
                   IsReadOnly="True"
-                  FontFamily="Comfortaa"
+                  FontFamily="Microsoft Sans Serif"
                   x:Name="DataGridChose"
                   Margin="10,0,0,10"
                   BorderBrush="Black"
@@ -56,16 +55,18 @@
             </DataGrid.ColumnHeaderStyle>
         </DataGrid>
 
-        <Label Grid.Row="2"
+        <Label Grid.Row="1"
                Grid.Column="1"
-               Margin="10,0,0,0"
-               FontFamily="Comfortaa"
+               Margin="10,0,10,0"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               FontFamily="Microsoft Sans Serif"
                Content="Результативная колонка"/>
 
         <ComboBox Grid.Row="2" 
-                  Grid.Column="3"
-                  FontFamily="Comfortaa"
-                  Margin="0,0,10,0"
+                  Grid.Column="1"
+                  FontFamily="Microsoft Sans Serif"
+                  Margin="10,0,10,0"
                   HorizontalContentAlignment="Center"
                   VerticalContentAlignment="Center"
                   Padding="10,0"
@@ -74,7 +75,7 @@
                 Grid.Column="1"
                 Grid.ColumnSpan="2"
                 Margin="10"
-                FontFamily="Comfortaa"
+                FontFamily="Microsoft Sans Serif"
                 Content="АНАЛИЗ" Click="Button_Click"/>
     </Grid>
 </Page>

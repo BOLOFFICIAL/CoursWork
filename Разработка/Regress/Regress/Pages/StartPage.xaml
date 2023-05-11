@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Regress"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="500" d:DesignWidth="800"
       Title="StartPage">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -21,30 +21,29 @@
         </Grid.RowDefinitions>
         <Label Grid.Row="0"
                Grid.Column="1"
-               FontFamily="Comfortaa"
                HorizontalAlignment="Center"
                VerticalAlignment="Bottom"
                FontSize="55"
-               FontWeight="Bold"
+               FontFamily="Microsoft Sans Serif"
                Content="КОРРЕЛЯЦИОННАЯ"/>
         <Label Grid.Row="1"
                Grid.Column="1"
-               FontFamily="Comfortaa"
                HorizontalAlignment="Center"
                VerticalAlignment="Top"
                FontSize="45"
-               FontWeight="Bold"
-               Content="РЕГРЕССИЯ"/>
+               Content="РЕГРЕССИЯ" 
+               FontFamily="Microsoft Sans Serif"/>
         <Button Grid.Row="2" 
                 Grid.Column="1" 
                 MaxWidth="250" 
                 FontSize="20"
-                FontFamily="Comfortaa"
+                FontFamily="Microsoft Sans Serif"
                 BorderThickness="4"
                 Foreground="White"
                 Background="Black"
                 FontWeight="Bold"
-                Content="ВЫБРАТЬ ФАИЛ" Click="Button_Click">
+                Content="ВЫБРАТЬ ФАИЛ" 
+                Click="Button_Click">
             <Button.Template>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border CornerRadius="30" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
@@ -54,6 +53,9 @@
             </Button.Template>
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
+                    <Setter Property="TextElement.FontFamily"
+                    Value="/FontFile/#Comfortaa-Light">
+                    </Setter>
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="BorderBrush" Value="Red"/>

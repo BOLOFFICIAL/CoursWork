@@ -4,6 +4,10 @@
              xmlns:local="clr-namespace:Regress"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style x:Key="MyFont">
+            <Setter Property="TextElement.FontFamily"
+                    Value="/FontFile/#Comfortaa-Light">
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>

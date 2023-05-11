@@ -1,6 +1,5 @@
 ﻿using Microsoft.Win32;
 using OxyPlot;
-using OxyPlot.Annotations;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using Regress.CSV;
@@ -105,9 +104,13 @@ namespace Regress
             }
 
             series1.Points.Add(new DataPoint(0, 0));
-            series1.Points.Add(new DataPoint(X.Max() + 10, 0));
+            series1.Points.Add(new DataPoint(X.Max() + X.Max() * 0.3, 0));
             series1.Points.Add(new DataPoint(0, 0));
-            series1.Points.Add(new DataPoint(0, Y.Max() + 10));
+            series1.Points.Add(new DataPoint(0, Y.Max() + Y.Max() * 0.3));
+            series1.Points.Add(new DataPoint(0, 0));
+            series1.Points.Add(new DataPoint(X.Min() + X.Min() * 0.3, 0));
+            series1.Points.Add(new DataPoint(0, 0));
+            series1.Points.Add(new DataPoint(0, Y.Min() + Y.Min() * 0.3));
 
             plotModel.Series.Add(series1);
             plotModel.Series.Add(scatterSeries);
@@ -138,7 +141,7 @@ namespace Regress
         private void Analise(int index)
         {
             regression = new CorrelationRegression(_filepath, ComboBoxRegression.SelectedValue.ToString(), _resultcolumn, index);
-            Label1.Content = regression.Results[0];
+            Label1.Content = regression.Results[0].Replace("+ -", "- ");
             Label2.Content = regression.Results[1];
             Label3.Content = regression.Results[2];
             Label4.Content = regression.Results[3];
