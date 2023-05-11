@@ -115,7 +115,7 @@ namespace Regress
             plotModel.Series.Add(series1);
             plotModel.Series.Add(scatterSeries);
             plotModel.Series.Add(equation);
-            plotModel.Title = $"{resultcolumn} & {parameter}";
+            plotModel.Title = $"{resultcolumn} - {parameter}";
             plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = parameter });
             plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = resultcolumn });
 
