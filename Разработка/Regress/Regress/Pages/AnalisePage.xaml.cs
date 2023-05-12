@@ -195,6 +195,7 @@ namespace Regress
                     exporter.Export(plotModel, stream);
                 }
             }
+            MessageBox.Show("Отчет успешно сохранен");
         }
     }
 }
