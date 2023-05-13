@@ -44,6 +44,7 @@ namespace Regress
             csv = new CsvData(filepath);
 
             ComboBoxResult.ItemsSource = csv.GetNames();
+            ComboBoxResult.SelectedIndex = csv.GetNames().Count - 1;
             var names = new List<string>();
             for (int i = 0; i < csv.ColumnCount; i++)
             {

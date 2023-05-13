@@ -63,19 +63,18 @@ namespace Regress
         {
             var plotModel = new PlotModel();
 
-
-
             var scatterSeries = new ScatterSeries
             {
                 MarkerType = MarkerType.Circle,
-                MarkerSize = 4,
-                MarkerStroke = OxyColors.Black,
-                MarkerFill = OxyColors.Green,
+                MarkerSize = 3,
+                MarkerStrokeThickness = 2,
+                MarkerStroke = OxyColors.DarkRed,
+                MarkerFill = OxyColors.DarkRed,
             };
 
             var series1 = new LineSeries
             {
-                Color = OxyColors.Red,
+                Color = OxyColors.DarkRed,
             };
 
             csv.SetResultColumn(resultcolumn);
@@ -115,9 +114,25 @@ namespace Regress
             plotModel.Series.Add(series1);
             plotModel.Series.Add(scatterSeries);
             plotModel.Series.Add(equation);
-            plotModel.Title = $"{resultcolumn} - {parameter}";
-            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = parameter });
-            plotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = resultcolumn });
+            plotModel.Title = $"Dependence {resultcolumn} - {parameter}";
+            plotModel.Axes.Add(new LinearAxis
+            {
+                Position = AxisPosition.Bottom,
+                Title = parameter.ToUpper(),
+                TitleFontWeight = OxyPlot.FontWeights.Bold,
+                TitleColor = OxyColors.DarkRed,
+                TitleFontSize = 15,
+                FontWeight = OxyPlot.FontWeights.Bold,
+            });
+            plotModel.Axes.Add(new LinearAxis
+            {
+                Position = AxisPosition.Left,
+                Title = resultcolumn.ToUpper(),
+                TitleColor = OxyColors.DarkRed,
+                TitleFontWeight = OxyPlot.FontWeights.Bold,
+                TitleFontSize = 15,
+                FontWeight = OxyPlot.FontWeights.Bold,
+            });
 
             PlotViewAnalise.Model = plotModel;
         }
@@ -194,8 +209,8 @@ namespace Regress
                 {
                     exporter.Export(plotModel, stream);
                 }
+                MessageBox.Show("Отчет успешно сохранен");
             }
-            MessageBox.Show("Отчет успешно сохранен");
         }
     }
 }

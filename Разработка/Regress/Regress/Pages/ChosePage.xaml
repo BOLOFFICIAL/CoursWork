@@ -69,7 +69,7 @@
                   Margin="10,0,10,0"
                   HorizontalContentAlignment="Center"
                   VerticalContentAlignment="Center"
-                  Padding="10,0"
+                  Padding="5"
                   x:Name="ComboBoxResult"/>
         <Button Grid.Row="4"
                 Grid.Column="1"
