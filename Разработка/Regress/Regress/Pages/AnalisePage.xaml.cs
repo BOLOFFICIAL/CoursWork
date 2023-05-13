@@ -144,18 +144,17 @@ namespace Regress
 
         private void Button_Analise(object sender, RoutedEventArgs e)
         {
-            Analise(ComboBoxParameter.SelectedIndex);
+            Analise(false);
         }
 
         private void Button_AutoAnalise(object sender, RoutedEventArgs e)
         {
-            return;
-            Analise(-1);
+            Analise(true);
         }
 
-        private void Analise(int index)
+        private void Analise(bool auto)
         {
-            regression = new CorrelationRegression(_filepath, ComboBoxRegression.SelectedValue.ToString(), _resultcolumn, index);
+            regression = new CorrelationRegression(_filepath, ComboBoxRegression.SelectedIndex, _resultcolumn, ComboBoxParameter.SelectedValue.ToString(), auto);
             Label1.Content = regression.Results[0].Replace("+ -", "- ");
             Label2.Content = regression.Results[1];
             Label3.Content = regression.Results[2];
@@ -165,6 +164,10 @@ namespace Regress
             Label7.Content = regression.Results[6];
             Label8.Content = regression.Results[7];
             PrintOXY(_resultcolumn, ComboBoxParameter.SelectedValue.ToString(), regression.Line);
+            if (auto) 
+            {
+                ComboBoxRegression.SelectedIndex = regression.TitleIndex;
+            }
         }
 
         private void Button_Save(object sender, RoutedEventArgs e)

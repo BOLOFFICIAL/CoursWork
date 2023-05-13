@@ -1,11 +1,15 @@
 ﻿using CsvHelper;
 using Regress.CSV;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Media;
 
 namespace Regress
 {
@@ -40,16 +44,13 @@ namespace Regress
                     }
                 }
             }
-
             csv = new CsvData(filepath);
-
-            ComboBoxResult.ItemsSource = csv.GetNames();
-            ComboBoxResult.SelectedIndex = csv.GetNames().Count - 1;
             var names = new List<string>();
             for (int i = 0; i < csv.ColumnCount; i++)
             {
                 names.Add(csv.Columns[i].Name);
             }
+            ComboBoxResult.ItemsSource = csv.GetNames();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -65,9 +66,37 @@ namespace Regress
             }
         }
 
+        public void HighlightDataGridColumn(DataGrid dataGrid, int columnIndex)
+        {
+            for (int i = 0; i < dataGrid.Columns.Count; i++)
+            {
+                var column = dataGrid.Columns[i];
+                var cellStyle = new Style(typeof(DataGridCell));
+                if (i == columnIndex)
+                {
+                    cellStyle.Setters.Add(new Setter(DataGridCell.ForegroundProperty, Brushes.Red));
+                    cellStyle.Setters.Add(new Setter(DataGridCell.FontWeightProperty, FontWeights.Bold));
+                }
+                else
+                {
+                    cellStyle.Setters.Add(new Setter(DataGridCell.ForegroundProperty, Brushes.Black));
+                    cellStyle.Setters.Add(new Setter(DataGridCell.FontWeightProperty, FontWeights.Normal));
+                }
+                column.CellStyle = cellStyle;
+            }
+        }
+
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new StartPage());
+        }
+
+        private void ComboBoxResult_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DataGridChose.Columns.Count > 0) 
+            {
+                HighlightDataGridColumn(DataGridChose, ComboBoxResult.SelectedIndex);
+            }
         }
     }
 }

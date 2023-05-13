@@ -47,6 +47,8 @@
                   x:Name="DataGridChose"
                   Margin="10,0,0,10"
                   BorderBrush="Black"
+                  FontWeight="Medium"
+                  FontSize="15"
                   Grid.RowSpan="5">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
@@ -70,7 +72,7 @@
                   HorizontalContentAlignment="Center"
                   VerticalContentAlignment="Center"
                   Padding="5"
-                  x:Name="ComboBoxResult"/>
+                  x:Name="ComboBoxResult" SelectionChanged="ComboBoxResult_SelectionChanged"/>
         <Button Grid.Row="4"
                 Grid.Column="1"
                 Grid.ColumnSpan="2"
