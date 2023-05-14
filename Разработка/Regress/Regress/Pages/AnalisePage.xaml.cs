@@ -3,6 +3,7 @@ using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using Regress.CSV;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -168,6 +169,8 @@ namespace Regress
             {
                 ComboBoxRegression.SelectedIndex = regression.TitleIndex;
             }
+            GridData.Height = Double.NaN;
+            ButtonSave.Visibility = Visibility.Visible;
         }
 
         private void Button_Save(object sender, RoutedEventArgs e)
