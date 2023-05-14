@@ -87,7 +87,7 @@
                 Grid.Column="0"
                 Content="Настроить фаил" 
                 Width="150"
-                Margin="10,10,10,0"
+                Margin="10,10,5,0"
                 HorizontalAlignment="Left"
                 Style="{StaticResource CustomButtonStyle}"
                 Click="Button_Back"/>
@@ -98,7 +98,7 @@
                 Width="150"
                 FontFamily="Microsoft Sans Serif"
                 MinWidth="100"
-                Margin="0,10,10,0"
+                Margin="5,10,10,0"
                 HorizontalAlignment="Left"
                 Style="{StaticResource CustomButtonStyle}"
                 Click="Button_Click"/>
