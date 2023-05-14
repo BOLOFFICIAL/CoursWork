@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Regress"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000">
+        Title="MainWindow" 
+        MinHeight="600"
+        MinWidth="1000"
+        WindowState="Maximized">
     <Grid>
         <Frame Name="MainFrame" 
                NavigationUIVisibility="Hidden"

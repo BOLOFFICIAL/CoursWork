@@ -198,7 +198,6 @@
                Content="Коэффициент корреляции: "/>
         <Label Grid.Row="3" 
                Grid.Column="2"
-               ToolBar.OverflowMode="Always"
                ToolTip="Связь между параметрами представляет собой степень взаимосвязи между двумя&#x0a; или более переменными.&#x0a; Эта связь измеряется при помощи коэффициента корреляции,&#x0a; который показывает направление и&#x0a; силу линейной зависимости между переменными."
                HorizontalContentAlignment="Right"
                VerticalContentAlignment="Center"
