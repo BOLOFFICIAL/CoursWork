@@ -8,7 +8,55 @@
    mc:Ignorable="d" 
    d:DesignHeight="500" d:DesignWidth="800"
    Title="AnalisePage">
-
+    <Page.Resources>
+        <Style x:Key="CustomButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="MinHeight" Value="30"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="15" 
+                                Background ="#646464"
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="2">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="TextElement.FontFamily" 
+                    Value="/FontFile/#Comfortaa-Light"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" 
+                         Value="True">
+                    <Setter Property="BorderBrush" 
+                            Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="PageTitleStyle" TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
+        </Style>
+        <Style x:Key="CustomComboBoxStyle" TargetType="{x:Type ComboBox}">
+            <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
+            <Setter Property="Margin" Value="30,0,30,0"/>
+            <Setter Property="Foreground" Value="#505050"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -37,52 +85,64 @@
 
         <Button Grid.Row="0"
                 Grid.Column="0"
-                Content="Назад" 
-                MaxWidth="100"
-                FontFamily="Microsoft Sans Serif"
-                MinWidth="100"
+                Content="Настроить фаил" 
+                Width="150"
                 Margin="10,10,10,0"
                 HorizontalAlignment="Left"
+                Style="{StaticResource CustomButtonStyle}"
                 Click="Button_Back"/>
+        
+        <Button Grid.Row="0"
+                Grid.Column="1"
+                Content="Выбрать фаил"
+                Width="150"
+                FontFamily="Microsoft Sans Serif"
+                MinWidth="100"
+                Margin="0,10,10,0"
+                HorizontalAlignment="Left"
+                Style="{StaticResource CustomButtonStyle}"
+                Click="Button_Click"/>
+        
         <oxy:PlotView Grid.Row="1" 
                       Grid.Column="0"
                       FontFamily="Microsoft Sans Serif"
                       Grid.ColumnSpan="2"
-                      Background="LightGray"
                       x:Name="PlotViewAnalise"
                       Margin="10,10,0,10"
+                      BorderBrush="Black"
+                      BorderThickness="2"
                       Grid.RowSpan="23"/>
+        
         <Label Grid.Row="9" 
                Grid.Column="2"
                Grid.ColumnSpan="2"
                Margin="0,20,0,0"
-               FontFamily="Microsoft Sans Serif"
+               Style="{StaticResource PageTitleStyle}"
                HorizontalContentAlignment="Center"
                VerticalContentAlignment="Center"
                Content="Тип регрессии"/>
+        
         <ComboBox Grid.Row="10" 
                Grid.Column="2"
                   Grid.ColumnSpan="2"
                   Margin="30,0,30,0"
-                  HorizontalContentAlignment="Center"
-                  VerticalContentAlignment="Center"
-                  FontFamily="Microsoft Sans Serif"
+                  Style="{StaticResource CustomComboBoxStyle}"
                   x:Name="ComboBoxRegression"/>
+        
         <Label Grid.Row="11" 
                Grid.Column="2" 
                Grid.ColumnSpan="2"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
-               FontFamily="Microsoft Sans Serif"
+               Style="{StaticResource PageTitleStyle}"
                Content="Параметр для анализа"/>
+        
         <ComboBox Grid.Row="12" 
                Grid.Column="2"
-                  Margin="30,0,30,0"
                   Grid.ColumnSpan="2"
-                  FontFamily="Microsoft Sans Serif"
-                  HorizontalContentAlignment="Center"
-                  VerticalContentAlignment="Center"
+                  Style="{StaticResource CustomComboBoxStyle}"
                   x:Name="ComboBoxParameter"/>
+        
         <Grid Grid.Row="13" 
                Grid.Column="2"
               Grid.ColumnSpan="2">
@@ -91,35 +151,35 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Row="0" 
-               Grid.Column="0"
-                Content="Анализ" 
-                MaxWidth="100"
-                MinWidth="100"
+                    Grid.Column="0"
+                    Content="Анализ" 
+                    MaxWidth="100"
+                    MinWidth="100"
                     Margin="10,10,5,10"
-                FontFamily="Microsoft Sans Serif"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                Click="Button_Analise"/>
+                    FontFamily="Microsoft Sans Serif"
+                    HorizontalAlignment="Right"
+                    Style="{StaticResource CustomButtonStyle}"
+                    Click="Button_Analise"/>
+            
             <Button Grid.Row="0" 
-               Grid.Column="1"
-                FontFamily="Microsoft Sans Serif"
-                Content="Auto" 
+                    Grid.Column="1"
+                    Content="Auto" 
                     Margin="5,10,10,10"
-                MaxWidth="100"
-                MinWidth="100"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Click="Button_AutoAnalise"/>
+                    MaxWidth="100"
+                    MinWidth="100"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource CustomButtonStyle}"
+                    Click="Button_AutoAnalise"/>
         </Grid>
         
         <Button Grid.Row="15"
                 Grid.Column="2"
                 Grid.ColumnSpan="2"
-                Content="Сохранить отчет" 
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="10"
-                FontFamily="Microsoft Sans Serif"
+                Content="Сохранить отчет"
+                Style="{StaticResource CustomButtonStyle}"
+                Width="200"
+                FontSize="20"
+                Height="35"
                 Click="Button_Save"/>
         
         <Label Grid.Row="1" 
@@ -127,110 +187,113 @@
                ToolTip ="Уравнение регрессии - это математическое выражение,&#x0a;которое связывает зависимую и одну или несколько &#x0a;независимых переменных&#x0a;в модели регрессии."
                HorizontalContentAlignment="Right"
                VerticalContentAlignment="Center"
-               FontFamily="Microsoft Sans Serif"
+               Style="{StaticResource PageTitleStyle}"
                Content="Уравнение регрессии: "/>
         <Label Grid.Row="2" 
                Grid.Column="2"
                ToolTip ="Коэффициент корреляции - это статистический показатель,&#x0a;который измеряет степень линейной взаимосвязи между двумя переменными.&#x0a;Значение коэффициента корреляции может изменяться от -1 до +1.&#x0a;Значение 0 означает отсутствие корреляции,&#x0a;значения ближе к +1 и -1 указывают на сильную положительную &#x0a;и отрицательную корреляцию соответственно."
                HorizontalContentAlignment="Right"
                VerticalContentAlignment="Center"
-               FontFamily="Microsoft Sans Serif"
+               Style="{StaticResource PageTitleStyle}"
                Content="Коэффициент корреляции: "/>
         <Label Grid.Row="3" 
                Grid.Column="2"
+               ToolBar.OverflowMode="Always"
+               ToolTip="Связь между параметрами представляет собой степень взаимосвязи между двумя&#x0a; или более переменными.&#x0a; Эта связь измеряется при помощи коэффициента корреляции,&#x0a; который показывает направление и&#x0a; силу линейной зависимости между переменными."
                HorizontalContentAlignment="Right"
                VerticalContentAlignment="Center"
-               FontFamily="Microsoft Sans Serif"
+               Style="{StaticResource PageTitleStyle}"
                Content="Связь между параметрами: "/>
         <Label Grid.Row="4" 
                Grid.Column="2"
                ToolTip ="Коэффициент детерминации - это статистический показатель,&#x0a;который указывает на долю вариации зависимой переменной,&#x0a;которая объясняется независимыми переменными в модели регрессии.&#x0a;Значение коэффициента детерминации может изменяться от 0 до 1.&#x0a;Значение 0 означает, что никакая вариация &#x0a;не может быть объяснена независимыми переменными,&#x0a;а значение 1 означает, что вся вариация зависимой переменной &#x0a;может быть объяснена независимыми переменными."
                HorizontalContentAlignment="Right"
                VerticalContentAlignment="Center"
-               FontFamily="Microsoft Sans Serif"
+               Style="{StaticResource PageTitleStyle}"
                Content="Коэффициент детерминации: "/>
         <Label Grid.Row="5" 
                Grid.Column="2"
                ToolTip ="Средняя ошибка аппроксимации - это средняя абсолютная ошибка &#x0a;прогноза в модели регрессии. Она измеряет среднее расстояние &#x0a;между фактическим значением зависимой переменной &#x0a;и ее прогнозируемым значением в модели регрессии."
                HorizontalContentAlignment="Right"
                VerticalContentAlignment="Center"
-               FontFamily="Microsoft Sans Serif"
+               Style="{StaticResource PageTitleStyle}"
                Content="Средняя ошибка апроксимации: "/>
         <Label Grid.Row="6" 
                Grid.Column="2"
                ToolTip ="F-критерий Фишера - это статистический тест,&#x0a;используемый в регрессионном анализе для определения значимости модели.&#x0a;Он позволяет сравнить объяснительную силу регрессионной модели с нулевой моделью,&#x0a;которая предполагает, что все коэффициенты регрессии равны нулю.&#x0a;Если значение F-критерия Фишера достаточно высоко,&#x0a;то это означает, что регрессионная модель значима и ее коэффициенты не равны нулю."
                HorizontalContentAlignment="Right"
                VerticalContentAlignment="Center"
-               FontFamily="Microsoft Sans Serif"
+               Style="{StaticResource PageTitleStyle}"
                Content="F-критерий Фишера: "/>
         <Label Grid.Row="7" 
                Grid.Column="2"
                ToolTip ="Критерий Дарбина-Уотсона - это статистический тест,&#x0a;используемый для определения наличия автокорреляции &#x0a;в остатках регрессионной модели.Он измеряет степень корреляции&#x0a;между последовательными остатками и принимает значения от 0 до 4.&#x0a;Значение 2 означает отсутствие автокорреляции,&#x0a;значение меньше 2 - положительная автокорреляция,&#x0a;значение больше 2 - отрицательная автокорреляция."               
                HorizontalContentAlignment="Right"
                VerticalContentAlignment="Center"
-               FontFamily="Microsoft Sans Serif"
+               Style="{StaticResource PageTitleStyle}"
                Content="Критерий Дарбина Уотсона: "/>
         <Label Grid.Row="8" 
                Grid.Column="2" 
                HorizontalContentAlignment="Right"
                VerticalContentAlignment="Center"
-               FontFamily="Microsoft Sans Serif"
+               ToolTip ="Автокорреляция - это статистический термин, который описывает степень корреляции&#x0a; между последовательностью значений переменной&#x0a; и самой собой с определенной задержкой времени.&#x0a; Иными словами, автокорреляция измеряет,&#x0a; насколько зависят значения переменной в различные моменты времени друг от друга."
+               Style="{StaticResource PageTitleStyle}"
                Content="Автокорреляция: "/>
 
         <Label Grid.Row="1" 
                Grid.Column="3"
                x:Name="Label1"
                Margin="0,0,10,0"
-               FontFamily="Microsoft Sans Serif"
+               Style="{StaticResource PageTitleStyle}"
                HorizontalContentAlignment="Left"
                VerticalContentAlignment="Center"/>
         <Label Grid.Row="2" 
                Grid.Column="3"
                x:Name="Label2"
                Margin="0,0,10,0"
-               FontFamily="Microsoft Sans Serif"
+               Style="{StaticResource PageTitleStyle}"
                HorizontalContentAlignment="Left"
                VerticalContentAlignment="Center"/>
         <Label Grid.Row="3" 
                Grid.Column="3"
                x:Name="Label3"
                Margin="0,0,10,0"
-               FontFamily="Microsoft Sans Serif"
+               Style="{StaticResource PageTitleStyle}"
                HorizontalContentAlignment="Left"
                VerticalContentAlignment="Center"/>
         <Label Grid.Row="4" 
                Grid.Column="3"
                x:Name="Label4"
                Margin="0,0,10,0"
-               FontFamily="Microsoft Sans Serif"
+               Style="{StaticResource PageTitleStyle}"
                HorizontalContentAlignment="Left"
                VerticalContentAlignment="Center"/>
         <Label Grid.Row="5" 
                Grid.Column="3"
                Margin="0,0,10,0"
                x:Name="Label5"
-               FontFamily="Microsoft Sans Serif"
+               Style="{StaticResource PageTitleStyle}"
                HorizontalContentAlignment="Left"
                VerticalContentAlignment="Center"/>
         <Label Grid.Row="6" 
                Grid.Column="3"
                x:Name="Label6"
                Margin="0,0,10,0"
-               FontFamily="Microsoft Sans Serif"
+               Style="{StaticResource PageTitleStyle}"
                HorizontalContentAlignment="Left"
                VerticalContentAlignment="Center"/>
         <Label Grid.Row="7" 
                Grid.Column="3"
                x:Name="Label7"
                Margin="0,0,10,0"
-               FontFamily="Microsoft Sans Serif"
+               Style="{StaticResource PageTitleStyle}"
                HorizontalContentAlignment="Left"
                VerticalContentAlignment="Center"/>
         <Label Grid.Row="8" 
                Grid.Column="3"
                x:Name="Label8"
                Margin="0,0,10,0"
-               FontFamily="Microsoft Sans Serif"
+               Style="{StaticResource PageTitleStyle}"
                HorizontalContentAlignment="Left"
                VerticalContentAlignment="Center"/>
     </Grid>

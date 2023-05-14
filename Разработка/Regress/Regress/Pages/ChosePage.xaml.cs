@@ -64,6 +64,10 @@ namespace Regress
                     NavigationService.Navigate(new AnalisePage(ComboBoxResult.SelectedValue.ToString(), filepath));
                 }
             }
+            else 
+            {
+                MessageBox.Show("Выберите колонку результатов");
+            }
         }
 
         public void HighlightDataGridColumn(DataGrid dataGrid, int columnIndex)

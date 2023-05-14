@@ -24,6 +24,8 @@ namespace Regress
         {
             InitializeComponent();
             MainFrame.Content = new StartPage();
+            WindowState = WindowState.Maximized;
+            ResizeMode = ResizeMode.NoResize;
         }
     }
 }

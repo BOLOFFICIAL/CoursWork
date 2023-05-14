@@ -68,13 +68,13 @@ namespace Regress
                 MarkerType = MarkerType.Circle,
                 MarkerSize = 3,
                 MarkerStrokeThickness = 2,
-                MarkerStroke = OxyColors.DarkRed,
-                MarkerFill = OxyColors.DarkRed,
+                MarkerStroke = OxyColor.FromRgb(50, 50, 50),
+                MarkerFill = OxyColor.FromRgb(50,50,50),
             };
 
             var series1 = new LineSeries
             {
-                Color = OxyColors.DarkRed,
+                Color = OxyColors.Red,
             };
 
             csv.SetResultColumn(resultcolumn);
@@ -120,7 +120,7 @@ namespace Regress
                 Position = AxisPosition.Bottom,
                 Title = parameter.ToUpper(),
                 TitleFontWeight = OxyPlot.FontWeights.Bold,
-                TitleColor = OxyColors.DarkRed,
+                TitleColor = OxyColor.FromRgb(50, 50, 50),
                 TitleFontSize = 15,
                 FontWeight = OxyPlot.FontWeights.Bold,
             });
@@ -128,7 +128,7 @@ namespace Regress
             {
                 Position = AxisPosition.Left,
                 Title = resultcolumn.ToUpper(),
-                TitleColor = OxyColors.DarkRed,
+                TitleColor = OxyColor.FromRgb(50, 50, 50),
                 TitleFontWeight = OxyPlot.FontWeights.Bold,
                 TitleFontSize = 15,
                 FontWeight = OxyPlot.FontWeights.Bold,
@@ -159,7 +159,7 @@ namespace Regress
             Label2.Content = regression.Results[1];
             Label3.Content = regression.Results[2];
             Label4.Content = regression.Results[3];
-            Label5.Content = regression.Results[4];
+            Label5.Content = (regression.Results[4]) + "%";
             Label6.Content = regression.Results[5];
             Label7.Content = regression.Results[6];
             Label8.Content = regression.Results[7];
@@ -172,47 +172,64 @@ namespace Regress
 
         private void Button_Save(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.FileName = regression.Title + "Regression";
-            saveFileDialog.DefaultExt = ".pdf";
-            saveFileDialog.Filter = "Regressions (.pdf)|*.pdf";
-
-            if (saveFileDialog.ShowDialog() == true)
+            if (!(regression?.Title is null))
             {
-                var plotModel = PlotViewAnalise.Model;
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.FileName = regression.Title + "Regression";
+                saveFileDialog.DefaultExt = ".pdf";
+                saveFileDialog.Filter = "Regressions (.pdf)|*.pdf";
 
-                // добавляем текст сверху графика
-                var textAnnotationTop = new OxyPlot.Annotations.TextAnnotation
+                if (saveFileDialog.ShowDialog() == true)
                 {
-                    Text = "UHFABE",
-                    TextPosition = new DataPoint(0.5, plotModel.PlotArea.Top - 400),
-                    FontSize = 18,
-                    FontWeight = OxyPlot.FontWeights.Bold,
-                    TextHorizontalAlignment = OxyPlot.HorizontalAlignment.Center
-                };
-                plotModel.Annotations.Add(textAnnotationTop);
+                    var plotModel = PlotViewAnalise.Model;
 
-                // добавляем текст под графиком
-                var textAnnotationBottom = new OxyPlot.Annotations.TextAnnotation
-                {
-                    Text = "BOLOFFICIAL",
-                    TextPosition = new DataPoint(0.5, plotModel.PlotArea.Bottom + 200),
-                    FontSize = 18,
-                    FontWeight = OxyPlot.FontWeights.Bold,
-                    TextHorizontalAlignment = OxyPlot.HorizontalAlignment.Center
-                };
-                plotModel.Annotations.Add(textAnnotationBottom);
+                    // добавляем текст сверху графика
+                    var textAnnotationTop = new OxyPlot.Annotations.TextAnnotation
+                    {
+                        Text = "UHFABE",
+                        TextPosition = new DataPoint(0.5, plotModel.PlotArea.Top - 400),
+                        FontSize = 18,
+                        FontWeight = OxyPlot.FontWeights.Bold,
+                        TextHorizontalAlignment = OxyPlot.HorizontalAlignment.Center
+                    };
+                    plotModel.Annotations.Add(textAnnotationTop);
 
-                var exporter = new PdfExporter();
+                    // добавляем текст под графиком
+                    var textAnnotationBottom = new OxyPlot.Annotations.TextAnnotation
+                    {
+                        Text = "BOLOFFICIAL",
+                        TextPosition = new DataPoint(0.5, plotModel.PlotArea.Bottom + 200),
+                        FontSize = 18,
+                        FontWeight = OxyPlot.FontWeights.Bold,
+                        TextHorizontalAlignment = OxyPlot.HorizontalAlignment.Center
+                    };
+                    plotModel.Annotations.Add(textAnnotationBottom);
 
-                exporter.Width = 800;
-                exporter.Height = 6000;
+                    var exporter = new PdfExporter();
 
-                using (var stream = File.Create(saveFileDialog.FileName))
-                {
-                    exporter.Export(plotModel, stream);
+                    exporter.Width = 800;
+                    exporter.Height = 6000;
+
+                    using (var stream = File.Create(saveFileDialog.FileName))
+                    {
+                        exporter.Export(plotModel, stream);
+                    }
+                    MessageBox.Show("Отчет успешно сохранен");
                 }
-                MessageBox.Show("Отчет успешно сохранен");
+            }
+            else 
+            {
+                MessageBox.Show("Нет данных для формирования отчета");
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "CSV files (*.csv)|*.csv";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                NavigationService.Navigate(new ChosePage(openFileDialog.FileName));
             }
         }
     }

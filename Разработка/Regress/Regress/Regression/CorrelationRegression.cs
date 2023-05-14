@@ -232,7 +232,7 @@ namespace Regress
             Results = new List<string>();
             lines = new List<LineSeries>();
             equations = new List<string>();
-            
+
             {
                 Line = new LineSeries { Color = OxyColors.Red };
                 double x = X.Min();
@@ -338,7 +338,7 @@ namespace Regress
                 lines.Add(Line);
             }
 
-            bestregression = BestRegression(Regressions[0], Regressions[1], Regressions[2], Regressions[3], Regressions[4]);
+            bestregression = BestRegression(Regressions[0], Regressions[1], Regressions[2], Regressions[3]);
             TitleIndex = bestregression;
             switch (bestregression)
             {
@@ -368,30 +368,27 @@ namespace Regress
             Results.Add(AboutDurbinWatson((Regressions[4])[bestregression]));
             Line = lines[bestregression];
 
-            int BestRegression(List<double> correlationCoefficients, List<double> determinationCoefficients, List<double> meanErrors, List<double> fisherCrit, List<double> DurbinWatsonCrit)
+            int BestRegression(List<double> correlationCoefficients, List<double> determinationCoefficients, List<double> meanErrors, List<double> fisherCrit)
             {
                 int bestindex = -1;
                 correlationCoefficients = CheckData(correlationCoefficients);
                 determinationCoefficients = CheckData(determinationCoefficients);
                 meanErrors = CheckData(meanErrors);
                 fisherCrit = CheckData(fisherCrit);
-                DurbinWatsonCrit = CheckData(DurbinWatsonCrit);
                 double max1 = correlationCoefficients.Min();
                 double max2 = determinationCoefficients.Min();
                 double max3 = meanErrors.Min();
                 double max4 = fisherCrit.Min();
-                double max5 = DurbinWatsonCrit.Min();
                 double max = 0;
                 for (int i = 0; i < correlationCoefficients.Count; i++)
                 {
                     max1 = Squeeze(correlationCoefficients, correlationCoefficients[i]);
                     max2 = Squeeze(determinationCoefficients, determinationCoefficients[i]);
-                    max3 = Squeeze(meanErrors, meanErrors[i]);
+                    max3 = (1 - Squeeze(meanErrors, meanErrors[i])) * 2;
                     max4 = Squeeze(fisherCrit, fisherCrit[i]);
-                    max5 = Squeeze(DurbinWatsonCrit, DurbinWatsonCrit[i]);
-                    if ((max1 + max2 + max3 + max4 + max5) > max)
+                    if ((max1 + max2 + max3 + max4) > max)
                     {
-                        max = max1 + max2 + max3 + max4 + max5;
+                        max = max1 + max2 + max3 + max4;
                         bestindex = i;
                     }
 
@@ -400,21 +397,16 @@ namespace Regress
             }
             double Squeeze(List<double> values, double value)
             {
-                return value / values.Max();
+                value = double.Parse(value.ToString("0.#####"));
+                var max = double.Parse(values.Max().ToString("0.#####"));
+                return value / max;
             }
             List<double> CheckData(List<double> values)
             {
                 List<double> datas = new List<double>();
                 foreach (double data in values)
                 {
-                    if (data > 0)
-                    {
-                        datas.Add(data);
-                    }
-                    else
-                    {
-                        datas.Add(0);
-                    }
+                    datas.Add(double.IsNaN(data) ? 0 : data);
                 }
                 return datas;
             }
