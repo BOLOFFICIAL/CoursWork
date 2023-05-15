@@ -338,7 +338,7 @@ namespace Regress
                 lines.Add(Line);
             }
 
-            bestregression = BestRegression(Regressions[0], Regressions[1], Regressions[2]);
+            bestregression = BestRegression(Regressions[0], Regressions[2]);
             TitleIndex = bestregression;
             switch (bestregression)
             {
@@ -358,24 +358,21 @@ namespace Regress
             Results.Add(AboutDurbinWatson((Regressions[4])[bestregression]));
             Line = lines[bestregression];
 
-            int BestRegression(List<double> correlationCoefficients, List<double> determinationCoefficients, List<double> meanErrors)
+            int BestRegression(List<double> correlationCoefficients, List<double> meanErrors)
             {
                 int bestindex = -1;
                 var cC = CheckData(correlationCoefficients);
-                var dC = CheckData(determinationCoefficients);
                 var mE = CheckData(meanErrors);
                 double maxcC = correlationCoefficients.Min();
-                double maxdC = determinationCoefficients.Min();
                 double maxmE = meanErrors.Min();
                 double max = 0;
                 for (int i = 0; i < correlationCoefficients.Count; i++)
                 {
                     maxcC = Squeeze(cC, cC[i]);
-                    maxdC = Squeeze(dC, dC[i]);
                     maxmE = Squeeze(mE, 100 - mE[i]);
-                    if ((maxcC + maxdC + maxmE) > max)
+                    if (maxcC + maxmE > max)
                     {
-                        max = maxcC + maxdC + maxmE;
+                        max = maxcC + maxmE;
                         bestindex = i;
                     }
 

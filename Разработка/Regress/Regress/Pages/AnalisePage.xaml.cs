@@ -70,7 +70,7 @@ namespace Regress
                 MarkerSize = 3,
                 MarkerStrokeThickness = 2,
                 MarkerStroke = OxyColor.FromRgb(50, 50, 50),
-                MarkerFill = OxyColor.FromRgb(50,50,50),
+                MarkerFill = OxyColor.FromRgb(50, 50, 50),
             };
 
             var series1 = new LineSeries
@@ -80,23 +80,8 @@ namespace Regress
 
             csv.SetResultColumn(resultcolumn);
 
-            var X = new List<double>();
-
-            foreach (var el in csv.GetColumn(parameter).Value)
-            {
-                double element = 0;
-                double.TryParse(el.Replace(".", ","), out element);
-                X.Add(element);
-            }
-
-            var Y = new List<double>();
-
-            foreach (var el in csv.ResultColumn.Value)
-            {
-                double element = 0;
-                double.TryParse(el.Replace(".", ","), out element);
-                Y.Add(element);
-            }
+            var X = csv.GetColumn(parameter).Value.Select(el => double.TryParse(el.Replace(".", ","), out double element) ? element : 0).ToList();
+            var Y = csv.ResultColumn.Value.Select(el => double.TryParse(el.Replace(".", ","), out double element) ? element : 0).ToList();
 
             for (int i = 0; i < csv.RowCount; i++)
             {
@@ -165,7 +150,7 @@ namespace Regress
             Label7.Content = regression.Results[6];
             Label8.Content = regression.Results[7];
             PrintOXY(_resultcolumn, ComboBoxParameter.SelectedValue.ToString(), regression.Line);
-            if (auto) 
+            if (auto)
             {
                 ComboBoxRegression.SelectedIndex = regression.TitleIndex;
             }
@@ -220,7 +205,7 @@ namespace Regress
                     MessageBox.Show("Отчет успешно сохранен");
                 }
             }
-            else 
+            else
             {
                 MessageBox.Show("Нет данных для формирования отчета");
             }

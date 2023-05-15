@@ -1,14 +1,11 @@
 ﻿using CsvHelper;
 using Regress.CSV;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Media;
 
 namespace Regress
@@ -64,7 +61,7 @@ namespace Regress
                     NavigationService.Navigate(new AnalisePage(ComboBoxResult.SelectedValue.ToString(), filepath));
                 }
             }
-            else 
+            else
             {
                 MessageBox.Show("Выберите колонку результатов");
             }
@@ -97,7 +94,7 @@ namespace Regress
 
         private void ComboBoxResult_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (DataGridChose.Columns.Count > 0) 
+            if (DataGridChose.Columns.Count > 0)
             {
                 HighlightDataGridColumn(DataGridChose, ComboBoxResult.SelectedIndex);
             }
