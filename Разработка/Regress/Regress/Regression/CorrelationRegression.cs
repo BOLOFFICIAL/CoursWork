@@ -364,18 +364,18 @@ namespace Regress
                 var cC = CheckData(correlationCoefficients);
                 var dC = CheckData(determinationCoefficients);
                 var mE = CheckData(meanErrors);
-                double max1 = correlationCoefficients.Min();
-                double max2 = determinationCoefficients.Min();
-                double max3 = meanErrors.Min();
+                double maxcC = correlationCoefficients.Min();
+                double maxdC = determinationCoefficients.Min();
+                double maxmE = meanErrors.Min();
                 double max = 0;
                 for (int i = 0; i < correlationCoefficients.Count; i++)
                 {
-                    max1 = Squeeze(cC, cC[i]);
-                    max2 = Squeeze(dC, dC[i]);
-                    max3 = Squeeze(mE, 100 - mE[i]);
-                    if ((max1 + max2 + max3) > max)
+                    maxcC = Squeeze(cC, cC[i]);
+                    maxdC = Squeeze(dC, dC[i]);
+                    maxmE = Squeeze(mE, 100 - mE[i]);
+                    if ((maxcC + maxdC + maxmE) > max)
                     {
-                        max = max1 + max2 + max3;
+                        max = maxcC + maxdC + maxmE;
                         bestindex = i;
                     }
 
