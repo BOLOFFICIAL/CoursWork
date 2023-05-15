@@ -338,7 +338,7 @@ namespace Regress
                 lines.Add(Line);
             }
 
-            bestregression = BestRegression(Regressions[0], Regressions[1], Regressions[2], Regressions[3]);
+            bestregression = BestRegression(Regressions[0], Regressions[1], Regressions[2]);
             TitleIndex = bestregression;
             switch (bestregression)
             {
@@ -368,27 +368,24 @@ namespace Regress
             Results.Add(AboutDurbinWatson((Regressions[4])[bestregression]));
             Line = lines[bestregression];
 
-            int BestRegression(List<double> correlationCoefficients, List<double> determinationCoefficients, List<double> meanErrors, List<double> fisherCrit)
+            int BestRegression(List<double> correlationCoefficients, List<double> determinationCoefficients, List<double> meanErrors)
             {
                 int bestindex = -1;
-                correlationCoefficients = CheckData(correlationCoefficients);
-                determinationCoefficients = CheckData(determinationCoefficients);
-                meanErrors = CheckData(meanErrors);
-                fisherCrit = CheckData(fisherCrit);
+                var cC = CheckData(correlationCoefficients);
+                var dC = CheckData(determinationCoefficients);
+                var mE = CheckData(meanErrors);
                 double max1 = correlationCoefficients.Min();
                 double max2 = determinationCoefficients.Min();
                 double max3 = meanErrors.Min();
-                double max4 = fisherCrit.Min();
                 double max = 0;
                 for (int i = 0; i < correlationCoefficients.Count; i++)
                 {
-                    max1 = Squeeze(correlationCoefficients, correlationCoefficients[i]);
-                    max2 = Squeeze(determinationCoefficients, determinationCoefficients[i]);
-                    max3 = (1 - Squeeze(meanErrors, meanErrors[i])) * 2;
-                    max4 = Squeeze(fisherCrit, fisherCrit[i]);
-                    if ((max1 + max2 + max3 + max4) > max)
+                    max1 = Squeeze(cC, cC[i]);
+                    max2 = Squeeze(dC, dC[i]);
+                    max3 = Squeeze(mE, 100 - mE[i]);
+                    if ((max1 + max2 + max3) > max)
                     {
-                        max = max1 + max2 + max3 + max4;
+                        max = max1 + max2 + max3;
                         bestindex = i;
                     }
 
