@@ -342,21 +342,11 @@ namespace Regress
             TitleIndex = bestregression;
             switch (bestregression)
             {
-                case 0:
-                    Title = "Linear";
-                    break;
-                case 1:
-                    Title = "Power";
-                    break;
-                case 2:
-                    Title = "Quadratic";
-                    break;
-                case 3:
-                    Title = "Logarithmic";
-                    break;
-                case 4:
-                    Title = "Hiperbolic";
-                    break;
+                case 0: Title = "Linear"; break;
+                case 1: Title = "Power"; break;
+                case 2: Title = "Quadratic"; break;
+                case 3: Title = "Logarithmic"; break;
+                case 4: Title = "Hiperbolic"; break;
             }
             Results.Add(equations[bestregression]);
             Results.Add((Regressions[0])[bestregression].ToString("0.####"));
