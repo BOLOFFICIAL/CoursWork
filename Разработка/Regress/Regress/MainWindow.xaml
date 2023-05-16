@@ -12,6 +12,6 @@
     <Grid>
         <Frame Name="MainFrame" 
                NavigationUIVisibility="Hidden"
-               Background="#505050"/>
+               Background="#404040"/>
     </Grid>
 </Window>

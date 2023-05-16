@@ -57,21 +57,18 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="3*"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        
-        <Label Grid.Row="0"
-               Grid.Column="1"
-               Content="КОРРЕЛЯЦИОННАЯ"
-               Style="{StaticResource PageTitleStyle}"/>
 
         <Label Grid.Row="1"
                Grid.Column="1"
                Content="РЕГРЕССИЯ" 
                Style="{StaticResource PageTitleStyle}"/>
+
+        
 
         <Button Grid.Row="2" 
                 Grid.Column="1" 

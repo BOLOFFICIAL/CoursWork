@@ -15,21 +15,22 @@ namespace Regress
     /// </summary>
     public partial class ChosePage : Page
     {
-        private string filepath;
+        private string _filepath;
         private CsvData csv;
         private CheckBox[] checkBoxes;
 
         public ChosePage(string filepath)
         {
             InitializeComponent();
-            this.filepath = filepath;
+            this._filepath = filepath;
             Initialization();
         }
+
         public void Initialization()
         {
-            filename.Content = System.IO.Path.GetFileName(filepath);
+            filename.Content = System.IO.Path.GetFileName(_filepath);
 
-            using (var reader = new StreamReader(filepath))
+            using (var reader = new StreamReader(_filepath))
             {
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
@@ -41,16 +42,12 @@ namespace Regress
                     }
                 }
             }
-            csv = new CsvData(filepath);
-            var names = new List<string>();
-            for (int i = 0; i < csv.ColumnCount; i++)
-            {
-                names.Add(csv.Columns[i].Name);
-            }
+
+            csv = new CsvData(_filepath);
             ComboBoxResult.ItemsSource = csv.GetNames();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ToAnalisePage(object sender, RoutedEventArgs e)
         {
             var resultname = ComboBoxResult.SelectedValue;
             if (!(resultname is null))
@@ -58,7 +55,7 @@ namespace Regress
                 var name = resultname.ToString();
                 if (name.Length > 0)
                 {
-                    NavigationService.Navigate(new AnalisePage(ComboBoxResult.SelectedValue.ToString(), filepath));
+                    NavigationService.Navigate(new AnalisePage(ComboBoxResult.SelectedValue.ToString(), _filepath));
                 }
             }
             else
@@ -87,7 +84,7 @@ namespace Regress
             }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void ToStartPage(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new StartPage());
         }

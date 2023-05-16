@@ -24,8 +24,8 @@
                     </Style>
                 </Setter.Value>
             </Setter>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Background" Value="#404040"/>
+            <Setter Property="BorderThickness" Value="3"/>
             <Setter Property="Padding" Value="5"/>
         </Style>
         <Style x:Key="CustomComboBoxStyle" TargetType="{x:Type ComboBox}">
@@ -37,6 +37,8 @@
             <Setter Property="Padding" Value="5"/>
             <Setter Property="FontWeight" Value="DemiBold"/>
             <Setter Property="FontSize" Value="15"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Height" Value="30"/>
             <EventSetter Event="SelectionChanged" 
                          Handler="ComboBoxResult_SelectionChanged"/>
         </Style>
@@ -115,7 +117,7 @@
                 MinWidth="100"
                 HorizontalAlignment="Left"
                 Style="{StaticResource CustomButtonStyle}"
-                Click="Button_Click_1"/>
+                Click="ToStartPage"/>
         
         <Label Grid.Row="0"
                Grid.Column="0"
@@ -142,6 +144,6 @@
                 Grid.Column="1"
                 Grid.ColumnSpan="2"
                 Style="{StaticResource CustomButtonStyle}"
-                Content="Анализ" Click="Button_Click"/>
+                Content="Анализ" Click="ToAnalisePage"/>
     </Grid>
 </Page>

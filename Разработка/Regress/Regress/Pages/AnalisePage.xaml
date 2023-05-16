@@ -49,12 +49,14 @@
         <Style x:Key="CustomComboBoxStyle" TargetType="{x:Type ComboBox}">
             <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
             <Setter Property="Margin" Value="30,0,30,0"/>
+            <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="Foreground" Value="#505050"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="5"/>
             <Setter Property="FontWeight" Value="DemiBold"/>
             <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Height" Value="30"/>
         </Style>
     </Page.Resources>
     <Grid>
@@ -89,7 +91,7 @@
                 Margin="10,10,5,0"
                 HorizontalAlignment="Left"
                 Style="{StaticResource CustomButtonStyle}"
-                Click="Button_Back"/>
+                Click="ToEditFile"/>
 
         <Button Grid.Row="0"
                 Grid.Column="1"
@@ -100,7 +102,7 @@
                 Margin="5,10,10,0"
                 HorizontalAlignment="Left"
                 Style="{StaticResource CustomButtonStyle}"
-                Click="Button_Click"/>
+                Click="ToChosePage"/>
 
         <oxy:PlotView Grid.Row="1" 
                       Grid.Column="0"
@@ -109,7 +111,8 @@
                       x:Name="PlotViewAnalise"
                       Margin="10,10,0,10"
                       BorderBrush="Black"
-                      BorderThickness="2"
+                      BorderThickness="3"
+                      Background="#909090"
                       Grid.RowSpan="23"/>
 
         <Label Grid.Row="9" 
@@ -122,9 +125,7 @@
                Content="Тип регрессии"/>
 
         <ComboBox Grid.Row="10" 
-               Grid.Column="2"
-                  Grid.ColumnSpan="2"
-                  Margin="30,0,30,0"
+                  Grid.Column="2"
                   Style="{StaticResource CustomComboBoxStyle}"
                   x:Name="ComboBoxRegression"/>
 
@@ -137,8 +138,7 @@
                Content="Параметр для анализа"/>
 
         <ComboBox Grid.Row="12" 
-               Grid.Column="2"
-                  Grid.ColumnSpan="2"
+                  Grid.Column="2"
                   Style="{StaticResource CustomComboBoxStyle}"
                   x:Name="ComboBoxParameter"/>
 
@@ -158,7 +158,7 @@
                     FontFamily="Microsoft Sans Serif"
                     HorizontalAlignment="Right"
                     Style="{StaticResource CustomButtonStyle}"
-                    Click="Button_Analise"/>
+                    Click="Analize"/>
 
             <Button Grid.Row="0" 
                     Grid.Column="1"
@@ -168,7 +168,7 @@
                     MinWidth="100"
                     HorizontalAlignment="Left"
                     Style="{StaticResource CustomButtonStyle}"
-                    Click="Button_AutoAnalise"/>
+                    Click="AutoAnalize"/>
         </Grid>
 
         <Button Grid.Row="15"
@@ -181,7 +181,7 @@
                 FontSize="20"
                 Height="35"
                 Visibility="Hidden"
-                Click="Button_Save"/>
+                Click="SavePdf"/>
         
         <Grid Grid.Row="1"
               Grid.Column="2"

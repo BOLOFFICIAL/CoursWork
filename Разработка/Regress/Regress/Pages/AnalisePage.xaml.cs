@@ -3,7 +3,6 @@ using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using Regress.CSV;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,38 +17,21 @@ namespace Regress
     /// </summary>
     public partial class AnalisePage : Page
     {
-        CsvData csv;
-        string _filepath;
-        string _resultcolumn;
-        CorrelationRegression regression;
+        private CsvData _csv;
+        private string _filepath;
+        private string _resultcolumn;
+        private CorrelationRegression _regression;
+
         public AnalisePage(string resultcolumn, string filepath)
         {
             InitializeComponent();
             _filepath = filepath;
-            csv = new CsvData(filepath);
+            _csv = new CsvData(filepath);
             _resultcolumn = resultcolumn;
+
             ComboBoxRegression.SelectedIndex = 0;
             ComboBoxParameter.SelectedIndex = 0;
 
-            Regressions();
-            Parameters();
-        }
-
-        private void Parameters()
-        {
-            var parameters = new List<string>();
-            foreach (var name in csv.GetNames())
-            {
-                if (name != _resultcolumn)
-                {
-                    parameters.Add(name);
-                }
-            }
-            ComboBoxParameter.ItemsSource = parameters;
-        }
-
-        private void Regressions()
-        {
             ComboBoxRegression.ItemsSource = new List<string>()
             {
                 "Линейная",
@@ -58,6 +40,8 @@ namespace Regress
                 "Логарифмическая",
                 "Гиперболическая",
             };
+
+            ComboBoxParameter.ItemsSource = _csv.GetNames().Where(name => name != _resultcolumn).ToList();
         }
 
         private void PrintOXY(string resultcolumn, string parameter, LineSeries equation)
@@ -75,95 +59,105 @@ namespace Regress
 
             var series1 = new LineSeries
             {
-                Color = OxyColors.Red,
+                Color = OxyColors.Red
             };
 
-            csv.SetResultColumn(resultcolumn);
+            //_csv.SetResultColumn(resultcolumn);
 
-            var X = csv.GetColumn(parameter).Value.Select(el => double.TryParse(el.Replace(".", ","), out double element) ? element : 0).ToList();
-            var Y = csv.ResultColumn.Value.Select(el => double.TryParse(el.Replace(".", ","), out double element) ? element : 0).ToList();
+            var X = _csv.GetColumn(parameter).Value.Select(el => double.TryParse(el.Replace(".", ","), out double element) ? element : 0).ToList();
+            var Y = _csv.GetColumn(resultcolumn).Value.Select(el => double.TryParse(el.Replace(".", ","), out double element) ? element : 0).ToList();
 
-            for (int i = 0; i < csv.RowCount; i++)
+            for (int i = 0; i < _csv.RowCount; i++)
             {
                 scatterSeries.Points.Add(new ScatterPoint(X[i], Y[i]));
             }
 
             series1.Points.Add(new DataPoint(0, 0));
-            series1.Points.Add(new DataPoint(X.Max() + X.Max() * 0.3, 0));
+            series1.Points.Add(new DataPoint(X.Max() * 1.3, 0));
             series1.Points.Add(new DataPoint(0, 0));
-            series1.Points.Add(new DataPoint(0, Y.Max() + Y.Max() * 0.3));
+            series1.Points.Add(new DataPoint(0, Y.Max() * 1.3));
             series1.Points.Add(new DataPoint(0, 0));
-            series1.Points.Add(new DataPoint(X.Min() + X.Min() * 0.3, 0));
+            series1.Points.Add(new DataPoint(X.Min() * 1.3, 0));
             series1.Points.Add(new DataPoint(0, 0));
-            series1.Points.Add(new DataPoint(0, Y.Min() + Y.Min() * 0.3));
+            series1.Points.Add(new DataPoint(0, Y.Min() * 1.3));
 
             plotModel.Series.Add(series1);
             plotModel.Series.Add(scatterSeries);
             plotModel.Series.Add(equation);
             plotModel.Title = $"Dependence {resultcolumn} - {parameter}";
-            plotModel.Axes.Add(new LinearAxis
-            {
-                Position = AxisPosition.Bottom,
-                Title = parameter.ToUpper(),
-                TitleFontWeight = OxyPlot.FontWeights.Bold,
-                TitleColor = OxyColor.FromRgb(50, 50, 50),
-                TitleFontSize = 15,
-                FontWeight = OxyPlot.FontWeights.Bold,
-            });
-            plotModel.Axes.Add(new LinearAxis
-            {
-                Position = AxisPosition.Left,
-                Title = resultcolumn.ToUpper(),
-                TitleColor = OxyColor.FromRgb(50, 50, 50),
-                TitleFontWeight = OxyPlot.FontWeights.Bold,
-                TitleFontSize = 15,
-                FontWeight = OxyPlot.FontWeights.Bold,
-            });
+
+            plotModel.Axes.Add(
+                new LinearAxis 
+                { 
+                    Position = AxisPosition.Bottom, 
+                    Title = parameter.ToUpper(), 
+                    TitleFontWeight = OxyPlot.FontWeights.Bold, 
+                    TitleColor = OxyColor.FromRgb(50, 50, 50), 
+                    TitleFontSize = 15, 
+                    FontWeight = OxyPlot.FontWeights.Bold 
+                });
+
+            plotModel.Axes.Add(
+                new LinearAxis 
+                { 
+                    Position = AxisPosition.Left, 
+                    Title = resultcolumn.ToUpper(), 
+                    TitleColor = OxyColor.FromRgb(50, 50, 50), 
+                    TitleFontWeight = OxyPlot.FontWeights.Bold, 
+                    TitleFontSize = 15, 
+                    FontWeight = OxyPlot.FontWeights.Bold 
+                });
 
             PlotViewAnalise.Model = plotModel;
         }
 
-        private void Button_Back(object sender, RoutedEventArgs e)
+        private void ToEditFile(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new ChosePage(_filepath));
         }
 
-        private void Button_Analise(object sender, RoutedEventArgs e)
+        private void Analize(object sender, RoutedEventArgs e)
         {
-            Analise(false);
+            Analize(false);
         }
 
-        private void Button_AutoAnalise(object sender, RoutedEventArgs e)
+        private void AutoAnalize(object sender, RoutedEventArgs e)
         {
-            Analise(true);
+            Analize(true);
         }
 
-        private void Analise(bool auto)
+        private void Analize(bool auto)
         {
-            regression = new CorrelationRegression(_filepath, ComboBoxRegression.SelectedIndex, _resultcolumn, ComboBoxParameter.SelectedValue.ToString(), auto);
-            Label1.Content = regression.Results[0].Replace("+ -", "- ");
-            Label2.Content = regression.Results[1];
-            Label3.Content = regression.Results[2];
-            Label4.Content = regression.Results[3];
-            Label5.Content = (regression.Results[4]) + "%";
-            Label6.Content = regression.Results[5];
-            Label7.Content = regression.Results[6];
-            Label8.Content = regression.Results[7];
-            PrintOXY(_resultcolumn, ComboBoxParameter.SelectedValue.ToString(), regression.Line);
+            _regression = new CorrelationRegression(_filepath, ComboBoxRegression.SelectedIndex, _resultcolumn, ComboBoxParameter.SelectedValue.ToString(), auto);
+
+            List<string> results = _regression.Results;
+
+            Label1.Content = results[0].Replace("+ -", "- ");
+            Label2.Content = results[1];
+            Label3.Content = results[2];
+            Label4.Content = results[3];
+            Label5.Content = $"{results[4]}%";
+            Label6.Content = results[5];
+            Label7.Content = results[6];
+            Label8.Content = results[7];
+
+            PrintOXY(_resultcolumn, ComboBoxParameter.SelectedValue.ToString(), _regression.Line);
+
             if (auto)
             {
-                ComboBoxRegression.SelectedIndex = regression.TitleIndex;
+                ComboBoxRegression.SelectedIndex = _regression.TitleIndex;
             }
-            GridData.Height = Double.NaN;
+
+            GridData.Height = double.NaN;
             ButtonSave.Visibility = Visibility.Visible;
         }
 
-        private void Button_Save(object sender, RoutedEventArgs e)
+        private void SavePdf(object sender, RoutedEventArgs e)
         {
-            if (!(regression?.Title is null))
+            if (!(_regression?.Title is null))
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.FileName = regression.Title + "Regression";
+                saveFileDialog.FileName = _regression.Title + "Regression";
                 saveFileDialog.DefaultExt = ".pdf";
                 saveFileDialog.Filter = "Regressions (.pdf)|*.pdf";
 
@@ -211,7 +205,7 @@ namespace Regress
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ToChosePage(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "CSV files (*.csv)|*.csv";

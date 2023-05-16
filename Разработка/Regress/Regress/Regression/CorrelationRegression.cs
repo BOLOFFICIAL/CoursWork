@@ -17,13 +17,14 @@ namespace Regress
         private string _parameter;
         private string _result;
         private int _index;
-        int bestregression;
-        private List<double> X;
-        private List<double> Y;
+        private int _bestregression;
+        private List<double> _X;
+        private List<double> _Y;
         public List<LineSeries> lines;
-        private List<string> equations;
+        private List<string> _equations;
         public string Title { get; private set; }
         public List<string> Results { get; private set; }
+
         public CorrelationRegression(string filepath, int index, string result, string parameter, bool auto)
         {
             csv = new CsvData(filepath);
@@ -31,32 +32,27 @@ namespace Regress
             _filepath = filepath;
             _result = result;
             _index = index;
-            X = csv.GetColumn(_parameter).Value.Select(el => double.TryParse(el.Replace(".", ","), out double element) ? element : 0).ToList();
-            Y = csv.GetColumn(_result).Value.Select(el => double.TryParse(el.Replace(".", ","), out double element) ? element : 0).ToList();
-            if (auto)
-            {
-                AutoAnalise();
-            }
-            else
-            {
-                Analise(_result, _parameter);
-            }
+            _X = csv.GetColumn(_parameter).Value.Select(el => double.TryParse(el.Replace(".", ","), out double element) ? element : 0).ToList();
+            _Y = csv.GetColumn(_result).Value.Select(el => double.TryParse(el.Replace(".", ","), out double element) ? element : 0).ToList();
+
+            if (auto) { AutoAnalise(); }
+            else { Analise(_result, _parameter); }
         }
+
         public async Task Analise(string r, string p)
         {
-
             Results = new List<string>();
             Line = new LineSeries { Color = OxyColors.Red };
-            double x = X.Min();
-            double max = X.Max();
-            double avr = X.Average();
-            int count = X.Count();
+            double x = _X.Min();
+            double max = _X.Max();
+            double avr = _X.Average();
+            int count = _X.Count();
             switch (_index)
             {
                 case 0:
                     {
                         Title = "Linear";
-                        var regress = new LinearRegression(X, Y);
+                        var regress = new LinearRegression(_X, _Y);
                         Results.Add(regress.Equation);
                         Results.Add(regress.R.ToString("0.####"));
                         Results.Add(AboutR(regress.R));
@@ -78,7 +74,7 @@ namespace Regress
                 case 1:
                     {
                         Title = "Power";
-                        var regress = new PowerRegression(X, Y);
+                        var regress = new PowerRegression(_X, _Y);
                         Results.Add(regress.Equation);
                         Results.Add(regress.R.ToString("0.####"));
                         Results.Add(AboutR(regress.R));
@@ -100,7 +96,7 @@ namespace Regress
                 case 2:
                     {
                         Title = "Quadratic";
-                        var regress = new QuadraticRegression(X, Y);
+                        var regress = new QuadraticRegression(_X, _Y);
                         Results.Add(regress.Equation);
                         Results.Add(regress.R.ToString("0.####"));
                         Results.Add(AboutR(regress.R));
@@ -122,7 +118,7 @@ namespace Regress
                 case 3:
                     {
                         Title = "Logarithmic";
-                        var regress = new LogarithmicRegression(X, Y);
+                        var regress = new LogarithmicRegression(_X, _Y);
                         Results.Add(regress.Equation);
                         Results.Add(regress.R.ToString("0.####"));
                         Results.Add(AboutR(regress.R));
@@ -144,7 +140,7 @@ namespace Regress
                 case 4:
                     {
                         Title = "Hiperbolic";
-                        var regress = new HyperbolicRegression(X, Y);
+                        var regress = new HyperbolicRegression(_X, _Y);
                         Results.Add(regress.Equation);
                         Results.Add(regress.R.ToString("0.####"));
                         Results.Add(AboutR(regress.R));
@@ -167,9 +163,183 @@ namespace Regress
             }
         }
 
+        public void AutoAnalise()
+        {
+            var Regressions = new List<List<double>>();
+            var step = _X.Average() / _X.Count();
+            var x = 0.0;
+            var max = _X.Max();
+
+            for (var i = 0; i < 5; i++)
+            {
+                Regressions.Add(new List<double>());
+            }
+
+            Results = new List<string>();
+            lines = new List<LineSeries>();
+            _equations = new List<string>();
+
+            {
+                Line = new LineSeries { Color = OxyColors.Red };
+                x = _X.Min();
+                var regress = new LinearRegression(_X, _Y);
+                _equations.Add(regress.Equation);
+                Regressions[0].Add(regress.R);
+                Regressions[1].Add(regress.R2);
+                Regressions[2].Add(regress.AvrA);
+                Regressions[3].Add(regress.Ffact);
+                Regressions[4].Add(regress.Dfact);
+                while (x < max)
+                {
+                    Line.Points.Add(new DataPoint(x, regress.a * x + regress.b));
+                    x += step;
+                }
+                lines.Add(Line);
+            }
+
+            {
+                Line = new LineSeries { Color = OxyColors.Red };
+                x = _X.Min();
+                var regress = new PowerRegression(_X, _Y);
+                _equations.Add(regress.Equation);
+                Regressions[0].Add(regress.R);
+                Regressions[1].Add(regress.R2);
+                Regressions[2].Add(regress.AvrA);
+                Regressions[3].Add(regress.Ffact);
+                Regressions[4].Add(regress.Dfact);
+                while (x < max)
+                {
+                    Line.Points.Add(new DataPoint(x, regress.a * Math.Pow(x, regress.b)));
+                    x += step;
+                }
+                lines.Add(Line);
+            }
+
+            {
+                Line = new LineSeries { Color = OxyColors.Red };
+                x = _X.Min();
+                var regress = new QuadraticRegression(_X, _Y);
+                _equations.Add(regress.Equation);
+                Regressions[0].Add(regress.R);
+                Regressions[1].Add(regress.R2);
+                Regressions[2].Add(regress.AvrA);
+                Regressions[3].Add(regress.Ffact);
+                Regressions[4].Add(regress.Dfact);
+                while (x < max)
+                {
+                    Line.Points.Add(new DataPoint(x, regress.a * x * x + regress.b * x + regress.c));
+                    x += step;
+                }
+                lines.Add(Line);
+            }
+
+            {
+                Line = new LineSeries { Color = OxyColors.Red };
+                x = _X.Min();
+                var regress = new LogarithmicRegression(_X, _Y);
+                _equations.Add(regress.Equation);
+                Regressions[0].Add(regress.R);
+                Regressions[1].Add(regress.R2);
+                Regressions[2].Add(regress.AvrA);
+                Regressions[3].Add(regress.Ffact);
+                Regressions[4].Add(regress.Dfact);
+                while (x < max)
+                {
+                    Line.Points.Add(new DataPoint(x, regress.a + regress.b * Math.Log(x)));
+                    x += step;
+                }
+                lines.Add(Line);
+            }
+
+            {
+                Line = new LineSeries { Color = OxyColors.Red };
+                x = _X.Min();
+                var regress = new HyperbolicRegression(_X, _Y);
+                _equations.Add(regress.Equation);
+                Regressions[0].Add(regress.R);
+                Regressions[1].Add(regress.R2);
+                Regressions[2].Add(regress.AvrA);
+                Regressions[3].Add(regress.Ffact);
+                Regressions[4].Add(regress.Dfact);
+                while (x < max)
+                {
+                    Line.Points.Add(new DataPoint(x, regress.a + regress.b / x));
+                    x += step;
+                }
+                lines.Add(Line);
+            }
+
+
+            _bestregression = BestRegression(Regressions[0], Regressions[2]);
+
+            TitleIndex = _bestregression;
+
+            Title = _bestregression switch
+            {
+                0 => "Linear",
+                1 => "Power",
+                2 => "Quadratic",
+                3 => "Logarithmic",
+                4 => "Hiperbolic",
+                _ => Title // Handle unexpected case, if necessary
+            };
+
+            Results.AddRange(new[]
+            {
+                    _equations[_bestregression],
+                    (Regressions[0])[_bestregression].ToString("0.####"),
+                    AboutR((Regressions[0])[_bestregression]),
+                    (Regressions[1])[_bestregression].ToString("0.####"),
+                    (Regressions[2])[_bestregression].ToString("0.####"),
+                    (Regressions[3])[_bestregression].ToString("0.####"),
+                    (Regressions[4])[_bestregression].ToString("0.####"),
+                    AboutDurbinWatson((Regressions[4])[_bestregression])
+                });
+
+            Line = lines[_bestregression];
+
+            int BestRegression(List<double> correlationCoefficients, List<double> meanErrors)
+            {
+                var bestindex = -1;
+                var cC = CheckData(correlationCoefficients);
+                var mE = CheckData(meanErrors);
+                var maxcC = correlationCoefficients.Min();
+                var maxmE = meanErrors.Min();
+                var max = 0.0;
+                for (var i = 0; i < correlationCoefficients.Count; i++)
+                {
+                    maxcC = Squeeze(cC, cC[i]);
+                    maxmE = Squeeze(mE, 100 - mE[i]);
+                    if (maxcC + maxmE > max)
+                    {
+                        max = maxcC + maxmE;
+                        bestindex = i;
+                    }
+
+                }
+                return bestindex;
+
+                double Squeeze(List<double> values, double value)
+                {
+                    value = double.Parse(value.ToString("0.#####"));
+                    var max = double.Parse(values.Max().ToString("0.#####"));
+                    return value / max;
+                }
+                List<double> CheckData(List<double> values)
+                {
+                    var datas = new List<double>();
+                    foreach (var data in values)
+                    {
+                        datas.Add(double.IsNaN(data) ? 0 : data);
+                    }
+                    return datas;
+                }
+            }
+        }
+
         private string AboutR(double r)
         {
-            string res = "";
+            var res = "";
             if (Math.Abs(r) > 0.9)
             {
                 res = "Сильная";
@@ -184,7 +354,7 @@ namespace Regress
             }
             else if (Math.Abs(r) > 0.3)
             {
-                res = "Слабая";
+                res = "Очень слабая";
             }
             else
             {
@@ -221,180 +391,5 @@ namespace Regress
                 return "Отрицательная (сильная)";
             }
         }
-
-        public void AutoAnalise()
-        {
-            var Regressions = new List<List<double>>();
-            for (int i = 0; i < 5; i++)
-            {
-                Regressions.Add(new List<double>());
-            }
-            Results = new List<string>();
-            lines = new List<LineSeries>();
-            equations = new List<string>();
-
-            {
-                Line = new LineSeries { Color = OxyColors.Red };
-                double x = X.Min();
-                double max = X.Max();
-                double avr = X.Average();
-                int count = X.Count();
-                var regress = new LinearRegression(X, Y);
-                equations.Add(regress.Equation);
-                Regressions[0].Add(regress.R);
-                Regressions[1].Add(regress.R2);
-                Regressions[2].Add(regress.AvrA);
-                Regressions[3].Add(regress.Ffact);
-                Regressions[4].Add(regress.Dfact);
-                while (x < max)
-                {
-                    Line.Points.Add(new DataPoint(x, regress.a * x + regress.b));
-                    x += avr / count;
-                }
-                lines.Add(Line);
-            }
-
-            {
-                Line = new LineSeries { Color = OxyColors.Red };
-                double x = X.Min();
-                double max = X.Max();
-                double avr = X.Average();
-                int count = X.Count();
-                var regress = new PowerRegression(X, Y);
-                equations.Add(regress.Equation);
-                Regressions[0].Add(regress.R);
-                Regressions[1].Add(regress.R2);
-                Regressions[2].Add(regress.AvrA);
-                Regressions[3].Add(regress.Ffact);
-                Regressions[4].Add(regress.Dfact);
-                while (x < max)
-                {
-                    Line.Points.Add(new DataPoint(x, regress.a * Math.Pow(x, regress.b)));
-                    x += avr / count;
-                }
-                lines.Add(Line);
-            }
-
-            {
-                Line = new LineSeries { Color = OxyColors.Red };
-                double x = X.Min();
-                double max = X.Max();
-                double avr = X.Average();
-                int count = X.Count();
-                var regress = new QuadraticRegression(X, Y);
-                equations.Add(regress.Equation);
-                Regressions[0].Add(regress.R);
-                Regressions[1].Add(regress.R2);
-                Regressions[2].Add(regress.AvrA);
-                Regressions[3].Add(regress.Ffact);
-                Regressions[4].Add(regress.Dfact);
-                while (x < max)
-                {
-                    Line.Points.Add(new DataPoint(x, regress.a * x * x + regress.b * x + regress.c));
-                    x += avr / count;
-                }
-                lines.Add(Line);
-            }
-
-            {
-                Line = new LineSeries { Color = OxyColors.Red };
-                double x = X.Min();
-                double max = X.Max();
-                double avr = X.Average();
-                int count = X.Count();
-                var regress = new LogarithmicRegression(X, Y);
-                equations.Add(regress.Equation);
-                Regressions[0].Add(regress.R);
-                Regressions[1].Add(regress.R2);
-                Regressions[2].Add(regress.AvrA);
-                Regressions[3].Add(regress.Ffact);
-                Regressions[4].Add(regress.Dfact);
-                while (x < max)
-                {
-                    Line.Points.Add(new DataPoint(x, regress.a + regress.b * Math.Log(x)));
-                    x += avr / count;
-                }
-                lines.Add(Line);
-            }
-
-            {
-                Line = new LineSeries { Color = OxyColors.Red };
-                double x = X.Min();
-                double max = X.Max();
-                double avr = X.Average();
-                int count = X.Count();
-                var regress = new HyperbolicRegression(X, Y);
-                equations.Add(regress.Equation);
-                Regressions[0].Add(regress.R);
-                Regressions[1].Add(regress.R2);
-                Regressions[2].Add(regress.AvrA);
-                Regressions[3].Add(regress.Ffact);
-                Regressions[4].Add(regress.Dfact);
-                while (x < max)
-                {
-                    Line.Points.Add(new DataPoint(x, regress.a + regress.b / x));
-                    x += avr / count;
-                }
-                lines.Add(Line);
-            }
-
-            bestregression = BestRegression(Regressions[0], Regressions[2]);
-            TitleIndex = bestregression;
-            switch (bestregression)
-            {
-                case 0: Title = "Linear"; break;
-                case 1: Title = "Power"; break;
-                case 2: Title = "Quadratic"; break;
-                case 3: Title = "Logarithmic"; break;
-                case 4: Title = "Hiperbolic"; break;
-            }
-            Results.Add(equations[bestregression]);
-            Results.Add((Regressions[0])[bestregression].ToString("0.####"));
-            Results.Add(AboutR((Regressions[0])[bestregression]));
-            Results.Add((Regressions[1])[bestregression].ToString("0.####"));
-            Results.Add((Regressions[2])[bestregression].ToString("0.####"));
-            Results.Add((Regressions[3])[bestregression].ToString("0.####"));
-            Results.Add((Regressions[4])[bestregression].ToString("0.####"));
-            Results.Add(AboutDurbinWatson((Regressions[4])[bestregression]));
-            Line = lines[bestregression];
-
-            int BestRegression(List<double> correlationCoefficients, List<double> meanErrors)
-            {
-                int bestindex = -1;
-                var cC = CheckData(correlationCoefficients);
-                var mE = CheckData(meanErrors);
-                double maxcC = correlationCoefficients.Min();
-                double maxmE = meanErrors.Min();
-                double max = 0;
-                for (int i = 0; i < correlationCoefficients.Count; i++)
-                {
-                    maxcC = Squeeze(cC, cC[i]);
-                    maxmE = Squeeze(mE, 100 - mE[i]);
-                    if (maxcC + maxmE > max)
-                    {
-                        max = maxcC + maxmE;
-                        bestindex = i;
-                    }
-
-                }
-                return bestindex;
-            }
-            double Squeeze(List<double> values, double value)
-            {
-                value = double.Parse(value.ToString("0.#####"));
-                var max = double.Parse(values.Max().ToString("0.#####"));
-                return value / max;
-            }
-            List<double> CheckData(List<double> values)
-            {
-                List<double> datas = new List<double>();
-                foreach (double data in values)
-                {
-                    datas.Add(double.IsNaN(data) ? 0 : data);
-                }
-                return datas;
-            }
-        }
-
     }
 }
