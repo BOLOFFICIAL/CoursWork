@@ -190,7 +190,7 @@ namespace Regress
                     var exporter = new PdfExporter();
 
                     exporter.Width = 800;
-                    exporter.Height = 6000;
+                    exporter.Height = 600;
 
                     using (var stream = File.Create(saveFileDialog.FileName))
                     {
