@@ -4,6 +4,7 @@ using OxyPlot.Axes;
 using OxyPlot.Series;
 using Regress.CSV;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -196,7 +197,12 @@ namespace Regress
                     {
                         exporter.Export(plotModel, stream);
                     }
-                    MessageBox.Show("Отчет успешно сохранен");
+                    var result = MessageBox.Show("Отчет успешно сохранен.\nХотите открыть сохраненный файл?", "Сохранение завершено", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        Process.Start("cmd", "/c start \"\" \"" + saveFileDialog.FileName + "\"");
+                    }
                 }
             }
             else
