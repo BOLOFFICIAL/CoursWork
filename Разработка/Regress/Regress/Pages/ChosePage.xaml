@@ -8,142 +8,203 @@
       d:DesignHeight="500" d:DesignWidth="800"
       Title="ChosePage">
     <Page.Resources>
-        <Style x:Key="DataGridStyle" TargetType="{x:Type DataGrid}">
-            <Setter Property="IsReadOnly" Value="True"/>
-            <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
-            <Setter Property="Margin" Value="10,0,0,10"/>
-            <Setter Property="FontWeight" Value="Medium"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="FontWeight" Value="Medium"/>
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="Grid.RowSpan" Value="5"/>
-            <Setter Property="ColumnHeaderStyle">
-                <Setter.Value>
-                    <Style TargetType="{x:Type DataGridColumnHeader}">
-                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                    </Style>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="Background" Value="#404040"/>
-            <Setter Property="BorderThickness" Value="3"/>
-            <Setter Property="Padding" Value="5"/>
-        </Style>
-        <Style x:Key="CustomComboBoxStyle" TargetType="{x:Type ComboBox}">
-            <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
-            <Setter Property="Margin" Value="30,0,30,0"/>
-            <Setter Property="Foreground" Value="#505050"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="5"/>
-            <Setter Property="FontWeight" Value="DemiBold"/>
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="BorderThickness" Value="2"/>
-            <Setter Property="Height" Value="30"/>
-            <EventSetter Event="SelectionChanged" 
-                         Handler="ComboBoxResult_SelectionChanged"/>
-        </Style>
-        <Style x:Key="ResultLabelStyle" TargetType="{x:Type Label}">
-            <Setter Property="Grid.Row" Value="1"/>
-            <Setter Property="Grid.Column" Value="1"/>
-            <Setter Property="Margin" Value="30,23,30,0"/>
-            <Setter Property="FontWeight" Value="DemiBold"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
-            <Setter Property="FontSize" Value="15"/>
-        </Style>
-        <Style x:Key="FileNameLabelStyle" TargetType="{x:Type Label}">
-            <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="FontWeight" Value="DemiBold"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Content" Value="FileName"/>
-            <Setter Property="Grid.Row" Value="0"/>
-            <Setter Property="Grid.Column" Value="0"/>
-            <Setter Property="Grid.ColumnSpan" Value="3"/>
-        </Style>
-        <Style x:Key="CustomButtonStyle" TargetType="{x:Type Button}">
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Margin" Value="10"/>
-            <Setter Property="FontWeight" Value="DemiBold"/>
-            <Setter Property="MinHeight" Value="30"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border CornerRadius="15" 
-                                Background ="#646464"
-                                BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="2">
-                            <ContentPresenter HorizontalAlignment="Center" 
-                                              VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="TextElement.FontFamily" 
-                    Value="/FontFile/#Comfortaa-Light"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" 
-                         Value="True">
-                    <Setter Property="BorderBrush" 
-                            Value="White"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
+        
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="auto"/>
-        </Grid.ColumnDefinitions>
-        
-        <Button Grid.Row="0"
-                Grid.Column="0"
-                Content="Меню"
-                MaxWidth="100"
-                MinWidth="100"
-                HorizontalAlignment="Left"
-                Style="{StaticResource CustomButtonStyle}"
-                Click="ToStartPage"/>
-        
-        <Label Grid.Row="0"
-               Grid.Column="0"
-               Style="{StaticResource FileNameLabelStyle}" 
-               x:Name="filename"/>
 
-        <DataGrid Grid.Row="1"
-                  Grid.Column="0"
-                  x:Name="DataGridChose"
-                  Style="{StaticResource DataGridStyle}"/>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="1"
-               Grid.Column="1"
-               Style="{StaticResource ResultLabelStyle}"
-               Content="Результативная колонка"/>
+            <Button Grid.Column="0"
+                    Content="Меню"
+                    Click="ToStartPage"
+                    FontSize="15"
+                    Margin="10,10,0,10"
+                    FontFamily="Microsoft Sans Serif"
+                    Foreground="White"
+                    Background="#646464"
+                    HorizontalAlignment="Left"
+                    Height="24"
+                    Width="65">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="2"
+                                CornerRadius="12">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="border" Property="BorderBrush" Value="White" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+            </Button>
 
-        <ComboBox Grid.Row="2" 
-                  Grid.Column="1"
-                  x:Name="ComboBoxResult" 
-                  SelectionChanged="ComboBoxResult_SelectionChanged"
-                  Style="{StaticResource CustomComboBoxStyle}"/>
+            <Button Grid.Column="1"
+                    Content="Выбрать фаил"
+                    Click="Button_Click"
+                    FontSize="15"
+                    Margin="10"
+                    FontFamily="Microsoft Sans Serif"
+                    Foreground="White"
+                    Background="#646464"
+                    HorizontalAlignment="Left"
+                    Height="24"
+                    Width="125">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="2"
+                                CornerRadius="12">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="border" Property="BorderBrush" Value="White" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+            </Button>
+            
+        </Grid>
         
-        <Button Grid.Row="4"
-                Grid.Column="1"
-                Grid.ColumnSpan="2"
-                Style="{StaticResource CustomButtonStyle}"
-                Content="Анализ" Click="ToAnalisePage"/>
+        <Grid Grid.Row="1"
+              x:Name="GridDataResults"
+              Height="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0"
+                       FontFamily="Microsoft Sans Serif"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="20"
+                       FontWeight="DemiBold"
+                       Foreground="White"
+                       Content=""
+                       Grid.ColumnSpan="3"
+                       x:Name="filename"/>
+
+                <DataGrid Grid.Row="1"
+                          x:Name="DataGridChose"
+                          IsReadOnly="True"
+                          FontFamily="Microsoft Sans Serif"
+                          Margin="10,0,10,10"
+                          FontWeight="Medium"
+                          BorderBrush="Black"
+                          FontSize="15"
+                          Grid.RowSpan="3"
+                          Background="#404040"
+                          Padding="5"/>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0"
+                       Margin="30,0"
+                       FontWeight="DemiBold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Foreground="White"
+                       FontFamily="Microsoft Sans Serif"
+                       FontSize="15"
+                       Content="Результативная колонка"/>
+
+                <ComboBox Grid.Row="1" 
+                          x:Name="ComboBoxResult" 
+                          SelectionChanged="ComboBoxResult_SelectionChanged"
+                          FontFamily="Microsoft Sans Serif"
+                          Margin="0,0,10,0"
+                          HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center"
+                          Padding="5"
+                          FontWeight="DemiBold"
+                          FontSize="15"
+                          BorderThickness="2"
+                          Height="30"/>
+
+                <Button Grid.Row="2"
+                        Content="Анализ"
+                        Click="ToAnalisePage"
+                        FontSize="20"
+                        Margin="0,10,10,10"
+                        FontFamily="Microsoft Sans Serif"
+                        Foreground="White"
+                        Background="#646464"
+                        HorizontalAlignment="Center"
+                        Height="30"
+                        Width="110"
+                        VerticalAlignment="Top">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="2"
+                                CornerRadius="15">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="border" Property="BorderBrush" Value="White" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+        </Grid>
+        
+        
+
+        
+
+        
+
+        
     </Grid>
 </Page>

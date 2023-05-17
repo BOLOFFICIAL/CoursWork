@@ -17,19 +17,7 @@ namespace Regress
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "CSV files (*.csv)|*.csv";
-                if (openFileDialog.ShowDialog() == true)
-                {
-                    NavigationService.Navigate(new ChosePage(openFileDialog.FileName));
-                }
-            }
-            catch
-            {
-                MessageBox.Show("Перепроверьте фаил и повторите попытку", "Ошибка чтения файла", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            NavigationService.Navigate(new ChosePage());
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CsvHelper;
+using Microsoft.Win32;
 using Regress.CSV;
 using System.Collections.Generic;
 using System.Data;
@@ -6,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
 namespace Regress
@@ -19,11 +21,9 @@ namespace Regress
         private CsvData csv;
         private CheckBox[] checkBoxes;
 
-        public ChosePage(string filepath)
+        public ChosePage()
         {
             InitializeComponent();
-            this._filepath = filepath;
-            Initialization();
         }
 
         public void Initialization()
@@ -94,6 +94,25 @@ namespace Regress
             if (DataGridChose.Columns.Count > 0)
             {
                 HighlightDataGridColumn(DataGridChose, ComboBoxResult.SelectedIndex);
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "CSV files (*.csv)|*.csv";
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    _filepath = openFileDialog.FileName;
+                    Initialization();
+                    GridDataResults.Height = double.NaN;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Перепроверьте фаил и повторите попытку", "Ошибка чтения файла", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

@@ -114,7 +114,7 @@ namespace Regress
 
         private void ToEditFile(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new ChosePage(_filepath));
+            NavigationService.Navigate(new ChosePage());
         }
 
         private void Analize(object sender, RoutedEventArgs e)
@@ -217,7 +217,7 @@ namespace Regress
             openFileDialog.Filter = "CSV files (*.csv)|*.csv";
             if (openFileDialog.ShowDialog() == true)
             {
-                NavigationService.Navigate(new ChosePage(openFileDialog.FileName));
+                NavigationService.Navigate(new ChosePage());
             }
         }
     }
