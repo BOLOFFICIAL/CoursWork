@@ -1,6 +1,7 @@
 ﻿using OxyPlot;
 using OxyPlot.Series;
 using Regress.CSV;
+using Regress.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,48 +12,35 @@ namespace Regress
     internal class CorrelationRegression
     {
         public LineSeries Line { get; private set; }
-        private CsvData csv;
         public int TitleIndex { get; private set; }
-        private string _filepath;
-        private string _parameter;
-        private string _result;
         private int _index;
         private int _bestregression;
-        private List<double> _X;
-        private List<double> _Y;
         public List<LineSeries> lines;
         private List<string> _equations;
         public string Title { get; private set; }
         public List<string> Results { get; private set; }
 
-        public CorrelationRegression(string filepath, int index, string result, string parameter, bool auto)
+        public CorrelationRegression(int index, bool auto)
         {
-            csv = new CsvData(filepath);
-            _parameter = parameter;
-            _filepath = filepath;
-            _result = result;
             _index = index;
-            _X = csv.GetColumn(_parameter).Value.Select(el => double.TryParse(el.Replace(".", ","), out double element) ? element : 0).ToList();
-            _Y = csv.GetColumn(_result).Value.Select(el => double.TryParse(el.Replace(".", ","), out double element) ? element : 0).ToList();
-
             if (auto) { AutoAnalise(); }
-            else { Analise(_result, _parameter); }
+            else { Analise(); }
         }
 
-        public async Task Analise(string r, string p)
+        public async Task Analise()
         {
             Results = new List<string>();
             Line = new LineSeries { Color = OxyColors.Red };
-            double x = _X.Min();
-            double max = _X.Max();
-            double avr = _X.Average();
-            int count = _X.Count();
+            double x = ProgramData.X.Min();
+            double max = ProgramData.X.Max();
+            double avr = ProgramData.X.Average();
+            int count = ProgramData.X.Count();
             switch (_index)
             {
                 case 0:
                     {
                         Title = "Linear";
-                        var regress = new LinearRegression(_X, _Y);
+                        var regress = new LinearRegression(ProgramData.X, ProgramData.Y);
                         Results.Add(regress.Equation);
                         Results.Add(regress.R.ToString("0.####"));
                         Results.Add(AboutR(regress.R));
@@ -74,7 +62,7 @@ namespace Regress
                 case 1:
                     {
                         Title = "Power";
-                        var regress = new PowerRegression(_X, _Y);
+                        var regress = new PowerRegression(ProgramData.X, ProgramData.Y);
                         Results.Add(regress.Equation);
                         Results.Add(regress.R.ToString("0.####"));
                         Results.Add(AboutR(regress.R));
@@ -96,7 +84,7 @@ namespace Regress
                 case 2:
                     {
                         Title = "Quadratic";
-                        var regress = new QuadraticRegression(_X, _Y);
+                        var regress = new QuadraticRegression(ProgramData.X, ProgramData.Y);
                         Results.Add(regress.Equation);
                         Results.Add(regress.R.ToString("0.####"));
                         Results.Add(AboutR(regress.R));
@@ -118,7 +106,7 @@ namespace Regress
                 case 3:
                     {
                         Title = "Logarithmic";
-                        var regress = new LogarithmicRegression(_X, _Y);
+                        var regress = new LogarithmicRegression(ProgramData.X, ProgramData.Y);
                         Results.Add(regress.Equation);
                         Results.Add(regress.R.ToString("0.####"));
                         Results.Add(AboutR(regress.R));
@@ -140,7 +128,7 @@ namespace Regress
                 case 4:
                     {
                         Title = "Hiperbolic";
-                        var regress = new HyperbolicRegression(_X, _Y);
+                        var regress = new HyperbolicRegression(ProgramData.X, ProgramData.Y);
                         Results.Add(regress.Equation);
                         Results.Add(regress.R.ToString("0.####"));
                         Results.Add(AboutR(regress.R));
@@ -166,9 +154,9 @@ namespace Regress
         public void AutoAnalise()
         {
             var Regressions = new List<List<double>>();
-            var step = _X.Average() / _X.Count();
+            var step = ProgramData.X.Average() / ProgramData.X.Count();
             var x = 0.0;
-            var max = _X.Max();
+            var max = ProgramData.X.Max();
 
             for (var i = 0; i < 5; i++)
             {
@@ -181,8 +169,8 @@ namespace Regress
 
             {
                 Line = new LineSeries { Color = OxyColors.Red };
-                x = _X.Min();
-                var regress = new LinearRegression(_X, _Y);
+                x = ProgramData.X.Min();
+                var regress = new LinearRegression(ProgramData.X, ProgramData.Y);
                 _equations.Add(regress.Equation);
                 Regressions[0].Add(regress.R);
                 Regressions[1].Add(regress.R2);
@@ -199,8 +187,8 @@ namespace Regress
 
             {
                 Line = new LineSeries { Color = OxyColors.Red };
-                x = _X.Min();
-                var regress = new PowerRegression(_X, _Y);
+                x = ProgramData.X.Min();
+                var regress = new PowerRegression(ProgramData.X, ProgramData.Y);
                 _equations.Add(regress.Equation);
                 Regressions[0].Add(regress.R);
                 Regressions[1].Add(regress.R2);
@@ -217,8 +205,8 @@ namespace Regress
 
             {
                 Line = new LineSeries { Color = OxyColors.Red };
-                x = _X.Min();
-                var regress = new QuadraticRegression(_X, _Y);
+                x = ProgramData.X.Min();
+                var regress = new QuadraticRegression(ProgramData.X, ProgramData.Y);
                 _equations.Add(regress.Equation);
                 Regressions[0].Add(regress.R);
                 Regressions[1].Add(regress.R2);
@@ -235,8 +223,8 @@ namespace Regress
 
             {
                 Line = new LineSeries { Color = OxyColors.Red };
-                x = _X.Min();
-                var regress = new LogarithmicRegression(_X, _Y);
+                x = ProgramData.X.Min();
+                var regress = new LogarithmicRegression(ProgramData.X, ProgramData.Y);
                 _equations.Add(regress.Equation);
                 Regressions[0].Add(regress.R);
                 Regressions[1].Add(regress.R2);
@@ -253,8 +241,8 @@ namespace Regress
 
             {
                 Line = new LineSeries { Color = OxyColors.Red };
-                x = _X.Min();
-                var regress = new HyperbolicRegression(_X, _Y);
+                x = ProgramData.X.Min();
+                var regress = new HyperbolicRegression(ProgramData.X, ProgramData.Y);
                 _equations.Add(regress.Equation);
                 Regressions[0].Add(regress.R);
                 Regressions[1].Add(regress.R2);

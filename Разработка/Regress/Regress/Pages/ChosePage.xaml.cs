@@ -1,13 +1,12 @@
 ﻿using CsvHelper;
 using Microsoft.Win32;
 using Regress.CSV;
-using System.Collections.Generic;
+using Regress.Model;
 using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
 namespace Regress
@@ -17,20 +16,20 @@ namespace Regress
     /// </summary>
     public partial class ChosePage : Page
     {
-        private string _filepath;
-        private CsvData csv;
-        private CheckBox[] checkBoxes;
-
         public ChosePage()
         {
             InitializeComponent();
+            if (ProgramData.fileputh.Length > 0)
+            {
+                OpenFile(true);
+            }
         }
 
         public void Initialization()
         {
-            filename.Content = System.IO.Path.GetFileName(_filepath);
+            filename.Content = System.IO.Path.GetFileName(ProgramData.fileputh);
 
-            using (var reader = new StreamReader(_filepath))
+            using (var reader = new StreamReader(ProgramData.fileputh))
             {
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
@@ -43,20 +42,15 @@ namespace Regress
                 }
             }
 
-            csv = new CsvData(_filepath);
-            ComboBoxResult.ItemsSource = csv.GetNames();
+            ProgramData.csv = new CsvData(ProgramData.fileputh);
+            ComboBoxResult.ItemsSource = ProgramData.csv.GetNames();
         }
 
         private void ToAnalisePage(object sender, RoutedEventArgs e)
         {
-            var resultname = ComboBoxResult.SelectedValue;
-            if (!(resultname is null))
+            if (!(ProgramData.resultcolumn is null) && (ProgramData.resultcolumn.Length > 0))
             {
-                var name = resultname.ToString();
-                if (name.Length > 0)
-                {
-                    NavigationService.Navigate(new AnalisePage(ComboBoxResult.SelectedValue.ToString(), _filepath));
-                }
+                NavigationService.Navigate(new AnalisePage());
             }
             else
             {
@@ -64,13 +58,14 @@ namespace Regress
             }
         }
 
-        public void HighlightDataGridColumn(DataGrid dataGrid, int columnIndex)
+        public void HighlightDataGridColumn()
         {
-            for (int i = 0; i < dataGrid.Columns.Count; i++)
+            for (int i = 0; i < DataGridChose.Columns.Count; i++)
             {
-                var column = dataGrid.Columns[i];
+                var column = DataGridChose.Columns[i];
                 var cellStyle = new Style(typeof(DataGridCell));
-                if (i == columnIndex)
+
+                if (column.Header.ToString() == ProgramData.resultcolumn)
                 {
                     cellStyle.Setters.Add(new Setter(DataGridCell.ForegroundProperty, Brushes.Red));
                     cellStyle.Setters.Add(new Setter(DataGridCell.FontWeightProperty, FontWeights.Bold));
@@ -80,12 +75,14 @@ namespace Regress
                     cellStyle.Setters.Add(new Setter(DataGridCell.ForegroundProperty, Brushes.Black));
                     cellStyle.Setters.Add(new Setter(DataGridCell.FontWeightProperty, FontWeights.Normal));
                 }
+
                 column.CellStyle = cellStyle;
             }
         }
 
         private void ToStartPage(object sender, RoutedEventArgs e)
         {
+            ProgramData.resultcolumn = "";
             NavigationService.Navigate(new StartPage());
         }
 
@@ -93,27 +90,57 @@ namespace Regress
         {
             if (DataGridChose.Columns.Count > 0)
             {
-                HighlightDataGridColumn(DataGridChose, ComboBoxResult.SelectedIndex);
+                var select = ComboBoxResult.SelectedValue;
+
+                if (select != null)
+                {
+                    ProgramData.resultcolumn = select.ToString();
+                    ButtonAnalize.Visibility = Visibility.Visible;
+                }
+
+                HighlightDataGridColumn();
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Chose(object sender, RoutedEventArgs e)
         {
-            try
+            OpenFile();
+        }
+
+        private void OpenFile(bool oldfile = false)
+        {
+            if (oldfile)
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "CSV files (*.csv)|*.csv";
-                if (openFileDialog.ShowDialog() == true)
+                Initialization();
+                UpdateForm();
+            }
+            else
+            {
+                try
                 {
-                    _filepath = openFileDialog.FileName;
-                    Initialization();
-                    GridDataResults.Height = double.NaN;
+                    OpenFileDialog openFileDialog = new OpenFileDialog();
+                    openFileDialog.Filter = "CSV files (*.csv)|*.csv";
+                    if (openFileDialog.ShowDialog() == true)
+                    {
+                        ComboBoxResult.SelectedValue = null;
+                        ButtonAnalize.Visibility = Visibility.Hidden;
+                        new ProgramData(openFileDialog.FileName);
+                        Initialization();
+                        UpdateForm();
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("Перепроверьте фаил и повторите попытку", "Ошибка чтения файла", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            catch
-            {
-                MessageBox.Show("Перепроверьте фаил и повторите попытку", "Ошибка чтения файла", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+        }
+
+        private void UpdateForm()
+        {
+            GridChose.RowDefinitions[0].Height = new GridLength(0, GridUnitType.Auto);
+            GridChose.RowDefinitions[1].Height = new GridLength(1, GridUnitType.Star);
+            ChoseFile.HorizontalAlignment = HorizontalAlignment.Left;
         }
     }
 }

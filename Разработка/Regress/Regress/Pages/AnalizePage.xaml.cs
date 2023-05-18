@@ -2,7 +2,7 @@
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
-using Regress.CSV;
+using Regress.Model;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -18,17 +18,11 @@ namespace Regress
     /// </summary>
     public partial class AnalisePage : Page
     {
-        private CsvData _csv;
-        private string _filepath;
-        private string _resultcolumn;
         private CorrelationRegression _regression;
 
-        public AnalisePage(string resultcolumn, string filepath)
+        public AnalisePage()
         {
             InitializeComponent();
-            _filepath = filepath;
-            _csv = new CsvData(filepath);
-            _resultcolumn = resultcolumn;
 
             ComboBoxRegression.SelectedIndex = 0;
             ComboBoxParameter.SelectedIndex = 0;
@@ -42,14 +36,14 @@ namespace Regress
                 "Гиперболическая",
             };
 
-            ComboBoxParameter.ItemsSource = _csv.GetNames().Where(name => name != _resultcolumn).ToList();
+            ComboBoxParameter.ItemsSource = ProgramData.csv.GetNames().Where(name => name != ProgramData.resultcolumn).ToList();
         }
 
-        private void PrintOXY(string resultcolumn, string parameter, LineSeries equation)
+        private void PrintOXY(LineSeries equation)
         {
             var plotModel = new PlotModel();
 
-            var scatterSeries = new ScatterSeries
+            var scatterSeries = new LineSeries
             {
                 MarkerType = MarkerType.Circle,
                 MarkerSize = 3,
@@ -58,55 +52,35 @@ namespace Regress
                 MarkerFill = OxyColor.FromRgb(50, 50, 50),
             };
 
-            var series1 = new LineSeries
+            for (int i = 0; i < ProgramData.csv.RowCount; i++)
             {
-                Color = OxyColors.Red
-            };
-
-            //_csv.SetResultColumn(resultcolumn);
-
-            var X = _csv.GetColumn(parameter).Value.Select(el => double.TryParse(el.Replace(".", ","), out double element) ? element : 0).ToList();
-            var Y = _csv.GetColumn(resultcolumn).Value.Select(el => double.TryParse(el.Replace(".", ","), out double element) ? element : 0).ToList();
-
-            for (int i = 0; i < _csv.RowCount; i++)
-            {
-                scatterSeries.Points.Add(new ScatterPoint(X[i], Y[i]));
+                scatterSeries.Points.Add(new DataPoint(ProgramData.X[i], ProgramData.Y[i]));
             }
 
-            series1.Points.Add(new DataPoint(0, 0));
-            series1.Points.Add(new DataPoint(X.Max() * 1.3, 0));
-            series1.Points.Add(new DataPoint(0, 0));
-            series1.Points.Add(new DataPoint(0, Y.Max() * 1.3));
-            series1.Points.Add(new DataPoint(0, 0));
-            series1.Points.Add(new DataPoint(X.Min() * 1.3, 0));
-            series1.Points.Add(new DataPoint(0, 0));
-            series1.Points.Add(new DataPoint(0, Y.Min() * 1.3));
-
-            plotModel.Series.Add(series1);
             plotModel.Series.Add(scatterSeries);
             plotModel.Series.Add(equation);
-            plotModel.Title = $"Dependence {resultcolumn} - {parameter}";
+            plotModel.Title = $"Dependence {ProgramData.resultcolumn} - {ProgramData.parametercolumn}";
 
             plotModel.Axes.Add(
-                new LinearAxis 
-                { 
-                    Position = AxisPosition.Bottom, 
-                    Title = parameter.ToUpper(), 
-                    TitleFontWeight = OxyPlot.FontWeights.Bold, 
-                    TitleColor = OxyColor.FromRgb(50, 50, 50), 
-                    TitleFontSize = 15, 
-                    FontWeight = OxyPlot.FontWeights.Bold 
+                new LinearAxis
+                {
+                    Position = AxisPosition.Bottom,
+                    Title = ProgramData.parametercolumn.ToUpper(),
+                    TitleFontWeight = OxyPlot.FontWeights.Bold,
+                    TitleColor = OxyColor.FromRgb(50, 50, 50),
+                    TitleFontSize = 15,
+                    FontWeight = OxyPlot.FontWeights.Bold
                 });
 
             plotModel.Axes.Add(
-                new LinearAxis 
-                { 
-                    Position = AxisPosition.Left, 
-                    Title = resultcolumn.ToUpper(), 
-                    TitleColor = OxyColor.FromRgb(50, 50, 50), 
-                    TitleFontWeight = OxyPlot.FontWeights.Bold, 
-                    TitleFontSize = 15, 
-                    FontWeight = OxyPlot.FontWeights.Bold 
+                new LinearAxis
+                {
+                    Position = AxisPosition.Left,
+                    Title = ProgramData.resultcolumn.ToUpper(),
+                    TitleColor = OxyColor.FromRgb(50, 50, 50),
+                    TitleFontWeight = OxyPlot.FontWeights.Bold,
+                    TitleFontSize = 15,
+                    FontWeight = OxyPlot.FontWeights.Bold
                 });
 
             PlotViewAnalise.Model = plotModel;
@@ -129,7 +103,23 @@ namespace Regress
 
         private void Analize(bool auto)
         {
-            _regression = new CorrelationRegression(_filepath, ComboBoxRegression.SelectedIndex, _resultcolumn, ComboBoxParameter.SelectedValue.ToString(), auto);
+            ProgramData.parametercolumn = ComboBoxParameter.SelectedValue.ToString();
+
+            ProgramData.X = ProgramData.csv.GetColumn(ProgramData.parametercolumn).Value
+                .Select(el => double.TryParse(el.Replace(".", ","), out double element) ? element : 0)
+                .ToList();
+            ProgramData.Y = ProgramData.csv.GetColumn(ProgramData.resultcolumn).Value
+                .Select(el => double.TryParse(el.Replace(".", ","), out double element) ? element : 0)
+                .ToList();
+
+            var data = ProgramData.X.Zip(ProgramData.Y, (x, y) => new { X = x, Y = y }).ToList();
+
+            data.Sort((a, b) => a.X.CompareTo(b.X));
+
+            ProgramData.X = data.Select(pair => pair.X).ToList();
+            ProgramData.Y = data.Select(pair => pair.Y).ToList();
+
+            _regression = new CorrelationRegression(ComboBoxRegression.SelectedIndex, auto);
 
             List<string> results = _regression.Results;
 
@@ -142,7 +132,7 @@ namespace Regress
             Label7.Content = results[6];
             Label8.Content = results[7];
 
-            PrintOXY(_resultcolumn, ComboBoxParameter.SelectedValue.ToString(), _regression.Line);
+            PrintOXY(_regression.Line);
 
             if (auto)
             {
@@ -151,6 +141,10 @@ namespace Regress
 
             GridData.Height = double.NaN;
             ButtonSave.Visibility = Visibility.Visible;
+            BorderAnalize.Visibility = Visibility.Visible;
+
+            GridAnalize.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
+            GridAnalize.ColumnDefinitions[1].Width = new GridLength(0, GridUnitType.Auto);
         }
 
         private void SavePdf(object sender, RoutedEventArgs e)
@@ -217,8 +211,14 @@ namespace Regress
             openFileDialog.Filter = "CSV files (*.csv)|*.csv";
             if (openFileDialog.ShowDialog() == true)
             {
+                new ProgramData(openFileDialog.FileName);
                 NavigationService.Navigate(new ChosePage());
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new StartPage());
         }
     }
 }
