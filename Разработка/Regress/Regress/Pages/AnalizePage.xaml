@@ -292,8 +292,9 @@
                         BorderThickness="2"
                         Visibility="Hidden"
                         x:Name="BorderAnalize"
+                        Height="100"
                         Margin="10,0,10,10">
-                    <ScrollViewer>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <Grid Grid.Row="1"
                           x:Name="GridData"
                           Margin="10"
