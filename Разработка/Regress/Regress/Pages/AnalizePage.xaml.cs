@@ -46,10 +46,11 @@ namespace Regress
             var scatterSeries = new LineSeries
             {
                 MarkerType = MarkerType.Circle,
-                MarkerSize = 3,
-                MarkerStrokeThickness = 2,
-                MarkerStroke = OxyColor.FromRgb(50, 50, 50),
+                MarkerSize = 5,
                 MarkerFill = OxyColor.FromRgb(50, 50, 50),
+                Color = OxyColor.FromRgb(50, 50, 50),
+                LineStyle = LineStyle.Dot,
+                StrokeThickness = 2
             };
 
             for (int i = 0; i < ProgramData.csv.RowCount; i++)

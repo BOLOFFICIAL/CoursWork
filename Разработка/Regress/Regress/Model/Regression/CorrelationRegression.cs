@@ -51,10 +51,14 @@ namespace Regress
                         Results.Add(AboutDurbinWatson(regress.Dfact));
                         await Task.Run(() =>
                         {
-                            while (x < max)
+                            //while (x < max)
+                            //{
+                            //    Line.Points.Add(new DataPoint(x, regress.a * x + regress.b));
+                            //    x += avr / count;
+                            //}
+                            foreach (var x in ProgramData.X) 
                             {
                                 Line.Points.Add(new DataPoint(x, regress.a * x + regress.b));
-                                x += avr / count;
                             }
                         });
                     }
@@ -73,10 +77,14 @@ namespace Regress
                         Results.Add(AboutDurbinWatson(regress.Dfact));
                         await Task.Run(() =>
                         {
-                            while (x < max)
+                            //while (x < max)
+                            //{
+                            //    Line.Points.Add(new DataPoint(x, regress.a * Math.Pow(x, regress.b)));
+                            //    x += avr / count;
+                            //}
+                            foreach (var x in ProgramData.X)
                             {
                                 Line.Points.Add(new DataPoint(x, regress.a * Math.Pow(x, regress.b)));
-                                x += avr / count;
                             }
                         });
                     }
@@ -95,10 +103,14 @@ namespace Regress
                         Results.Add(AboutDurbinWatson(regress.Dfact));
                         await Task.Run(() =>
                         {
-                            while (x < max)
+                            //while (x < max)
+                            //{
+                            //    Line.Points.Add(new DataPoint(x, regress.a * x * x + regress.b * x + regress.c));
+                            //    x += avr / count;
+                            //}
+                            foreach (var x in ProgramData.X)
                             {
                                 Line.Points.Add(new DataPoint(x, regress.a * x * x + regress.b * x + regress.c));
-                                x += avr / count;
                             }
                         });
                     }
@@ -117,10 +129,14 @@ namespace Regress
                         Results.Add(AboutDurbinWatson(regress.Dfact));
                         await Task.Run(() =>
                         {
-                            while (x < max)
+                            //while (x < max)
+                            //{
+                            //    Line.Points.Add(new DataPoint(x, regress.a + regress.b * Math.Log(x)));
+                            //    x += avr / count;
+                            //}
+                            foreach (var x in ProgramData.X)
                             {
                                 Line.Points.Add(new DataPoint(x, regress.a + regress.b * Math.Log(x)));
-                                x += avr / count;
                             }
                         });
                     }
@@ -140,10 +156,14 @@ namespace Regress
 
                         await Task.Run(() =>
                         {
-                            while (x < max)
+                            //while (x < max)
+                            //{
+                            //    Line.Points.Add(new DataPoint(x, regress.a + regress.b / x));
+                            //    x += avr / count;
+                            //}
+                            foreach (var x in ProgramData.X)
                             {
                                 Line.Points.Add(new DataPoint(x, regress.a + regress.b / x));
-                                x += avr / count;
                             }
                         });
                     }
@@ -154,10 +174,6 @@ namespace Regress
         public void AutoAnalise()
         {
             var Regressions = new List<List<double>>();
-            var step = ProgramData.X.Average() / ProgramData.X.Count();
-            var x = 0.0;
-            var max = ProgramData.X.Max();
-
             for (var i = 0; i < 5; i++)
             {
                 Regressions.Add(new List<double>());
@@ -169,7 +185,6 @@ namespace Regress
 
             {
                 Line = new LineSeries { Color = OxyColors.Red };
-                x = ProgramData.X.Min();
                 var regress = new LinearRegression(ProgramData.X, ProgramData.Y);
                 _equations.Add(regress.Equation);
                 Regressions[0].Add(regress.R);
@@ -177,17 +192,15 @@ namespace Regress
                 Regressions[2].Add(regress.AvrA);
                 Regressions[3].Add(regress.Ffact);
                 Regressions[4].Add(regress.Dfact);
-                while (x < max)
+                for (int i = 0; i < ProgramData.X.Count; i++)
                 {
-                    Line.Points.Add(new DataPoint(x, regress.a * x + regress.b));
-                    x += step;
+                    Line.Points.Add(new DataPoint(ProgramData.X[i], regress.a * ProgramData.X[i] + regress.b));
                 }
                 lines.Add(Line);
             }
 
             {
                 Line = new LineSeries { Color = OxyColors.Red };
-                x = ProgramData.X.Min();
                 var regress = new PowerRegression(ProgramData.X, ProgramData.Y);
                 _equations.Add(regress.Equation);
                 Regressions[0].Add(regress.R);
@@ -195,17 +208,15 @@ namespace Regress
                 Regressions[2].Add(regress.AvrA);
                 Regressions[3].Add(regress.Ffact);
                 Regressions[4].Add(regress.Dfact);
-                while (x < max)
+                for (int i = 0; i < ProgramData.X.Count; i++)
                 {
-                    Line.Points.Add(new DataPoint(x, regress.a * Math.Pow(x, regress.b)));
-                    x += step;
+                    Line.Points.Add(new DataPoint(ProgramData.X[i], regress.a * Math.Pow(ProgramData.X[i], regress.b)));
                 }
                 lines.Add(Line);
             }
 
             {
                 Line = new LineSeries { Color = OxyColors.Red };
-                x = ProgramData.X.Min();
                 var regress = new QuadraticRegression(ProgramData.X, ProgramData.Y);
                 _equations.Add(regress.Equation);
                 Regressions[0].Add(regress.R);
@@ -213,17 +224,15 @@ namespace Regress
                 Regressions[2].Add(regress.AvrA);
                 Regressions[3].Add(regress.Ffact);
                 Regressions[4].Add(regress.Dfact);
-                while (x < max)
+                for (int i = 0; i < ProgramData.X.Count; i++)
                 {
-                    Line.Points.Add(new DataPoint(x, regress.a * x * x + regress.b * x + regress.c));
-                    x += step;
+                    Line.Points.Add(new DataPoint(ProgramData.X[i], regress.a * ProgramData.X[i] * ProgramData.X[i] + regress.b * ProgramData.X[i] + regress.c));
                 }
                 lines.Add(Line);
             }
 
             {
                 Line = new LineSeries { Color = OxyColors.Red };
-                x = ProgramData.X.Min();
                 var regress = new LogarithmicRegression(ProgramData.X, ProgramData.Y);
                 _equations.Add(regress.Equation);
                 Regressions[0].Add(regress.R);
@@ -231,17 +240,15 @@ namespace Regress
                 Regressions[2].Add(regress.AvrA);
                 Regressions[3].Add(regress.Ffact);
                 Regressions[4].Add(regress.Dfact);
-                while (x < max)
+                for (int i = 0; i < ProgramData.X.Count; i++)
                 {
-                    Line.Points.Add(new DataPoint(x, regress.a + regress.b * Math.Log(x)));
-                    x += step;
+                    Line.Points.Add(new DataPoint(ProgramData.X[i], regress.a + regress.b * Math.Log(ProgramData.X[i])));
                 }
                 lines.Add(Line);
             }
 
             {
                 Line = new LineSeries { Color = OxyColors.Red };
-                x = ProgramData.X.Min();
                 var regress = new HyperbolicRegression(ProgramData.X, ProgramData.Y);
                 _equations.Add(regress.Equation);
                 Regressions[0].Add(regress.R);
@@ -249,10 +256,9 @@ namespace Regress
                 Regressions[2].Add(regress.AvrA);
                 Regressions[3].Add(regress.Ffact);
                 Regressions[4].Add(regress.Dfact);
-                while (x < max)
+                for (int i = 0; i < ProgramData.X.Count; i++)
                 {
-                    Line.Points.Add(new DataPoint(x, regress.a + regress.b / x));
-                    x += step;
+                    Line.Points.Add(new DataPoint(ProgramData.X[i], regress.a + regress.b / ProgramData.X[i]));
                 }
                 lines.Add(Line);
             }

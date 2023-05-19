@@ -140,7 +140,7 @@
                           FontFamily="Microsoft Sans Serif"
                           x:Name="PlotViewAnalise"
                           Margin="10,10,0,10"
-                          BorderBrush="Black"
+                          BorderBrush="White"
                           BorderThickness="3"
                           Background="#909090"
                           Grid.RowSpan="23"/>
@@ -287,6 +287,7 @@
                     </Grid>
                 </Grid>
 
+
                 <Border Grid.Row="1"
                         BorderBrush="White"
                         BorderThickness="2"
@@ -314,11 +315,11 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <Label Grid.Row="0" 
-                               Grid.Column="0"
-                               FontSize="15"
-                               Foreground="White"
-                               FontWeight="DemiBold"
+                            <Label Grid.Row="0"
+                                   Grid.Column="0"
+                                   FontSize="15"
+                                   Foreground="White"
+                                   FontWeight="DemiBold"
                                FontFamily="Microsoft Sans Serif"
                                ToolTip ="Уравнение регрессии - это математическое выражение,&#x0a;которое связывает зависимую и одну или несколько &#x0a;независимых переменных&#x0a;в модели регрессии."
                                HorizontalContentAlignment="Right"
