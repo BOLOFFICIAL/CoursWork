@@ -51,11 +51,6 @@ namespace Regress
                         Results.Add(AboutDurbinWatson(regress.Dfact));
                         await Task.Run(() =>
                         {
-                            //while (x < max)
-                            //{
-                            //    Line.Points.Add(new DataPoint(x, regress.a * x + regress.b));
-                            //    x += avr / count;
-                            //}
                             foreach (var x in ProgramData.X) 
                             {
                                 Line.Points.Add(new DataPoint(x, regress.a * x + regress.b));
@@ -77,11 +72,6 @@ namespace Regress
                         Results.Add(AboutDurbinWatson(regress.Dfact));
                         await Task.Run(() =>
                         {
-                            //while (x < max)
-                            //{
-                            //    Line.Points.Add(new DataPoint(x, regress.a * Math.Pow(x, regress.b)));
-                            //    x += avr / count;
-                            //}
                             foreach (var x in ProgramData.X)
                             {
                                 Line.Points.Add(new DataPoint(x, regress.a * Math.Pow(x, regress.b)));
@@ -103,11 +93,6 @@ namespace Regress
                         Results.Add(AboutDurbinWatson(regress.Dfact));
                         await Task.Run(() =>
                         {
-                            //while (x < max)
-                            //{
-                            //    Line.Points.Add(new DataPoint(x, regress.a * x * x + regress.b * x + regress.c));
-                            //    x += avr / count;
-                            //}
                             foreach (var x in ProgramData.X)
                             {
                                 Line.Points.Add(new DataPoint(x, regress.a * x * x + regress.b * x + regress.c));
@@ -129,11 +114,6 @@ namespace Regress
                         Results.Add(AboutDurbinWatson(regress.Dfact));
                         await Task.Run(() =>
                         {
-                            //while (x < max)
-                            //{
-                            //    Line.Points.Add(new DataPoint(x, regress.a + regress.b * Math.Log(x)));
-                            //    x += avr / count;
-                            //}
                             foreach (var x in ProgramData.X)
                             {
                                 Line.Points.Add(new DataPoint(x, regress.a + regress.b * Math.Log(x)));
@@ -156,11 +136,6 @@ namespace Regress
 
                         await Task.Run(() =>
                         {
-                            //while (x < max)
-                            //{
-                            //    Line.Points.Add(new DataPoint(x, regress.a + regress.b / x));
-                            //    x += avr / count;
-                            //}
                             foreach (var x in ProgramData.X)
                             {
                                 Line.Points.Add(new DataPoint(x, regress.a + regress.b / x));
