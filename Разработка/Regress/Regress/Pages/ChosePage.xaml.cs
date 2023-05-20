@@ -124,9 +124,6 @@ namespace Regress
                     if (openFileDialog.ShowDialog() == true)
                     {
                         ComboBoxResult.SelectedValue = null;
-
-                        GridChoseResult.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Star);
-
                         new ProgramData(openFileDialog.FileName);
                         Initialization();
                         UpdateForm();

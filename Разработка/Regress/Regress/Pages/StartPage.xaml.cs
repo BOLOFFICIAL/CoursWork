@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+﻿using Regress.Model;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
@@ -17,7 +17,14 @@ namespace Regress
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new ChosePage());
+            if (ProgramData.regressionindex > -1)
+            {
+                NavigationService.Navigate(new AnalisePage(true));
+            }
+            else
+            {
+                NavigationService.Navigate(new ChosePage());
+            }
         }
     }
 }

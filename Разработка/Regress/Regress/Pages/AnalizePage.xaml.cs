@@ -20,12 +20,9 @@ namespace Regress
     {
         private CorrelationRegression _regression;
 
-        public AnalisePage()
+        public AnalisePage(bool hasfile = false)
         {
             InitializeComponent();
-
-            ComboBoxRegression.SelectedIndex = 0;
-            ComboBoxParameter.SelectedIndex = 0;
 
             ComboBoxRegression.ItemsSource = new List<string>()
             {
@@ -37,6 +34,11 @@ namespace Regress
             };
 
             ComboBoxParameter.ItemsSource = ProgramData.csv.GetNames().Where(name => name != ProgramData.resultcolumn).ToList();
+
+            if (hasfile) 
+            {
+                Analize(false, hasfile);
+            }
         }
 
         private void PrintOXY(LineSeries equation)
@@ -89,6 +91,7 @@ namespace Regress
 
         private void ToEditFile(object sender, RoutedEventArgs e)
         {
+            ProgramData.regressionindex = -1;
             NavigationService.Navigate(new ChosePage());
         }
 
@@ -102,10 +105,18 @@ namespace Regress
             Analize(true);
         }
 
-        private void Analize(bool auto)
+        private void Analize(bool auto,bool hasfile = false)
         {
-            ProgramData.parametercolumn = ComboBoxParameter.SelectedValue.ToString();
-
+            if (!hasfile)
+            {
+                ProgramData.regressionindex = ComboBoxRegression.SelectedIndex;
+                ProgramData.parametercolumn = ComboBoxParameter.SelectedValue.ToString();
+            }
+            else 
+            {
+                ComboBoxRegression.SelectedIndex = ProgramData.regressionindex;
+                ComboBoxParameter.SelectedValue = ProgramData.parametercolumn;
+            }
             ProgramData.X = ProgramData.csv.GetColumn(ProgramData.parametercolumn).Value
                 .Select(el => double.TryParse(el.Replace(".", ","), out double element) ? element : 0)
                 .ToList();
@@ -120,7 +131,7 @@ namespace Regress
             ProgramData.X = data.Select(pair => pair.X).ToList();
             ProgramData.Y = data.Select(pair => pair.Y).ToList();
 
-            _regression = new CorrelationRegression(ComboBoxRegression.SelectedIndex, auto);
+            _regression = new CorrelationRegression(ProgramData.regressionindex, auto);
 
             List<string> results = _regression.Results;
 
@@ -138,6 +149,7 @@ namespace Regress
             if (auto)
             {
                 ComboBoxRegression.SelectedIndex = _regression.TitleIndex;
+                ProgramData.regressionindex = _regression.TitleIndex;
             }
 
             GridData.Height = double.NaN;

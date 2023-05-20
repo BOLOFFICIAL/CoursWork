@@ -13,6 +13,7 @@ namespace Regress.Model
         public static CsvData csv;
         public static string resultcolumn = "";
         public static string parametercolumn = "";
+        public static int regressionindex = -1;
         public static List<double> X;
         public static List<double> Y;
         public ProgramData(string _fileputh) 
@@ -23,6 +24,7 @@ namespace Regress.Model
             parametercolumn = "";
             X = null;
             Y = null;
+            regressionindex = -1;
         }
     }
 }
