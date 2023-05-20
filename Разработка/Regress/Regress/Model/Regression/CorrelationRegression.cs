@@ -269,7 +269,7 @@ namespace Regress
 
             int BestRegression(List<double> correlationCoefficients, List<double> meanErrors)
             {
-                var bestindex = -1;
+                var bestindex = 0;
                 var cC = CheckData(correlationCoefficients);
                 var mE = CheckData(meanErrors);
                 var maxcC = correlationCoefficients.Min();
