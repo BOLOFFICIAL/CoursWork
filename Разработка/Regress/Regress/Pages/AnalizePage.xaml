@@ -145,24 +145,29 @@
                           Background="#909090"
                           Grid.RowSpan="23"/>
 
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="1"
+                  x:Name="GridDataAnalize">
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="0"/>
+                    <RowDefinition Height="0"/>
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+                <Border Grid.Row="0"
+                        BorderBrush="White"
+                        BorderThickness="3"
+                        Margin="10">
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
 
-                    <Label Grid.Row="0"
+                        <Label Grid.Row="0"
                            FontSize="15"
                            Foreground="White"
                            FontWeight="DemiBold"
@@ -171,7 +176,7 @@
                            VerticalContentAlignment="Center"
                            Content="Тип регрессии"/>
 
-                    <ComboBox Grid.Row="1"
+                        <ComboBox Grid.Row="1"
                               FontFamily="Microsoft Sans Serif"
                               Margin="100,0"
                               BorderThickness="2"
@@ -184,7 +189,7 @@
                               Height="30"
                               x:Name="ComboBoxRegression"/>
 
-                    <Label Grid.Row="2" 
+                        <Label Grid.Row="2" 
                            FontSize="15"
                            Foreground="White"
                            FontWeight="DemiBold"
@@ -193,7 +198,7 @@
                            VerticalContentAlignment="Center"
                            Content="Тип регрессии"/>
 
-                    <ComboBox Grid.Row="3"
+                        <ComboBox Grid.Row="3"
                               FontFamily="Microsoft Sans Serif"
                               Margin="100,0"
                               BorderThickness="2"
@@ -206,13 +211,13 @@
                               Height="30"
                               x:Name="ComboBoxParameter"/>
 
-                    <Grid Grid.Row="4">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Row="4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                        <Button Grid.Column="0"
+                            <Button Grid.Column="0"
                                 Grid.Row="0"
                                 Content="Анализ"
                                 Click="Analize"
@@ -224,31 +229,31 @@
                                 HorizontalAlignment="Right"
                                 Height="24"
                                 Width="100">
-                            <Button.Style>
-                                <Style TargetType="{x:Type Button}">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="{x:Type Button}">
-                                                <Border x:Name="border"
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Border x:Name="border"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="2"
                                 CornerRadius="12">
-                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                </Border>
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter TargetName="border" Property="BorderBrush" Value="White" />
-                                                    </Trigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </Button.Style>
-                        </Button>
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="border" Property="BorderBrush" Value="White" />
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
 
-                        <Button Grid.Column="1"
+                            <Button Grid.Column="1"
                                 Grid.Row="0"
                                 Content="Auto"
                                 Click="AutoAnalize"
@@ -260,40 +265,39 @@
                                 HorizontalAlignment="Left"
                                 Height="24"
                                 Width="100">
-                            <Button.Style>
-                                <Style TargetType="{x:Type Button}">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="{x:Type Button}">
-                                                <Border x:Name="border"
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Border x:Name="border"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="2"
                                 CornerRadius="12">
-                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                </Border>
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter TargetName="border" Property="BorderBrush" Value="White" />
-                                                    </Trigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="border" Property="BorderBrush" Value="White" />
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </Grid>
                     </Grid>
-                </Grid>
-
+                </Border>
 
                 <Border Grid.Row="1"
                         BorderBrush="White"
-                        BorderThickness="2"
+                        BorderThickness="3"
                         Visibility="Hidden"
                         x:Name="BorderAnalize"
-                        Margin="10,0,10,10">
+                        Margin="10,0">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <Grid Grid.Row="1"
                           x:Name="GridData"
@@ -305,14 +309,14 @@
                             </Grid.ColumnDefinitions>
 
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
 
                             <Label Grid.Row="0"
@@ -320,11 +324,12 @@
                                    FontSize="15"
                                    Foreground="White"
                                    FontWeight="DemiBold"
-                               FontFamily="Microsoft Sans Serif"
-                               ToolTip ="Уравнение регрессии - это математическое выражение,&#x0a;которое связывает зависимую и одну или несколько &#x0a;независимых переменных&#x0a;в модели регрессии."
-                               HorizontalContentAlignment="Right"
-                               VerticalContentAlignment="Center"
-                               Content="Уравнение регрессии: "/>
+                                   FontFamily="Microsoft Sans Serif"
+                                   ToolTip ="Уравнение регрессии - это математическое выражение,&#x0a;которое связывает зависимую и одну или несколько &#x0a;независимых переменных&#x0a;в модели регрессии."
+                                   HorizontalContentAlignment="Right"
+                                   VerticalContentAlignment="Center"
+                                   Content="Уравнение регрессии: "/>
+                            
                             <Label Grid.Row="1" 
                    Grid.Column="0" 
                    FontSize="15"
@@ -488,10 +493,8 @@
                         FontFamily="Microsoft Sans Serif"
                         Foreground="White"
                         Background="#646464"
-                        HorizontalAlignment="Center"
                         VerticalAlignment="Bottom"
-                        Height="40"
-                        Width="180">
+                        Height="40">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Template">
@@ -500,8 +503,7 @@
                                         <Border x:Name="border"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="2"
-                                CornerRadius="20">
+                                BorderThickness="3">
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                                         </Border>
                                         <ControlTemplate.Triggers>

@@ -146,6 +146,9 @@ namespace Regress
 
             GridAnalize.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
             GridAnalize.ColumnDefinitions[1].Width = new GridLength(0, GridUnitType.Auto);
+            GridDataAnalize.RowDefinitions[0].Height = new GridLength(0, GridUnitType.Auto);
+            GridDataAnalize.RowDefinitions[1].Height = new GridLength(1, GridUnitType.Star);
+            GridDataAnalize.RowDefinitions[2].Height = new GridLength(0, GridUnitType.Auto);
         }
 
         private void SavePdf(object sender, RoutedEventArgs e)

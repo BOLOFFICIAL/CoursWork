@@ -95,10 +95,11 @@ namespace Regress
                 if (select != null)
                 {
                     ProgramData.resultcolumn = select.ToString();
-                    ButtonAnalize.Visibility = Visibility.Visible;
                 }
 
                 HighlightDataGridColumn();
+
+                GridChoseResult.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Auto);
             }
         }
 
@@ -123,7 +124,9 @@ namespace Regress
                     if (openFileDialog.ShowDialog() == true)
                     {
                         ComboBoxResult.SelectedValue = null;
-                        ButtonAnalize.Visibility = Visibility.Hidden;
+
+                        GridChoseResult.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Star);
+
                         new ProgramData(openFileDialog.FileName);
                         Initialization();
                         UpdateForm();
