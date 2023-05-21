@@ -1,8 +1,11 @@
-﻿using Microsoft.Win32;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using Microsoft.Win32;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using Regress.Model;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -35,7 +38,7 @@ namespace Regress
 
             ComboBoxParameter.ItemsSource = ProgramData.csv.GetNames().Where(name => name != ProgramData.resultcolumn).ToList();
 
-            if (hasfile) 
+            if (hasfile)
             {
                 Analize(false, hasfile);
             }
@@ -105,14 +108,14 @@ namespace Regress
             Analize(true);
         }
 
-        private void Analize(bool auto,bool hasfile = false)
+        private void Analize(bool auto, bool hasfile = false)
         {
             if (!hasfile)
             {
                 ProgramData.regressionindex = ComboBoxRegression.SelectedIndex;
                 ProgramData.parametercolumn = ComboBoxParameter.SelectedValue.ToString();
             }
-            else 
+            else
             {
                 ComboBoxRegression.SelectedIndex = ProgramData.regressionindex;
                 ComboBoxParameter.SelectedValue = ProgramData.parametercolumn;
@@ -165,6 +168,9 @@ namespace Regress
 
         private void SavePdf(object sender, RoutedEventArgs e)
         {
+            string p1 = "";
+            string p2 = "";
+
             if (!(_regression?.Title is null))
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -174,39 +180,33 @@ namespace Regress
 
                 if (saveFileDialog.ShowDialog() == true)
                 {
-                    var plotModel = PlotViewAnalise.Model;
 
-                    // добавляем текст сверху графика
-                    var textAnnotationTop = new OxyPlot.Annotations.TextAnnotation
-                    {
-                        Text = "UHFABE",
-                        TextPosition = new DataPoint(0.5, plotModel.PlotArea.Top - 400),
-                        FontSize = 18,
-                        FontWeight = OxyPlot.FontWeights.Bold,
-                        TextHorizontalAlignment = OxyPlot.HorizontalAlignment.Center
-                    };
-                    plotModel.Annotations.Add(textAnnotationTop);
+                    p1 = Path.Combine(Path.GetDirectoryName(saveFileDialog.FileName), DateTime.Now.ToString("fffffff") + ".pdf");
 
-                    // добавляем текст под графиком
-                    var textAnnotationBottom = new OxyPlot.Annotations.TextAnnotation
-                    {
-                        Text = "BOLOFFICIAL",
-                        TextPosition = new DataPoint(0.5, plotModel.PlotArea.Bottom + 200),
-                        FontSize = 18,
-                        FontWeight = OxyPlot.FontWeights.Bold,
-                        TextHorizontalAlignment = OxyPlot.HorizontalAlignment.Center
-                    };
-                    plotModel.Annotations.Add(textAnnotationBottom);
+                    var model = PlotViewAnalise.Model;
 
-                    var exporter = new PdfExporter();
+                    SavePlotViewToPdf(p1, model);
 
-                    exporter.Width = 800;
-                    exporter.Height = 600;
+                    string[] data = new string[]
+                   {
+                        "Привет Bolofficial",
+                        "Привет Bolofficial",
+                        "Привет Bolofficial",
+                        "Привет Bolofficial",
+                        "Bolofficial",
+                        "Bolofficial",
+                        "Bolofficial",
+                        "Bolofficial",
+                        "Bolofficial",
+                        "Bolofficial",
+                   };
 
-                    using (var stream = File.Create(saveFileDialog.FileName))
-                    {
-                        exporter.Export(plotModel, stream);
-                    }
+                    p2 = Path.Combine(Path.GetDirectoryName(saveFileDialog.FileName), DateTime.Now.ToString("fffffff") + ".pdf");
+
+                    SaveTextToPdf(p2, data);
+
+                    MergePdfFiles(p1, p2, saveFileDialog.FileName);
+
                     var result = MessageBox.Show("Отчет успешно сохранен.\nХотите открыть сохраненный файл?", "Сохранение завершено", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                     if (result == MessageBoxResult.Yes)
@@ -218,6 +218,87 @@ namespace Regress
             else
             {
                 MessageBox.Show("Нет данных для формирования отчета");
+            }
+        }
+
+        private void SavePlotViewToPdf(string p1, PlotModel plotModel)
+        {
+            plotModel.Title = "Correlation - regression analysis in RiverCorr";
+            var exporter = new PdfExporter();
+
+            exporter.Width = 595;
+            exporter.Height = (595 * 842) / plotModel.Height;
+
+            using (var stream = File.Create(p1))
+            {
+                exporter.Export(plotModel, stream);
+            }
+        }
+
+        private void SaveTextToPdf(string filePath, string[] data)
+        {
+            Aspose.Pdf.Document document = new Aspose.Pdf.Document();
+            try
+            {
+                Aspose.Pdf.Page page = document.Pages.Add();
+
+                foreach (var el in data)
+                {
+                    page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment(el));
+                }
+
+                document.Save(filePath);
+            }
+            catch (iTextSharp.text.DocumentException ex)
+            {
+                Console.Error.WriteLine("Ошибка при создании документа PDF: " + ex.Message);
+            }
+            finally
+            {
+                document.Dispose();
+            }
+        }
+
+        private void MergePdfFiles(string filePath1, string filePath2, string outputFilePath)
+        {
+            iTextSharp.text.Document document = new iTextSharp.text.Document();
+
+            try
+            {
+                PdfCopy copy = new PdfCopy(document, new FileStream(outputFilePath, FileMode.Create));
+                document.Open();
+
+                PdfReader reader1 = new PdfReader(filePath1);
+                PdfReader reader2 = new PdfReader(filePath2);
+
+                document.NewPage();
+
+                for (int i = 1; i <= reader1.NumberOfPages; i++)
+                {
+                    copy.AddPage(copy.GetImportedPage(reader1, i));
+                }
+
+                for (int i = 1; i <= reader2.NumberOfPages; i++)
+                {
+                    copy.AddPage(copy.GetImportedPage(reader2, i));
+                }
+
+                copy.Close();
+                reader1.Close();
+                reader2.Close();
+
+                File.Delete(filePath1);
+                File.Delete(filePath2);
+            }
+            catch (DocumentException ex)
+            {
+                Console.Error.WriteLine("Ошибка при объединении PDF файлов: " + ex.Message);
+                File.Delete(filePath1);
+                File.Delete(filePath2);
+            }
+            finally
+            {
+                document.Close();
             }
         }
 
