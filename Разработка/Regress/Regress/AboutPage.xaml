@@ -53,15 +53,18 @@
         <Border Grid.Row="2"
                 Margin="10"
                 BorderBrush="White"
-                BorderThickness="3">
+                BorderThickness="3"
+                Padding="10">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <TextBlock  
                     x:Name ="TextBlockAbout"
                     Text=""
-                    Width="500"
+                    Margin="10"
                     FontFamily="Microsoft Sans Serif"
+                    Width="850"
                     Foreground="White"
-                    FontSize="15"
+                    FontSize="25"
+                    TextAlignment="Justify"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top" 
                     TextWrapping="Wrap"/>

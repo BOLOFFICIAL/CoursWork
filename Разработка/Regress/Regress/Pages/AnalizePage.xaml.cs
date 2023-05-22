@@ -1,4 +1,5 @@
 ﻿using Aspose.Pdf;
+using Aspose.Pdf.Facades;
 using Aspose.Pdf.Text;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
@@ -257,7 +258,8 @@ namespace Regress
             string fileName = System.IO.Path.GetFileName(ProgramData.fileputh);
             string text = $"\n\n\n  " +
                 $"  Корреляционно - регрессионный анализ для файла {fileName}\n\n" +
-                $"    Анализ проведен для параметра {ProgramData.parametercolumn} по результативной колонке {ProgramData.resultcolumn}\n";
+                $"    Анализ проведен для параметра {ProgramData.parametercolumn} по результативной колонке {ProgramData.resultcolumn}\n\n" +
+                $"    Тип регрессии: {ComboBoxRegression.Text}\n\n";
             Aspose.Pdf.Document document = new Aspose.Pdf.Document();
             try
             {
@@ -278,7 +280,7 @@ namespace Regress
 
                 Aspose.Pdf.Row headerRow = table.Rows.Add();
                 headerRow.FixedRowHeight = 20;
-                headerRow.Cells.Add("   Параметр    ");
+                headerRow.Cells.Add("   Характеристика    ");
                 headerRow.Cells.Add("   Значение    ");
                 headerRow.Cells[0].BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.Color.LightPink);
                 headerRow.Cells[1].BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.Color.LightPink);
