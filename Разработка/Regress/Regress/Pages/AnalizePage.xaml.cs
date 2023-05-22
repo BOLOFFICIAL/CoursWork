@@ -278,8 +278,8 @@ namespace Regress
                 headerRow.FixedRowHeight = 20;
                 headerRow.Cells.Add("   Параметр    ");
                 headerRow.Cells.Add("   Значение    ");
-                headerRow.Cells[0].BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.Color.White);
-                headerRow.Cells[1].BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.Color.White);
+                headerRow.Cells[0].BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.Color.LightPink);
+                headerRow.Cells[1].BackgroundColor = Aspose.Pdf.Color.FromRgb(System.Drawing.Color.LightPink);
 
                 for (int i = 0; i < column1Data.Length; i++)
                 {

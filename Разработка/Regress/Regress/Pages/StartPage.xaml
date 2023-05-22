@@ -72,7 +72,7 @@
         <Button Grid.Row="3"
                 Grid.Column="1"
                 Content="О программе"
-                Click="Button_Click"
+                Click="Button_Click_1"
                 MaxWidth="180"
                 FontSize="20"
                 FontFamily="Microsoft Sans Serif"

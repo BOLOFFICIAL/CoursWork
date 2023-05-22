@@ -26,5 +26,10 @@ namespace Regress
                 NavigationService.Navigate(new ChosePage());
             }
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
