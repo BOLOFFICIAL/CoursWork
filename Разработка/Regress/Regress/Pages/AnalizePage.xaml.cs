@@ -255,7 +255,9 @@ namespace Regress
         private void SaveTableToPdf(string filePath, string[] column1Data, string[] column2Data)
         {
             string fileName = System.IO.Path.GetFileName(ProgramData.fileputh);
-            string text = $"\n\n\nКорреляционно - регрессионный анализ для файла {fileName}\n";
+            string text = $"\n\n\n  " +
+                $"  Корреляционно - регрессионный анализ для файла {fileName}\n\n" +
+                $"    Анализ проведен для параметра {ProgramData.parametercolumn} по результативной колонке {ProgramData.resultcolumn}\n";
             Aspose.Pdf.Document document = new Aspose.Pdf.Document();
             try
             {
