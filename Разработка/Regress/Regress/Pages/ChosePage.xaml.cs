@@ -45,7 +45,7 @@ namespace Regress
                     }
                 }
             }
-
+            filename.Content = System.IO.Path.GetFileName(ProgramData.fileputh);
             ProgramData.csv = new CsvData(ProgramData.fileputh);
             ComboBoxResult.ItemsSource = ProgramData.csv.GetNames();
         }
@@ -134,7 +134,6 @@ namespace Regress
                         new ProgramData(openFileDialog.FileName);
                         Initialization();
                         UpdateForm();
-                        filename.Content = System.IO.Path.GetFileName(ProgramData.fileputh);
                     }
                 }
                 catch
