@@ -402,11 +402,20 @@ namespace Regress
 
         private void ToChosePage(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "CSV files (*.csv)|*.csv";
-            if (openFileDialog.ShowDialog() == true)
+            try
             {
-                new ProgramData(openFileDialog.FileName);
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "CSV files (*.csv)|*.csv";
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    ProgramData data = new ProgramData(openFileDialog.FileName);
+                    NavigationService.Navigate(new ChosePage());
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Перепроверьте фаил и повторите попытку", "Ошибка чтения файла", MessageBoxButton.OK, MessageBoxImage.Error);
+                ProgramData.fileputh = "";
                 NavigationService.Navigate(new ChosePage());
             }
         }

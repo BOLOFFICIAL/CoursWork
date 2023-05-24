@@ -52,14 +52,17 @@ namespace Regress
 
         private void ToAnalisePage(object sender, RoutedEventArgs e)
         {
-            if (!(ProgramData.resultcolumn is null) && (ProgramData.resultcolumn.Length > 0))
-            {
-                NavigationService.Navigate(new AnalisePage());
-            }
-            else
+            if ((ProgramData.resultcolumn is null) && !(ProgramData.resultcolumn.Length > 0))
             {
                 MessageBox.Show("Выберите колонку результатов");
+                return;
             }
+            if (ProgramData.csv.ColumnCount<2)
+            {
+                MessageBox.Show("В файле недостаточно колонок.\n Минимальное количество 2");
+                return;
+            }
+            NavigationService.Navigate(new AnalisePage());
         }
 
         public void HighlightDataGridColumn()
