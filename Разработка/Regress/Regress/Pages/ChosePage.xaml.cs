@@ -52,7 +52,7 @@ namespace Regress
 
         private void ToAnalisePage(object sender, RoutedEventArgs e)
         {
-            if ((ProgramData.resultcolumn is null) && !(ProgramData.resultcolumn.Length > 0))
+            if (!(ProgramData.resultcolumn.Length > 0))
             {
                 MessageBox.Show("Выберите колонку результатов");
                 return;
