@@ -59,7 +59,7 @@ namespace Regress
             }
             if (ProgramData.csv.ColumnCount<2)
             {
-                MessageBox.Show("В файле недостаточно колонок.\n Минимальное количество 2");
+                MessageBox.Show("В файле недостаточно колонок.\nМинимальное количество 2");
                 return;
             }
             NavigationService.Navigate(new AnalisePage());
