@@ -1,4 +1,5 @@
 ﻿using CsvHelper;
+using CsvHelper.Configuration;
 using Microsoft.Win32;
 using Regress.CSV;
 using Regress.Model;
@@ -27,11 +28,14 @@ namespace Regress
 
         public void Initialization()
         {
-            filename.Content = System.IO.Path.GetFileName(ProgramData.fileputh);
-
             using (var reader = new StreamReader(ProgramData.fileputh))
             {
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                var csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture)
+                {
+                    Delimiter = ";"
+                };
+
+                using (var csv = new CsvReader(reader, csvConfig))
                 {
                     using (var dr = new CsvDataReader(csv))
                     {
@@ -127,11 +131,14 @@ namespace Regress
                         new ProgramData(openFileDialog.FileName);
                         Initialization();
                         UpdateForm();
+                        filename.Content = System.IO.Path.GetFileName(ProgramData.fileputh);
                     }
                 }
                 catch
                 {
                     MessageBox.Show("Перепроверьте фаил и повторите попытку", "Ошибка чтения файла", MessageBoxButton.OK, MessageBoxImage.Error);
+                    ProgramData.fileputh = "";
+                    NavigationService.Navigate(new ChosePage());
                 }
             }
         }

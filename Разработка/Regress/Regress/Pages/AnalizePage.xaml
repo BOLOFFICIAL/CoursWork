@@ -152,6 +152,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="0"/>
                     <RowDefinition Height="0"/>
+                    <RowDefinition Height="0"/>
                 </Grid.RowDefinitions>
 
                 <Border Grid.Row="0"
@@ -477,6 +478,36 @@ ToolTip ="F-критерий Фишера — это&#x0a; статистиче�
                    VerticalContentAlignment="Center"/>
                         </Grid>
                     </ScrollViewer>
+                </Border>
+
+                <Border Grid.Row="2"
+                        BorderBrush="White"
+                        BorderThickness="3"
+                        Margin="10,10,10,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0"
+                               FontSize="15"
+                               Foreground="White"
+                               FontWeight="DemiBold"
+                               FontFamily="Microsoft Sans Serif"
+                               HorizontalContentAlignment="Center"
+                               VerticalContentAlignment="Center"
+                               Content="Некорректные значения"/>
+
+                        <DataGrid Grid.Row="1"
+                                  x:Name="DataGridAnalize"
+                                  IsReadOnly="True"
+                                  FontFamily="Microsoft Sans Serif"
+                                  FontWeight="Medium"
+                                  FontSize="15"
+                                  Grid.RowSpan="3"
+                                  Background="White"
+                                  Padding="5"/>
+                    </Grid>
                 </Border>
 
                 <Button Grid.Row="3"

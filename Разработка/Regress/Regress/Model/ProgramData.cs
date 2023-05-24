@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Regress.Model
 {
@@ -16,6 +17,8 @@ namespace Regress.Model
         public static int regressionindex = -1;
         public static List<double> X;
         public static List<double> Y;
+        public static List<string> ErrorX;
+        public static List<string> ErrorY;
         public ProgramData(string _fileputh) 
         {
             fileputh = _fileputh;
@@ -24,6 +27,8 @@ namespace Regress.Model
             parametercolumn = "";
             X = null;
             Y = null;
+            ErrorX = null;
+            ErrorY = null;
             regressionindex = -1;
         }
     }

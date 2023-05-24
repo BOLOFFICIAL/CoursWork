@@ -134,7 +134,7 @@
                           BorderThickness="3"
                           FontSize="15"
                           Grid.RowSpan="3"
-                          Background="#404040"
+                          Background="White"
                           Padding="5"/>
             </Grid>
 

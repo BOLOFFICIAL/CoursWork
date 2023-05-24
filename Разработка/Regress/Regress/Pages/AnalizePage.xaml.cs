@@ -8,6 +8,7 @@ using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using Regress.Model;
+using SixLabors.ImageSharp.ColorSpaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -62,7 +63,7 @@ namespace Regress
                 StrokeThickness = 2
             };
 
-            for (int i = 0; i < ProgramData.csv.RowCount; i++)
+            for (int i = 0; i < ProgramData.X.Count; i++)
             {
                 scatterSeries.Points.Add(new DataPoint(ProgramData.X[i], ProgramData.Y[i]));
             }
@@ -124,12 +125,28 @@ namespace Regress
                 ComboBoxRegression.SelectedIndex = ProgramData.regressionindex;
                 ComboBoxParameter.SelectedValue = ProgramData.parametercolumn;
             }
-            ProgramData.X = ProgramData.csv.GetColumn(ProgramData.parametercolumn).Value
-                .Select(el => double.TryParse(el.Replace(".", ","), out double element) ? element : 0)
-                .ToList();
-            ProgramData.Y = ProgramData.csv.GetColumn(ProgramData.resultcolumn).Value
-                .Select(el => double.TryParse(el.Replace(".", ","), out double element) ? element : 0)
-                .ToList();
+            ProgramData.X = new List<double>();
+            ProgramData.Y = new List<double>();
+            ProgramData.ErrorX = new List<string>();
+            ProgramData.ErrorY = new List<string>();
+
+            for (int i = 0; i < ProgramData.csv.RowCount; i++)
+            {
+                var p = ProgramData.csv.GetColumn(ProgramData.parametercolumn).Value[i].Replace(".", ",");
+                var r = ProgramData.csv.GetColumn(ProgramData.resultcolumn).Value[i].Replace(".", ",");
+
+                if (double.TryParse(p, out double valueX) &&
+                    double.TryParse(r, out double valueY))
+                {
+                    ProgramData.X.Add(valueX);
+                    ProgramData.Y.Add(valueY);
+                }
+                else 
+                {
+                    ProgramData.ErrorX.Add(p);
+                    ProgramData.ErrorY.Add(r);
+                }
+            }
 
             var data = ProgramData.X.Zip(ProgramData.Y, (x, y) => new { X = x, Y = y }).ToList();
 
@@ -159,6 +176,8 @@ namespace Regress
                 ProgramData.regressionindex = _regression.TitleIndex;
             }
 
+            FillDataGrid(ProgramData.ErrorX, ProgramData.ErrorY,DataGridAnalize);
+
             GridData.Height = double.NaN;
             ButtonSave.Visibility = Visibility.Visible;
             BorderAnalize.Visibility = Visibility.Visible;
@@ -167,7 +186,34 @@ namespace Regress
             GridAnalize.ColumnDefinitions[1].Width = new GridLength(0, GridUnitType.Auto);
             GridDataAnalize.RowDefinitions[0].Height = new GridLength(0, GridUnitType.Auto);
             GridDataAnalize.RowDefinitions[1].Height = new GridLength(1, GridUnitType.Star);
-            GridDataAnalize.RowDefinitions[2].Height = new GridLength(0, GridUnitType.Auto);
+            if (ProgramData.ErrorX.Count > 0)
+            {
+                GridDataAnalize.RowDefinitions[2].Height = new GridLength(1, GridUnitType.Star);
+            }
+            GridDataAnalize.RowDefinitions[3].Height = new GridLength(0, GridUnitType.Auto);
+        }
+
+        private void FillDataGrid(List<string> X, List<string> Y, DataGrid dataGrid)
+        {
+            DataTable dataTable = new DataTable();
+
+            // Создание столбцов
+            DataColumn columnX = new DataColumn(ProgramData.parametercolumn, typeof(string));
+            DataColumn columnY = new DataColumn(ProgramData.resultcolumn, typeof(string));
+            dataTable.Columns.Add(columnX);
+            dataTable.Columns.Add(columnY);
+
+            // Заполнение данными
+            for (int i = 0; i < Math.Min(X.Count, Y.Count); i++)
+            {
+                DataRow row = dataTable.NewRow();
+                row[ProgramData.parametercolumn] = X[i];
+                row[ProgramData.resultcolumn] = Y[i];
+                dataTable.Rows.Add(row);
+            }
+
+            // Привязка DataTable к DataGrid
+            dataGrid.ItemsSource = dataTable.DefaultView;
         }
 
         private void SavePdf(object sender, RoutedEventArgs e)
@@ -238,6 +284,8 @@ namespace Regress
 
         private void SavePlotViewToPdf(string p1, PlotModel plotModel)
         {
+            plotModel.Axes[0].Title = "X";
+            plotModel.Axes[1].Title = "Y";
             plotModel.Title = "Correlation - regression analysis in RiverCorr";
             ((LineSeries)plotModel.Series[0]).MarkerSize = 3;
             var exporter = new PdfExporter();
@@ -258,7 +306,7 @@ namespace Regress
             string fileName = System.IO.Path.GetFileName(ProgramData.fileputh);
             string text = $"\n\n\n  " +
                 $"  Корреляционно - регрессионный анализ для файла {fileName}\n\n" +
-                $"    Анализ проведен для параметра {ProgramData.parametercolumn} по результативной колонке {ProgramData.resultcolumn}\n\n" +
+                $"    Анализ проведен для параметра {ProgramData.parametercolumn} (ось X) по результативной колонке {ProgramData.resultcolumn} (ось Y)\n\n" +
                 $"    Тип регрессии: {ComboBoxRegression.Text}\n\n";
             Aspose.Pdf.Document document = new Aspose.Pdf.Document();
             try

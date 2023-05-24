@@ -24,7 +24,7 @@ namespace Regress.CSV
         public int ColumnCount { get; private set; }
 
         // Определяем свойство для хранения количества строк в файле
-        public int RowCount { get; private set; }
+        public int RowCount { get; set; }
 
         // Определяем конструктор, который принимает путь к файлу в качестве аргумента
         public CsvData(string filePath)
@@ -43,7 +43,7 @@ namespace Regress.CSV
             if (_data != null)
             {
                 // Создаем список столбцов Columns и заполняем его объектами Column на основе первой строки файла
-                Columns = _data[0].Split(',').Select(columnName => new Column(columnName)).ToList();
+                Columns = _data[0].Split(';').Select(columnName => new Column(columnName)).ToList();
 
                 if (CheckDuplicateColumnNames() == false)
                 {
@@ -54,7 +54,7 @@ namespace Regress.CSV
                 foreach (var dataRow in _data.Skip(1))
                 {
                     // Разбиваем строку на массив значений, используя разделитель ","
-                    var splitDataRow = dataRow.Split(',');
+                    var splitDataRow = dataRow.Split(';');
 
                     // Проходим по всем столбцам и добавляем значение текущей строки в соответствующий столбец
                     for (int i = 0; i < splitDataRow.Length; i++)
