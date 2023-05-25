@@ -291,9 +291,8 @@ namespace Regress
             ((LineSeries)plotModel.Series[0]).MarkerSize = 3;
             var exporter = new PdfExporter();
 
-            var tmp = plotModel.Width;
             exporter.Width = 595;
-            exporter.Height = plotModel.Height * 595 / tmp;
+            exporter.Height = exporter.Width * 3 / 4;
 
             using (var stream = File.Create(p1))
             {
@@ -403,20 +402,22 @@ namespace Regress
 
         private void ToChosePage(object sender, RoutedEventArgs e)
         {
+            string oldputh = ProgramData.fileputh;
             try
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Filter = "CSV files (*.csv)|*.csv";
                 if (openFileDialog.ShowDialog() == true)
                 {
-                    ProgramData data = new ProgramData(openFileDialog.FileName);
+                    ProgramData.fileputh = openFileDialog.FileName;
+                    ProgramData.Clear();
                     NavigationService.Navigate(new ChosePage());
                 }
             }
             catch
             {
                 MessageBox.Show("Перепроверьте фаил и повторите попытку", "Ошибка чтения файла", MessageBoxButton.OK, MessageBoxImage.Error);
-                ProgramData.fileputh = "";
+                ProgramData.fileputh = oldputh;
                 NavigationService.Navigate(new ChosePage());
             }
         }
