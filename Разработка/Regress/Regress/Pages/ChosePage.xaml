@@ -169,6 +169,7 @@
                           SelectionChanged="ComboBoxResult_SelectionChanged"
                           FontFamily="Microsoft Sans Serif"
                           Margin="10,0"
+                                  MaxWidth="500"
                           HorizontalContentAlignment="Center"
                           VerticalContentAlignment="Center"
                           FontWeight="DemiBold"

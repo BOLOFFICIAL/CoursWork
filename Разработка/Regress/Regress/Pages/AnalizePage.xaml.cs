@@ -184,6 +184,7 @@ namespace Regress
 
             GridAnalize.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
             GridAnalize.ColumnDefinitions[1].Width = new GridLength(0, GridUnitType.Auto);
+            DataGridAnalize.MaxWidth = 700;
             GridDataAnalize.RowDefinitions[0].Height = new GridLength(0, GridUnitType.Auto);
             GridDataAnalize.RowDefinitions[1].Height = new GridLength(1, GridUnitType.Star);
             if (ProgramData.ErrorX.Count > 0)
