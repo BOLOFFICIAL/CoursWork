@@ -41,7 +41,7 @@ namespace Regress
                 "Гиперболическая",
             };
 
-            ComboBoxParameter.ItemsSource = ProgramData.csv.GetNames().Where(name => name != ProgramData.resultcolumn).ToList();
+            ComboBoxParameter.ItemsSource = ProgramData.csv.GetNames().Where(name => name.Length >= 1 && name != ProgramData.resultcolumn).ToList();
 
             if (hasfile)
             {

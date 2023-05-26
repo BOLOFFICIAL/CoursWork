@@ -199,7 +199,7 @@
                            FontFamily="Microsoft Sans Serif"
                            HorizontalContentAlignment="Center"
                            VerticalContentAlignment="Center"
-                           Content="Тип регрессии"/>
+                           Content="Параметр"/>
 
                         <ComboBox Grid.Row="3"
                               FontFamily="Microsoft Sans Serif"

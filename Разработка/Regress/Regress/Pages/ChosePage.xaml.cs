@@ -6,6 +6,7 @@ using Regress.Model;
 using System.Data;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -47,7 +48,7 @@ namespace Regress
             }
             filename.Content = System.IO.Path.GetFileName(ProgramData.fileputh);
             ProgramData.csv = new CsvData(ProgramData.fileputh);
-            ComboBoxResult.ItemsSource = ProgramData.csv.GetNames();
+            ComboBoxResult.ItemsSource = ProgramData.csv.GetNames().Where(name => name.Length >= 1).ToList();
         }
 
         private void ToAnalisePage(object sender, RoutedEventArgs e)
