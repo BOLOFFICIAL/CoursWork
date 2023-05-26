@@ -31,10 +31,6 @@ namespace Regress
         {
             Results = new List<string>();
             Line = new LineSeries { Color = OxyColors.Red };
-            double x = ProgramData.X.Min();
-            double max = ProgramData.X.Max();
-            double avr = ProgramData.X.Average();
-            int count = ProgramData.X.Count();
             switch (_index)
             {
                 case 0:
