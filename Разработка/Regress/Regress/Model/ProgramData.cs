@@ -1,9 +1,6 @@
 ﻿using Regress.CSV;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
 
 namespace Regress.Model
 {
@@ -18,7 +15,8 @@ namespace Regress.Model
         public static List<double> Y;
         public static List<string> ErrorX;
         public static List<string> ErrorY;
-        public ProgramData(string _fileputh) 
+        public static DataTable datatable;
+        public ProgramData(string _fileputh)
         {
             fileputh = _fileputh;
             csv = null;

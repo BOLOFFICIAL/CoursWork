@@ -1,6 +1,5 @@
 ﻿using OxyPlot;
 using OxyPlot.Series;
-using Regress.CSV;
 using Regress.Model;
 using System;
 using System.Collections.Generic;
@@ -47,7 +46,7 @@ namespace Regress
                         Results.Add(AboutDurbinWatson(regress.Dfact));
                         await Task.Run(() =>
                         {
-                            foreach (var x in ProgramData.X) 
+                            foreach (var x in ProgramData.X)
                             {
                                 Line.Points.Add(new DataPoint(x, regress.a * x + regress.b));
                             }

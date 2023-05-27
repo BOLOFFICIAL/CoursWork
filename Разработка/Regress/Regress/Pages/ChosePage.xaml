@@ -122,7 +122,7 @@
                            Grid.ColumnSpan="3"
                            x:Name="filename"/>
                 </Border>
-                
+
 
                 <DataGrid Grid.Row="1"
                           x:Name="DataGridChose"
@@ -135,7 +135,13 @@
                           FontSize="15"
                           Grid.RowSpan="3"
                           Background="White"
-                          Padding="5"/>
+                          Padding="5">
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Удалить" Click="MenuItem_Click"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                </DataGrid>
             </Grid>
 
             <Grid Grid.Column="1"

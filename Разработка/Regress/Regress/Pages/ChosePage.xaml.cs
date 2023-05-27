@@ -3,6 +3,7 @@ using CsvHelper.Configuration;
 using Microsoft.Win32;
 using Regress.CSV;
 using Regress.Model;
+using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
@@ -27,27 +28,32 @@ namespace Regress
             }
         }
 
-        public void Initialization()
+        public void Initialization(bool oldfile = false)
         {
-            using (var reader = new StreamReader(ProgramData.fileputh))
+            if (!oldfile || ProgramData.csv == null)
             {
-                var csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture)
+                using (var reader = new StreamReader(ProgramData.fileputh))
                 {
-                    Delimiter = ";"
-                };
-
-                using (var csv = new CsvReader(reader, csvConfig))
-                {
-                    using (var dr = new CsvDataReader(csv))
+                    var csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture)
                     {
-                        var dt = new DataTable();
-                        dt.Load(dr);
-                        DataGridChose.ItemsSource = dt.DefaultView;
+                        Delimiter = ";"
+                    };
+
+                    using (var csv = new CsvReader(reader, csvConfig))
+                    {
+                        using (var dr = new CsvDataReader(csv))
+                        {
+                            var dt = new DataTable();
+                            dt.Load(dr);
+                            ProgramData.datatable = dt;
+                            DataGridChose.ItemsSource = ProgramData.datatable.DefaultView;
+                        }
                     }
                 }
+                ProgramData.csv = new CsvData(ProgramData.fileputh);
             }
+            DataGridChose.ItemsSource = ProgramData.datatable.DefaultView;
             filename.Content = System.IO.Path.GetFileName(ProgramData.fileputh);
-            ProgramData.csv = new CsvData(ProgramData.fileputh);
             ComboBoxResult.ItemsSource = ProgramData.csv.GetNames().Where(name => name.Length >= 1).ToList();
         }
 
@@ -58,7 +64,7 @@ namespace Regress
                 MessageBox.Show("Выберите колонку результатов");
                 return;
             }
-            if (ProgramData.csv.ColumnCount<2)
+            if (ProgramData.csv.ColumnCount < 2)
             {
                 MessageBox.Show("В файле недостаточно колонок.\nМинимальное количество 2");
                 return;
@@ -120,7 +126,7 @@ namespace Regress
         {
             if (oldfile)
             {
-                Initialization();
+                Initialization(oldfile);
                 UpdateForm();
             }
             else
@@ -151,6 +157,28 @@ namespace Regress
             GridChose.RowDefinitions[0].Height = new GridLength(0, GridUnitType.Auto);
             GridChose.RowDefinitions[1].Height = new GridLength(1, GridUnitType.Star);
             ChoseFile.HorizontalAlignment = HorizontalAlignment.Left;
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            List<int> deleteindex = new List<int>();
+            List<DataRowView> rowsToDelete = new List<DataRowView>();
+            DataTable dt = ((DataView)DataGridChose.ItemsSource).Table;
+
+            foreach (var selectedItem in DataGridChose.SelectedItems)
+            {
+                DataRowView rowView = (DataRowView)selectedItem;
+                rowsToDelete.Add(rowView);
+                int rowIndex = dt.Rows.IndexOf(rowView.Row);
+                deleteindex.Add(rowIndex);
+            }
+
+            ProgramData.csv.DeleteRows(deleteindex);
+
+            foreach (DataRowView row in rowsToDelete)
+            {
+                dt.Rows.Remove(row.Row);
+            }
         }
     }
 }

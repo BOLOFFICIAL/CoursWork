@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Regress.CSV
 {
@@ -153,6 +149,15 @@ namespace Regress.CSV
                 }
             }
             return csvtable;
+        }
+
+        public void DeleteRows(List<int> deleteindex)
+        {
+            foreach (Column column in Columns)
+            {
+                column.DeleteRows(deleteindex);
+            }
+            RowCount = RowCount - deleteindex.Count;
         }
     }
 }

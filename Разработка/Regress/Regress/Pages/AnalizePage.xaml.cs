@@ -1,14 +1,10 @@
-﻿using Aspose.Pdf;
-using Aspose.Pdf.Facades;
-using Aspose.Pdf.Text;
-using iTextSharp.text;
+﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.Win32;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using Regress.Model;
-using SixLabors.ImageSharp.ColorSpaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -141,7 +137,7 @@ namespace Regress
                     ProgramData.X.Add(valueX);
                     ProgramData.Y.Add(valueY);
                 }
-                else 
+                else
                 {
                     ProgramData.ErrorX.Add(p);
                     ProgramData.ErrorY.Add(r);
@@ -176,7 +172,7 @@ namespace Regress
                 ProgramData.regressionindex = _regression.TitleIndex;
             }
 
-            FillDataGrid(ProgramData.ErrorX, ProgramData.ErrorY,DataGridAnalize);
+            FillDataGrid(ProgramData.ErrorX, ProgramData.ErrorY, DataGridAnalize);
 
             GridData.Height = double.NaN;
             ButtonSave.Visibility = Visibility.Visible;

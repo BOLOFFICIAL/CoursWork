@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Regress.CSV
 {
@@ -26,6 +22,23 @@ namespace Regress.CSV
         public void RenameColumn(string name)
         {
             Name = name;
+        }
+
+        public void DeleteRows(List<int> index)
+        {
+            List<string> newValue = new List<string>();
+
+            for (int i = 0; i < Value.Count; i++)
+            {
+                if (!index.Contains(i))
+                {
+                    newValue.Add(Value[i]);
+                }
+            }
+
+            // Замена исходных списков новыми списками без удаленных элементов
+            Value.Clear();
+            Value.AddRange(newValue);
         }
     }
 }
