@@ -69,6 +69,11 @@ namespace Regress
                 MessageBox.Show("В файле недостаточно колонок.\nМинимальное количество 2");
                 return;
             }
+            if (DataGridChose.Items.Count == 0)
+            {
+                MessageBox.Show("В файле недостаточно значений");
+                return;
+            }
             NavigationService.Navigate(new AnalisePage());
         }
 
@@ -111,7 +116,7 @@ namespace Regress
                     ProgramData.resultcolumn = select.ToString();
                 }
 
-                HighlightDataGridColumn();
+                //HighlightDataGridColumn();
 
                 GridChoseResult.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Auto);
             }

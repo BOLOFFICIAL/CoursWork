@@ -9,7 +9,123 @@
    d:DesignHeight="500" d:DesignWidth="800"
    Title="AnalisePage">
     <Page.Resources>
-        
+        <Style x:Key="PlotViewStyle" TargetType="oxy:PlotView">
+            <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Margin" Value="10,10,0,0"/>
+            <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#646464"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="Width" Value="140"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="2"
+                        CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ButtonRegressionStyle" TargetType="Button">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Margin" Value="5,10,5,10"/>
+            <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#646464"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="2"
+                                CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,5,0,0"/>
+        </Style>
+        <Style x:Key="LabelAnalizeStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="LabelResultStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+        </Style>
+        <Style x:Key="ButtonSaveStyle" TargetType="Button">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="10,0,10,10"/>
+            <Setter Property="Visibility" Value="Hidden"/>
+            <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#646464"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="3"
+                                CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="BorderStyle" TargetType="Border">
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="CornerRadius" Value="10"/>
+        </Style>
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -25,107 +141,21 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0"
-                Content="Меню"
-                FontSize="15"
-                Margin="10,10,5,0"
-                FontFamily="Microsoft Sans Serif"
-                Foreground="White"
-                Background="#646464"
-                HorizontalAlignment="Center"
-                Height="24"
-                Width="140" Click="Button_Click">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="2"
-                                CornerRadius="12">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="BorderBrush" Value="White" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
+                    Content="Меню"
+                    Click="Button_Click"
+                    Style="{StaticResource ButtonStyle}">
             </Button>
 
             <Button Grid.Column="1"
-                Content="Выбрать фаил"
-                Click="ToChosePage"
-                FontSize="15"
-                Margin="5,10,5,0"
-                FontFamily="Microsoft Sans Serif"
-                Foreground="White"
-                Background="#646464"
-                HorizontalAlignment="Left"
-                Height="24"
-                Width="140">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="2"
-                                CornerRadius="12">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="BorderBrush" Value="White" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
+                    Content="Выбрать фаил"
+                    Click="ToChosePage"
+                    Style="{StaticResource ButtonStyle}">
             </Button>
 
             <Button Grid.Column="2"
-                Content="Настроить фаил"
-                Click="ToEditFile"
-                FontSize="15"
-                Margin="5,10,10,0"
-                FontFamily="Microsoft Sans Serif"
-                Foreground="White"
-                Background="#646464"
-                HorizontalAlignment="Center"
-                Height="24"
-                Width="140">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="2"
-                                CornerRadius="12">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="BorderBrush" Value="White" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
+                    Content="Настроить фаил"
+                    Click="ToEditFile"
+                    Style="{StaticResource ButtonStyle}">
             </Button>
         </Grid>
 
@@ -136,15 +166,14 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <oxy:PlotView Grid.Column="0"
-                          FontFamily="Microsoft Sans Serif"
+            <Border Grid.Column="0"
+                    Style="{StaticResource BorderStyle}"
+                    Margin="10,10,0,10">
+                <oxy:PlotView 
                           x:Name="PlotViewAnalise"
-                          Margin="10,10,0,10"
-                          BorderBrush="White"
-                          BorderThickness="3"
-                          Background="#909090"
-                          Grid.RowSpan="23"/>
-
+                          Style="{StaticResource PlotViewStyle}"/>
+            </Border>
+            
             <Grid Grid.Column="1"
                   x:Name="GridDataAnalize">
 
@@ -156,8 +185,7 @@
                 </Grid.RowDefinitions>
 
                 <Border Grid.Row="0"
-                        BorderBrush="White"
-                        BorderThickness="3"
+                        Style="{StaticResource BorderStyle}"
                         Margin="10">
                     <Grid Grid.Row="0">
                         <Grid.RowDefinitions>
@@ -169,52 +197,33 @@
                         </Grid.RowDefinitions>
 
                         <Label Grid.Row="0"
-                           FontSize="15"
-                           Foreground="White"
-                           FontWeight="DemiBold"
-                           FontFamily="Microsoft Sans Serif"
-                           HorizontalContentAlignment="Center"
-                           VerticalContentAlignment="Center"
-                           Content="Тип регрессии"/>
+                               Content="Тип регрессии"
+                               Style="{StaticResource LabelStyle}">
+                        </Label>
 
                         <ComboBox Grid.Row="1"
-                                  FontFamily="Microsoft Sans Serif"
                                   Margin="100,0"
-                                  BorderThickness="2"
                                   SelectedIndex="0"
-                                  Foreground="#505050"
-                                  MaxWidth="500"
-                                  HorizontalContentAlignment="Center"
-                              VerticalContentAlignment="Center"
-                              Padding="5"
-                              FontWeight="DemiBold"
-                              FontSize="15"
-                              Height="30"
-                              x:Name="ComboBoxRegression"/>
+                                  Foreground="White"
+                                  MaxWidth="300"
+                                  HorizontalAlignment="Center"
+                                  Padding="5"
+                                  FontSize="20"
+                                  x:Name="ComboBoxRegression"/>
 
-                        <Label Grid.Row="2" 
-                           FontSize="15"
-                           Foreground="White"
-                           FontWeight="DemiBold"
-                           FontFamily="Microsoft Sans Serif"
-                           HorizontalContentAlignment="Center"
-                           VerticalContentAlignment="Center"
-                           Content="Параметр"/>
+                        <Label Grid.Row="2"
+                               Content="Параметр"
+                               Style="{StaticResource LabelStyle}">
+                        </Label>
 
                         <ComboBox Grid.Row="3"
-                              FontFamily="Microsoft Sans Serif"
-                              Margin="100,0"
-                              BorderThickness="2"
-                              Foreground="#505050"
-                                  MaxWidth="500"
-                              HorizontalContentAlignment="Center"
+                                  Margin="100,0"
+                                  Foreground="White"
+                                  MaxWidth="300"
                                   SelectedIndex="0"
-                              VerticalContentAlignment="Center"
-                              Padding="5"
-                              FontWeight="DemiBold"
-                              FontSize="15"
-                              Height="30"
-                              x:Name="ComboBoxParameter"/>
+                                  HorizontalAlignment="Center"
+                                  FontSize="20"
+                                  x:Name="ComboBoxParameter"/>
 
                         <Grid Grid.Row="4">
                             <Grid.ColumnDefinitions>
@@ -223,86 +232,29 @@
                             </Grid.ColumnDefinitions>
 
                             <Button Grid.Column="0"
-                                Grid.Row="0"
-                                Content="Анализ"
-                                Click="Analize"
-                                FontSize="15"
-                                Margin="10,10,5,10"
-                                FontFamily="Microsoft Sans Serif"
-                                Foreground="White"
-                                Background="#646464"
-                                HorizontalAlignment="Right"
-                                Height="24"
-                                Width="100">
-                                <Button.Style>
-                                    <Style TargetType="{x:Type Button}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type Button}">
-                                                    <Border x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="2"
-                                CornerRadius="12">
-                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                    </Border>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter TargetName="border" Property="BorderBrush" Value="White" />
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </Button.Style>
+                                    Grid.Row="0"
+                                    Content="Анализ"
+                                    Click="Analize"
+                                    HorizontalAlignment="Right"
+                                    Style="{StaticResource ButtonRegressionStyle}">
                             </Button>
 
                             <Button Grid.Column="1"
-                                Grid.Row="0"
-                                Content="Auto"
-                                Click="AutoAnalize"
-                                FontSize="15"
-                                Margin="5,10,10,10"
-                                FontFamily="Microsoft Sans Serif"
-                                Foreground="White"
-                                Background="#646464"
-                                HorizontalAlignment="Left"
-                                Height="24"
-                                Width="100">
-                                <Button.Style>
-                                    <Style TargetType="{x:Type Button}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type Button}">
-                                                    <Border x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="2"
-                                CornerRadius="12">
-                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                    </Border>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter TargetName="border" Property="BorderBrush" Value="White" />
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </Button.Style>
+                                    Grid.Row="0"
+                                    Content="Auto"
+                                    Click="AutoAnalize"
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource ButtonRegressionStyle}">
                             </Button>
                         </Grid>
                     </Grid>
                 </Border>
 
                 <Border Grid.Row="1"
-                        BorderBrush="White"
-                        BorderThickness="3"
                         Visibility="Hidden"
                         x:Name="BorderAnalize"
-                        Margin="10,0">
+                        Style="{StaticResource BorderStyle}"                        
+                        Margin="10,0,10,10">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <Grid Grid.Row="1"
                           x:Name="GridData"
@@ -326,179 +278,113 @@
 
                             <Label Grid.Row="0"
                                    Grid.Column="0"
-                                   FontSize="15"
-                                   Foreground="White"
-                                   FontWeight="DemiBold"
-                                   FontFamily="Microsoft Sans Serif"
-ToolTip ="Уравнение регрессии — это&#x0a; математическое выражение, которое&#x0a; связывает зависимую и одну или несколько&#x0a; независимых переменных в модели&#x0a; регрессии."                                   HorizontalContentAlignment="Right"
-                                   VerticalContentAlignment="Center"
-                                   Content="Уравнение регрессии: "/>
-                            
-                            <Label Grid.Row="1" 
-                   Grid.Column="0" 
-                   FontSize="15"
-                   Foreground="White"
-                   FontWeight="DemiBold"
-                   FontFamily="Microsoft Sans Serif"
-ToolTip ="Коэффициент корреляции — это&#x0a; статистический показатель, который измеряет&#x0a; степень линейной взаимосвязи между двумя&#x0a; переменными. Значение коэффициента&#x0a; корреляции может изменяться от -1 до +1.&#x0a; Значение 0 означает отсутствие корреляции,&#x0a; значения ближе к +1 и -1 указывают на&#x0a; сильную положительную и отрицательную&#x0a; корреляцию соответственно."                   HorizontalContentAlignment="Right"
-                   VerticalContentAlignment="Center"
-                   Content="Коэффициент корреляции: "/>
-                            <Label Grid.Row="2" 
-                   Grid.Column="0" 
-                   FontSize="15"
-                   Foreground="White"
-                   FontWeight="DemiBold"
-                   FontFamily="Microsoft Sans Serif"
-ToolTip="Связь между параметрами&#x0a; представляет собой степень взаимосвязи&#x0a; между двумя или более переменными. Эта&#x0a; связь измеряется при помощи коэффициента&#x0a; корреляции, который показывает направление&#x0a; и силу линейной зависимости между&#x0a; переменными."                   HorizontalContentAlignment="Right"
-                   Content="Связь между параметрами: "/>
-                            <Label Grid.Row="3" 
-                   Grid.Column="0" 
-                   FontSize="15"
-                   Foreground="White"
-                   FontWeight="DemiBold"
-                   FontFamily="Microsoft Sans Serif"
-ToolTip ="Коэффициент детерминации — это&#x0a; статистический показатель, который указывает&#x0a; на долю вариации зависимой переменной,&#x0a; которая объясняется независимыми&#x0a; переменными в модели регрессии. Значение&#x0a; коэффициента детерминации может&#x0a; изменяться от 0 до 1. Значение 0 означает, что&#x0a; никакая вариация не может быть объяснена&#x0a; независимыми переменными, а значение 1&#x0a; означает, что вся вариация зависимой&#x0a; переменной может быть объяснена&#x0a; независимыми переменными."                   HorizontalContentAlignment="Right"
-                   VerticalContentAlignment="Center"
-                   Content="Коэффициент детерминации: "/>
-                            <Label Grid.Row="4" 
-                   Grid.Column="0" 
-ToolTip ="Средняя ошибка аппроксимации — это&#x0a; средняя абсолютная ошибка прогноза в&#x0a; модели регрессии. Она измеряет среднее&#x0a; расстояние между фактическим значением&#x0a; зависимой переменной и ее прогнозируемым&#x0a; значением в модели регрессии."                   HorizontalContentAlignment="Right"
-                   VerticalContentAlignment="Center"
-                   FontSize="15"
-                   Foreground="White"
-                   FontWeight="DemiBold"
-                   FontFamily="Microsoft Sans Serif"
-                   Content="Средняя ошибка апроксимации: "/>
-                            <Label Grid.Row="5" 
-                   Grid.Column="0" 
-ToolTip ="F-критерий Фишера — это&#x0a; статистический тест, используемый в&#x0a; регрессионном анализе для определения&#x0a; значимости модели. Он позволяет сравнить&#x0a; объяснительную силу регрессионной модели с&#x0a; нулевой моделью, которая предполагает, что&#x0a; все коэффициенты регрессии равны нулю.&#x0a; Если значение F-критерия Фишера достаточно&#x0a; высоко, то это означает, что регрессионная&#x0a; модель значима и ее коэффициенты не равны&#x0a; нулю."                   HorizontalContentAlignment="Right"
-                   VerticalContentAlignment="Center"
-                   FontSize="15"
-                   Foreground="White"
-                   FontWeight="DemiBold"
-                   FontFamily="Microsoft Sans Serif"
-                   Content="F-критерий Фишера: "/>
-                            <Label Grid.Row="6" 
-                                   Grid.Column="0" 
-                                   ToolTip ="Критерий Дарбина-Уотсона — это&#x0a; статистический тест, используемый для&#x0a; определения наличия автокорреляции в&#x0a; остатках регрессионной модели. Он измеряет&#x0a; степень корреляции между&#x0a; последовательными остатками и принимает&#x0a; значения от 0 до 4. Значение 2 означает&#x0a; отсутствие автокорреляции, значение меньше&#x0a; 2 - положительная автокорреляция, значение&#x0a; больше 2 - отрицательная автокорреляция."                                  HorizontalContentAlignment="Right"
-                                   VerticalContentAlignment="Center"
-                                   FontSize="15"
-                                   Foreground="White"
-                                   FontWeight="DemiBold"
-                                   FontFamily="Microsoft Sans Serif"
-                                   Content="Критерий Дарбина Уотсона: "/>
+                                   Content="Уравнение регрессии: "
+                                   ToolTip="Уравнение регрессии — это математическое выражение, которое связывает зависимую и одну или несколько независимых переменных в модели регрессии."
+                                   Style="{StaticResource LabelAnalizeStyle}"/>
+
+                            <Label Grid.Row="1"
+                                   Grid.Column="0"
+                                   Content="Коэффициент корреляции: "
+                                   ToolTip="Коэффициент корреляции — это статистический показатель, который измеряет степень линейной взаимосвязи между двумя переменными. Значение коэффициента корреляции может изменяться от -1 до +1. Значение 0 означает отсутствие корреляции, значения ближе к +1 и -1 указывают на сильную положительную и отрицательную корреляцию соответственно."
+                                   Style="{StaticResource LabelAnalizeStyle}"/>
+
+                            <Label Grid.Row="2"
+                                   Grid.Column="0"
+                                   Content="Связь между параметрами: "
+                                   ToolTip="Связь между параметрами представляет собой степень взаимосвязи между двумя или более переменными. Эта связь измеряется при помощи коэффициента корреляции, который показывает направление и силу линейной зависимости между переменными."
+                                   Style="{StaticResource LabelAnalizeStyle}"/>
+
+                            <Label Grid.Row="3"
+                                   Grid.Column="0"
+                                   Content="Коэффициент детерминации: "
+                                   ToolTip="Коэффициент детерминации — это статистический показатель, который указывает на долю вариации зависимой переменной, которая объясняется независимыми переменными в модели регрессии. Значение коэффициента детерминации может изменяться от 0 до 1. Значение 0 означает, что никакая вариация не может быть объяснена независимыми переменными, а значение 1 означает, что вся вариация зависимой переменной может быть объяснена независимыми переменными."
+                                   Style="{StaticResource LabelAnalizeStyle}"/>
+
+                            <Label Grid.Row="4"
+                                   Grid.Column="0"
+                                   Content="Средняя ошибка аппроксимации: "
+                                   ToolTip="Средняя ошибка аппроксимации — это средняя абсолютная ошибка прогноза в модели регрессии. Она измеряет среднее расстояние между фактическим значением зависимой переменной и ее прогнозируемым значением в модели регрессии."
+                                   Style="{StaticResource LabelAnalizeStyle}"/>
+
+                            <Label Grid.Row="5"
+                                   Grid.Column="0"
+                                   Content="F-критерий Фишера: "
+                                   ToolTip="F-критерий Фишера — это статистический тест, используемый в регрессионном анализе для определения значимости модели. Он позволяет сравнить объяснительную силу регрессионной модели с нулевой моделью, которая предполагает, что все коэффициенты регрессии равны нулю. Если значение F-критерия Фишера достаточно высоко, то это означает, что регрессионная модель значима и ее коэффициенты не равны нулю."
+                                   Style="{StaticResource LabelAnalizeStyle}"/>
+
+                            <Label Grid.Row="6"
+                                   Grid.Column="0"
+                                   Content="Критерий Дарбина Уотсона: "
+                                   ToolTip="Критерий Дарбина-Уотсона — это статистический тест, используемый для определения наличия автокорреляции в остатках регрессионной модели. Он измеряет степень корреляции между последовательными остатками и принимает значения от 0 до 4. Значение 2 означает отсутствие автокорреляции, значение меньше 2 - положительная автокорреляция, значение больше 2 - отрицательная автокорреляция."
+                                   Style="{StaticResource LabelAnalizeStyle}"/>
 
                             <Label Grid.Row="7" 
                                    Grid.Column="0" 
-                                   HorizontalContentAlignment="Right"
-                                   VerticalContentAlignment="Center"
                                    ToolTip ="Автокорреляция — это&#x0a; статистический термин, который описывает&#x0a; степень корреляции между&#x0a; последовательностью значений переменной и&#x0a; самой собой с определенной задержкой&#x0a; времени. Иными словами, автокорреляция&#x0a; измеряет, насколько зависят значения&#x0a; переменной в различные моменты времени&#x0a; друг от друга."                   
-                                   FontSize="15"
-                                   Foreground="White"
-                                   FontWeight="DemiBold"
-                                   Content="Автокорреляция: "/>
-                            
+                                   Content="Автокорреляция: "
+                                   Style="{StaticResource LabelAnalizeStyle}"/>
+
                             <Label Grid.Row="0" 
-                   Grid.Column="1"
-                   x:Name="Label1"
-                   Margin="0,0,10,0"
-                   FontSize="15"
-                   Foreground="White"
-                   FontWeight="DemiBold"
-                   FontFamily="Microsoft Sans Serif"
-                   HorizontalContentAlignment="Left"
-                   VerticalContentAlignment="Center"/>
+                                   Grid.Column="1" 
+                                   x:Name="Label1" 
+                                   Style="{StaticResource LabelResultStyle}"/>
+                            
                             <Label Grid.Row="1" 
-                   Grid.Column="1"
-                   x:Name="Label2"
-                   Margin="0,0,10,0"
-                   FontSize="15"
-                   Foreground="White"
-                   FontWeight="DemiBold"
-                   FontFamily="Microsoft Sans Serif"
-                   HorizontalContentAlignment="Left"
-                   VerticalContentAlignment="Center"/>
+                                   Grid.Column="1" 
+                                   x:Name="Label2" 
+                                   Style="{StaticResource LabelResultStyle}"/>
+                            
                             <Label Grid.Row="2" 
-                   Grid.Column="1"
-                   x:Name="Label3"
-                   Margin="0,0,10,0"
-                   FontSize="15"
-                   Foreground="White"
-                   FontWeight="DemiBold"
-                   FontFamily="Microsoft Sans Serif"
-                   HorizontalContentAlignment="Left"
-                   VerticalContentAlignment="Center"/>
+                                   Grid.Column="1" 
+                                   x:Name="Label3" 
+                                   Margin="0,0,10,0" 
+                                   Style="{StaticResource LabelResultStyle}"/>
+
                             <Label Grid.Row="3" 
-                   Grid.Column="1"
-                   x:Name="Label4"
-                   Margin="0,0,10,0"
-                   FontSize="15"
-                   Foreground="White"
-                   FontWeight="DemiBold"
-                   FontFamily="Microsoft Sans Serif"
-                   HorizontalContentAlignment="Left"
-                   VerticalContentAlignment="Center"/>
+                                   Grid.Column="1" 
+                                   x:Name="Label4" 
+                                   Margin="0,0,10,0" 
+                                   Style="{StaticResource LabelResultStyle}"/>
+
                             <Label Grid.Row="4" 
-                   Grid.Column="1"
-                   Margin="0,0,10,0"
-                   x:Name="Label5"
-                   FontSize="15"
-                   Foreground="White"
-                   FontWeight="DemiBold"
-                   FontFamily="Microsoft Sans Serif"
-                   HorizontalContentAlignment="Left"
-                   VerticalContentAlignment="Center"/>
+                                   Grid.Column="1" 
+                                   x:Name="Label5" 
+                                   Margin="0,0,10,0" 
+                                   Style="{StaticResource LabelResultStyle}"/>
+                            
                             <Label Grid.Row="5" 
-                   Grid.Column="1"
-                   x:Name="Label6"
-                   Margin="0,0,10,0"
-                   FontSize="15"
-                   Foreground="White"
-                   FontWeight="DemiBold"
-                   FontFamily="Microsoft Sans Serif"
-                   HorizontalContentAlignment="Left"
-                   VerticalContentAlignment="Center"/>
+                                   Grid.Column="1" 
+                                   x:Name="Label6" 
+                                   Margin="0,0,10,0" 
+                                   Style="{StaticResource LabelResultStyle}"/>
+                            
                             <Label Grid.Row="6" 
-                   Grid.Column="1"
-                   x:Name="Label7"
-                   Margin="0,0,10,0"
-                   FontSize="15"
-                   Foreground="White"
-                   FontWeight="DemiBold"
-                   FontFamily="Microsoft Sans Serif"
-                   HorizontalContentAlignment="Left"
-                   VerticalContentAlignment="Center"/>
+                                   Grid.Column="1" 
+                                   x:Name="Label7" 
+                                   Margin="0,0,10,0" 
+                                   Style="{StaticResource LabelResultStyle}"/>
+                            
                             <Label Grid.Row="7" 
-                   Grid.Column="1"
-                   x:Name="Label8"
-                   Margin="0,0,10,0"
-                   FontSize="15"
-                   Foreground="White"
-                   FontWeight="DemiBold"
-                   FontFamily="Microsoft Sans Serif"
-                   HorizontalContentAlignment="Left"
-                   VerticalContentAlignment="Center"/>
+                                   Grid.Column="1" 
+                                   x:Name="Label8" 
+                                   Margin="0,0,10,0" 
+                                   Style="{StaticResource LabelResultStyle}"/>
                         </Grid>
                     </ScrollViewer>
                 </Border>
 
                 <Border Grid.Row="2"
-                        BorderBrush="White"
-                        BorderThickness="3"
-                        Margin="10,10,10,0">
+                        Style="{StaticResource BorderStyle}"
+                        Margin="10,0">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
+                        
                         <Label Grid.Row="0"
-                               FontSize="15"
-                               Foreground="White"
-                               FontWeight="DemiBold"
-                               FontFamily="Microsoft Sans Serif"
-                               HorizontalContentAlignment="Center"
-                               VerticalContentAlignment="Center"
-                               Content="Некорректные значения"/>
+                               Content="Некорректные значения"
+                               Style="{StaticResource LabelStyle}"/>
 
                         <DataGrid Grid.Row="1"
                                   x:Name="DataGridAnalize"
@@ -507,7 +393,7 @@ ToolTip ="F-критерий Фишера — это&#x0a; статистиче�
                                   FontWeight="Medium"
                                   FontSize="15"
                                   Grid.RowSpan="3"
-                                  Background="White"
+                                  Background="#404040"
                                   Padding="5"/>
                     </Grid>
                 </Border>
@@ -516,36 +402,7 @@ ToolTip ="F-критерий Фишера — это&#x0a; статистиче�
                         x:Name="ButtonSave"
                         Content="Сохранить отчет"
                         Click="SavePdf"
-                        FontSize="20"
-                        Margin="10"
-                        Visibility="Hidden"
-                        FontFamily="Microsoft Sans Serif"
-                        Foreground="White"
-                        Background="#646464"
-                        VerticalAlignment="Bottom"
-                        Height="40">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Border x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="3">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="border" Property="BorderBrush" Value="White" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Style>
-                </Button>
+                        Style="{StaticResource ButtonSaveStyle}" />
             </Grid>
         </Grid>
     </Grid>

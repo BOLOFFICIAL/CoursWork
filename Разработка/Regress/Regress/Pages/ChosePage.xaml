@@ -8,7 +8,78 @@
       d:DesignHeight="500" d:DesignWidth="800"
       Title="ChosePage">
     <Page.Resources>
-        
+        <Style x:Key="ButtonAnalizeStyle" TargetType="Button">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="0,0,10,10"/>
+            <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#646464"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="3"
+                                CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" 
+                                     Value="True">
+                                <Setter TargetName="border" 
+                                        Property="BorderBrush" 
+                                        Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#646464"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="Width" Value="140"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="2"
+                                CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" 
+                                     Value="True">
+                                <Setter TargetName="border" 
+                                        Property="BorderBrush" 
+                                        Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="Microsoft Sans Serif"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+        </Style>
+        <Style x:Key="BorderStyle" TargetType="Border">
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="CornerRadius" Value="10"/>
+        </Style>
     </Page.Resources>
     <Grid x:Name="GridChose">
         <Grid.RowDefinitions>
@@ -25,75 +96,21 @@
             <Button Grid.Column="0"
                     Content="Меню"
                     Click="ToStartPage"
-                    FontSize="15"
-                    Margin="10,10,0,0"
-                    FontFamily="Microsoft Sans Serif"
-                    Foreground="White"
-                    Background="#646464"
                     VerticalAlignment="Top"
                     HorizontalAlignment="Left"
-                    Height="24"
-                    Width="140">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="2"
-                                CornerRadius="12">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="BorderBrush" Value="White" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
+                    Margin="10,10,0,0"
+                    Style="{StaticResource ButtonStyle}">
             </Button>
 
             <Button Grid.Column="1"
                     Content="Выбрать фаил"
                     Click="Chose"
-                    FontSize="15"
-                    Margin="10,10,150,0"
-                    FontFamily="Microsoft Sans Serif"
-                    Foreground="White"
-                    Background="#646464"
-                    HorizontalAlignment="Center"
-                    Height="24"
                     x:Name="ChoseFile"
-                    Width="140">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="2"
-                                CornerRadius="12">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="BorderBrush" Value="White" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
+                    HorizontalAlignment="Center"
+                    Margin="10,10,150,0"
+                    Style="{StaticResource ButtonStyle}">
             </Button>
-            
+
         </Grid>
 
         <Grid Grid.Row="1"
@@ -109,39 +126,38 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0"
-                        BorderBrush="White"
-                        BorderThickness="3"
-                        Margin="10">
-                    <Label FontFamily="Microsoft Sans Serif"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
+                        Margin="10"
+                        Style="{StaticResource BorderStyle}">
+                    <Label x:Name="filename"
+                           Style="{StaticResource LabelStyle}"
                            FontSize="20"
-                           FontWeight="DemiBold"
-                           Foreground="White"
                            Content=""
-                           Grid.ColumnSpan="3"
-                           x:Name="filename"/>
+                           Grid.ColumnSpan="3"/>
                 </Border>
-
-
-                <DataGrid Grid.Row="1"
-                          x:Name="DataGridChose"
-                          IsReadOnly="True"
-                          FontFamily="Microsoft Sans Serif"
-                          Margin="10,0,10,10"
-                          FontWeight="Medium"
-                          BorderBrush="White"
-                          BorderThickness="3"
-                          FontSize="15"
-                          Grid.RowSpan="3"
-                          Background="White"
-                          Padding="5">
-                    <DataGrid.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="Удалить" Click="MenuItem_Click"/>
-                        </ContextMenu>
-                    </DataGrid.ContextMenu>
-                </DataGrid>
+                <Border Grid.Row="1"
+                        Margin="10,0,10,10"
+                        Style="{StaticResource BorderStyle}">
+                    
+                    <DataGrid Grid.Row="1"
+                              x:Name="DataGridChose"
+                              IsReadOnly="True"
+                              Margin="2"
+                              FontFamily="Microsoft Sans Serif"
+                              FontWeight="Medium"
+                              FontSize="15"
+                              Grid.RowSpan="3"
+                              Background="#404040"
+                              Padding="2">
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Удалить" 
+                                      Click="MenuItem_Click"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                        
+                    </DataGrid>
+                </Border>
+                
             </Grid>
 
             <Grid Grid.Column="1"
@@ -151,9 +167,8 @@
                     <RowDefinition Height="0"/>
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0"
-                        BorderBrush="White"
-                        BorderThickness="3"
-                        Margin="0,10,10,10">
+                        Margin="0,10,10,10"
+                        Style="{StaticResource BorderStyle}">
                     <Grid Grid.Row="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
@@ -161,66 +176,31 @@
                         </Grid.RowDefinitions>
 
                         <Label Grid.Row="0"
+                               Style="{StaticResource LabelStyle}"
                                Margin="10,0"
-                       FontWeight="DemiBold"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Foreground="White"
-                       FontFamily="Microsoft Sans Serif"
-                       FontSize="15"
-                       Content="Результативная колонка"/>
+                               FontSize="15"
+                               Content="Колонка результатов"/>
 
-                        <ComboBox Grid.Row="1" 
-                          x:Name="ComboBoxResult" 
-                          SelectionChanged="ComboBoxResult_SelectionChanged"
-                          FontFamily="Microsoft Sans Serif"
-                          Margin="10,0"
-                                  MaxWidth="500"
-                          HorizontalContentAlignment="Center"
-                          VerticalContentAlignment="Center"
-                          FontWeight="DemiBold"
-                          FontSize="15"
-                          BorderThickness="2"
-                          Height="30"/>
+                        <ComboBox Grid.Row="1"
+                                  x:Name="ComboBoxResult" 
+                                  Foreground="White"
+                                  MaxWidth = "500"
+                                  Margin = "10,0"
+                                  FontSize="20"
+                                  SelectionChanged="ComboBoxResult_SelectionChanged">
+                        </ComboBox>
+                        
                     </Grid>
                 </Border>
-               
+
                 <Grid Grid.Row="1">
                     <Button Content="Анализ"
-                        x:Name="ButtonAnalize"
-                        Click="ToAnalisePage"
-                        FontSize="20"
-                        Margin="0,0,10,10"
-                        FontFamily="Microsoft Sans Serif"
-                        Foreground="White"
-                        Background="#646464"
-                        Height="40"
-                        VerticalAlignment="Bottom">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type Button}">
-                                            <Border x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="3">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                            </Border>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter TargetName="border" Property="BorderBrush" Value="White" />
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Button.Style>
+                            x:Name="ButtonAnalize"
+                            Click="ToAnalisePage"
+                            Style="{StaticResource ButtonAnalizeStyle}">
                     </Button>
                 </Grid>
             </Grid>
-            
         </Grid>
     </Grid>
 </Page>

@@ -144,50 +144,55 @@ namespace Regress
                 }
             }
 
-            var data = ProgramData.X.Zip(ProgramData.Y, (x, y) => new { X = x, Y = y }).ToList();
-
-            data.Sort((a, b) => a.X.CompareTo(b.X));
-
-            ProgramData.X = data.Select(pair => pair.X).ToList();
-            ProgramData.Y = data.Select(pair => pair.Y).ToList();
-
-            _regression = new CorrelationRegression(ProgramData.regressionindex, auto);
-
-            List<string> results = _regression.Results;
-
-            Label1.Content = results[0].Replace("+ -", "- ");
-            Label2.Content = results[1];
-            Label3.Content = results[2];
-            Label4.Content = results[3];
-            Label5.Content = $"{results[4]}%";
-            Label6.Content = results[5];
-            Label7.Content = results[6];
-            Label8.Content = results[7];
-
-            PrintOXY(_regression.Line);
-
-            if (auto)
+            if (ProgramData.X.Count > 0)
             {
-                ComboBoxRegression.SelectedIndex = _regression.TitleIndex;
-                ProgramData.regressionindex = _regression.TitleIndex;
+                var data = ProgramData.X.Zip(ProgramData.Y, (x, y) => new { X = x, Y = y }).ToList();
+
+                data.Sort((a, b) => a.X.CompareTo(b.X));
+
+                ProgramData.X = data.Select(pair => pair.X).ToList();
+                ProgramData.Y = data.Select(pair => pair.Y).ToList();
+
+                _regression = new CorrelationRegression(ProgramData.regressionindex, auto);
+
+                List<string> results = _regression.Results;
+
+                Label1.Content = results[0].Replace("+ -", "- ");
+                Label2.Content = results[1];
+                Label3.Content = results[2];
+                Label4.Content = results[3];
+                Label5.Content = $"{results[4]}%";
+                Label6.Content = results[5];
+                Label7.Content = results[6];
+                Label8.Content = results[7];
+
+                PrintOXY(_regression.Line);
+
+                if (auto)
+                {
+                    ComboBoxRegression.SelectedIndex = _regression.TitleIndex;
+                    ProgramData.regressionindex = _regression.TitleIndex;
+                }
+
+                GridData.Height = double.NaN;
+                ButtonSave.Visibility = Visibility.Visible;
+                BorderAnalize.Visibility = Visibility.Visible;
+
+                GridAnalize.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
+                GridAnalize.ColumnDefinitions[1].Width = new GridLength(0, GridUnitType.Auto);
+                DataGridAnalize.MaxWidth = 700;
+                GridDataAnalize.RowDefinitions[0].Height = new GridLength(0, GridUnitType.Auto);
+                GridDataAnalize.RowDefinitions[1].Height = new GridLength(1, GridUnitType.Star);
+                GridDataAnalize.RowDefinitions[3].Height = new GridLength(0, GridUnitType.Auto);
             }
 
             FillDataGrid(ProgramData.ErrorX, ProgramData.ErrorY, DataGridAnalize);
 
-            GridData.Height = double.NaN;
-            ButtonSave.Visibility = Visibility.Visible;
-            BorderAnalize.Visibility = Visibility.Visible;
-
-            GridAnalize.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
-            GridAnalize.ColumnDefinitions[1].Width = new GridLength(0, GridUnitType.Auto);
-            DataGridAnalize.MaxWidth = 700;
-            GridDataAnalize.RowDefinitions[0].Height = new GridLength(0, GridUnitType.Auto);
-            GridDataAnalize.RowDefinitions[1].Height = new GridLength(1, GridUnitType.Star);
             if (ProgramData.ErrorX.Count > 0)
             {
                 GridDataAnalize.RowDefinitions[2].Height = new GridLength(1, GridUnitType.Star);
             }
-            GridDataAnalize.RowDefinitions[3].Height = new GridLength(0, GridUnitType.Auto);
+
         }
 
         private void FillDataGrid(List<string> X, List<string> Y, DataGrid dataGrid)
