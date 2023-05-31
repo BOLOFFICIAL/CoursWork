@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Regress"
         mc:Ignorable="d"
-        Title="MainWindow" 
+        Title="RiverCorr" 
         MinHeight="600"
         MinWidth="1000"
         WindowState="Maximized">

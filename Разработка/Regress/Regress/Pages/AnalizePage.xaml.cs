@@ -192,7 +192,6 @@ namespace Regress
             {
                 GridDataAnalize.RowDefinitions[2].Height = new GridLength(1, GridUnitType.Star);
             }
-
         }
 
         private void FillDataGrid(List<string> X, List<string> Y, DataGrid dataGrid)

@@ -5,6 +5,8 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Fish.ico</ApplicationIcon>
+    <AssemblyName>RiverCorr</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +15,10 @@
     <None Remove="Comfortaa-Medium.ttf" />
     <None Remove="Comfortaa-Regular.ttf" />
     <None Remove="Comfortaa-SemiBold.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Fish.ico" />
   </ItemGroup>
 
   <ItemGroup>

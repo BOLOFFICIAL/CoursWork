@@ -1,0 +1,25 @@
+RiverCorr
+License Agreement
+
+Please read this License Agreement (the "Agreement") carefully before using our RiverCorr application (the "Application"). This is a legal agreement between you (an individual or a legal entity) and MIX, the developer and the owner of the Application. Using the Application implies your full agreement with the terms of this Agreement. If you do not agree to these terms, please do not use the App.
+
+License
+MIX grants you a limited, non-exclusive, non-transferable license to use the RiverCorr App on your device in accordance with the terms of this Agreement. You have the right to use the Application only for your personal or commercial purposes, complying with all applicable laws and regulations.
+
+Intellectual property
+The RiverCorr application, including all its components, content, graphics, design, logos and all other materials, are the intellectual property of the MIX and are protected by copyrights and other intellectual property laws. You may not modify, copy, distribute, transmit, display, create derivative works, sell, lease, license or otherwise use the materials of the Application without the prior written permission of MIX.
+
+Usage Restrictions
+You agree not to use the RiverCorr App for illegal or prohibited purposes. You may not use the Application to hack, sort passwords, distribute malicious software or any other actions that may harm you or third parties.
+
+Limitation of liability
+When using the RiverCorr Application, you assume all risks associated with its use. MIX is not responsible for any direct, indirect, incidental, special, punitive or other damages resulting from the use or inability to use the Application.
+
+Updates and support
+MIX may provide updates and fixes to the RiverCorr Application at its discretion. MIX is not obligated to provide any technical support or updates to the Application, although it may do so at its discretion.
+
+Termination
+MIX has the right to terminate your license to use the RiverCorr Application at any time if you violate the terms of this Agreement. In case of termination, you are obliged to stop using the Application and delete it from your device.
+
+Applicable law and dispute resolution
+This Agreement is governed by and interpreted in accordance with the laws of the Russian Federation. Any disputes related to the Annex or this Agreement must be resolved by binding arbitration in accordance with the rules of the Russian arbitration organization.
