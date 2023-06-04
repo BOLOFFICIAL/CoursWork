@@ -64,7 +64,7 @@ namespace Regress
                 MessageBox.Show("Выберите колонку результатов");
                 return;
             }
-            if (ProgramData.csv.ColumnCount < 2)
+            if (ComboBoxResult.Items.Count < 2)
             {
                 MessageBox.Show("В файле недостаточно колонок.\nМинимальное количество 2");
                 return;
