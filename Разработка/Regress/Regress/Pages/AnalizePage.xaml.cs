@@ -95,7 +95,7 @@ namespace Regress
 
         private void ToEditFile(object sender, RoutedEventArgs e)
         {
-            //ProgramData.regressionindex = -1;
+            ProgramData.regressionindex = -1;
             NavigationService.Navigate(new ChosePage());
         }
 
@@ -198,7 +198,7 @@ namespace Regress
             catch
             {
                 MessageBox.Show("Возникла неизвестная ошибка, Перепроверьте фаил и повтрите попытку","Ошибка анализа",MessageBoxButton.OK,MessageBoxImage.Error);
-                //ProgramData.regressionindex = -1;
+                ProgramData.regressionindex = -1;
                 NavigationService.Navigate(new ChosePage());
             }
         }
