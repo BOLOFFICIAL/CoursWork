@@ -16,12 +16,12 @@ DefaultDirName={autopf}\RiverCorr
 ChangesAssociations=yes
 DefaultGroupName=RiverCorr
 DisableProgramGroupPage=yes
-LicenseFile=D:\YandexDisk\ЯндексДиск\BOLOFFICIAL\ЯГТУ\Бакалавриат\3 КУРС\6 СЕМЕСТР\ИНСТРУМЕНТАЛЬНЫЕ СРЕДСТВА ИНФОРМАЦИОННЫХ СИСТЕМ\Курсовая работа\Setup\License.txt
+LicenseFile=D:\Projects\RiverCorr\Setup\License.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputDir=D:\YandexDisk\ЯндексДиск\BOLOFFICIAL\ЯГТУ\Бакалавриат\3 КУРС\6 СЕМЕСТР\ИНСТРУМЕНТАЛЬНЫЕ СРЕДСТВА ИНФОРМАЦИОННЫХ СИСТЕМ\Курсовая работа\Setup
+OutputDir=D:\Projects\RiverCorr\Setup
 OutputBaseFilename=RiverCorrSetup
-SetupIconFile=D:\YandexDisk\ЯндексДиск\BOLOFFICIAL\ЯГТУ\Бакалавриат\3 КУРС\6 СЕМЕСТР\ИНСТРУМЕНТАЛЬНЫЕ СРЕДСТВА ИНФОРМАЦИОННЫХ СИСТЕМ\Курсовая работа\Setup\Fish.ico
+SetupIconFile=D:\Projects\RiverCorr\Setup\Fish.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -33,17 +33,17 @@ Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "D:\YandexDisk\ЯндексДиск\BOLOFFICIAL\ЯГТУ\Бакалавриат\3 КУРС\6 СЕМЕСТР\ИНСТРУМЕНТАЛЬНЫЕ СРЕДСТВА ИНФОРМАЦИОННЫХ СИСТЕМ\Курсовая работа\Разработка\Regress\Regress\bin\Release\net5.0-windows\RiverCorr.exe";                 DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\YandexDisk\ЯндексДиск\BOLOFFICIAL\ЯГТУ\Бакалавриат\3 КУРС\6 СЕМЕСТР\ИНСТРУМЕНТАЛЬНЫЕ СРЕДСТВА ИНФОРМАЦИОННЫХ СИСТЕМ\Курсовая работа\Разработка\Regress\Regress\bin\Release\net5.0-windows\Aspose.PDF.dll";                DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\YandexDisk\ЯндексДиск\BOLOFFICIAL\ЯГТУ\Бакалавриат\3 КУРС\6 СЕМЕСТР\ИНСТРУМЕНТАЛЬНЫЕ СРЕДСТВА ИНФОРМАЦИОННЫХ СИСТЕМ\Курсовая работа\Разработка\Regress\Regress\bin\Release\net5.0-windows\CsvHelper.dll";                 DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\YandexDisk\ЯндексДиск\BOLOFFICIAL\ЯГТУ\Бакалавриат\3 КУРС\6 СЕМЕСТР\ИНСТРУМЕНТАЛЬНЫЕ СРЕДСТВА ИНФОРМАЦИОННЫХ СИСТЕМ\Курсовая работа\Разработка\Regress\Regress\bin\Release\net5.0-windows\itextsharp.dll";                DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\YandexDisk\ЯндексДиск\BOLOFFICIAL\ЯГТУ\Бакалавриат\3 КУРС\6 СЕМЕСТР\ИНСТРУМЕНТАЛЬНЫЕ СРЕДСТВА ИНФОРМАЦИОННЫХ СИСТЕМ\Курсовая работа\Разработка\Regress\Regress\bin\Release\net5.0-windows\MaterialDesignColors.dll";      DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\YandexDisk\ЯндексДиск\BOLOFFICIAL\ЯГТУ\Бакалавриат\3 КУРС\6 СЕМЕСТР\ИНСТРУМЕНТАЛЬНЫЕ СРЕДСТВА ИНФОРМАЦИОННЫХ СИСТЕМ\Курсовая работа\Разработка\Regress\Regress\bin\Release\net5.0-windows\MaterialDesignThemes.Wpf.dll";  DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\YandexDisk\ЯндексДиск\BOLOFFICIAL\ЯГТУ\Бакалавриат\3 КУРС\6 СЕМЕСТР\ИНСТРУМЕНТАЛЬНЫЕ СРЕДСТВА ИНФОРМАЦИОННЫХ СИСТЕМ\Курсовая работа\Разработка\Regress\Regress\bin\Release\net5.0-windows\OxyPlot.dll";                   DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\YandexDisk\ЯндексДиск\BOLOFFICIAL\ЯГТУ\Бакалавриат\3 КУРС\6 СЕМЕСТР\ИНСТРУМЕНТАЛЬНЫЕ СРЕДСТВА ИНФОРМАЦИОННЫХ СИСТЕМ\Курсовая работа\Разработка\Regress\Regress\bin\Release\net5.0-windows\OxyPlot.Wpf.dll";               DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\YandexDisk\ЯндексДиск\BOLOFFICIAL\ЯГТУ\Бакалавриат\3 КУРС\6 СЕМЕСТР\ИНСТРУМЕНТАЛЬНЫЕ СРЕДСТВА ИНФОРМАЦИОННЫХ СИСТЕМ\Курсовая работа\Разработка\Regress\Regress\bin\Release\net5.0-windows\OxyPlot.Wpf.Shared.dll";        DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\YandexDisk\ЯндексДиск\BOLOFFICIAL\ЯГТУ\Бакалавриат\3 КУРС\6 СЕМЕСТР\ИНСТРУМЕНТАЛЬНЫЕ СРЕДСТВА ИНФОРМАЦИОННЫХ СИСТЕМ\Курсовая работа\Разработка\Regress\Regress\bin\Release\net5.0-windows\RiverCorr.dll";                 DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\YandexDisk\ЯндексДиск\BOLOFFICIAL\ЯГТУ\Бакалавриат\3 КУРС\6 СЕМЕСТР\ИНСТРУМЕНТАЛЬНЫЕ СРЕДСТВА ИНФОРМАЦИОННЫХ СИСТЕМ\Курсовая работа\Разработка\Regress\Regress\bin\Release\net5.0-windows\RiverCorr.runtimeconfig.json";  DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Projects\RiverCorr\Разработка\Regress\Regress\bin\Release\net5.0-windows\RiverCorr.exe";                 DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Projects\RiverCorr\Разработка\Regress\Regress\bin\Release\net5.0-windows\Aspose.PDF.dll";                DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Projects\RiverCorr\Разработка\Regress\Regress\bin\Release\net5.0-windows\CsvHelper.dll";                 DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Projects\RiverCorr\Разработка\Regress\Regress\bin\Release\net5.0-windows\itextsharp.dll";                DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Projects\RiverCorr\Разработка\Regress\Regress\bin\Release\net5.0-windows\MaterialDesignColors.dll";      DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Projects\RiverCorr\Разработка\Regress\Regress\bin\Release\net5.0-windows\MaterialDesignThemes.Wpf.dll";  DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Projects\RiverCorr\Разработка\Regress\Regress\bin\Release\net5.0-windows\OxyPlot.dll";                   DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Projects\RiverCorr\Разработка\Regress\Regress\bin\Release\net5.0-windows\OxyPlot.Wpf.dll";               DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Projects\RiverCorr\Разработка\Regress\Regress\bin\Release\net5.0-windows\OxyPlot.Wpf.Shared.dll";        DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Projects\RiverCorr\Разработка\Regress\Regress\bin\Release\net5.0-windows\RiverCorr.dll";                 DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Projects\RiverCorr\Разработка\Regress\Regress\bin\Release\net5.0-windows\RiverCorr.runtimeconfig.json";  DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
